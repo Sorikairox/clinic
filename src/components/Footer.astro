@@ -17,7 +17,11 @@ const year = new Date().getFullYear();
 		<div>
 			<h4>{t('footer.clinicName')}</h4>
 			<p>{t('access.address')}</p>
-			<p>{t('hours.morning')}<br />{t('hours.afternoon')}</p>
+			<p>
+				{t('common.phoneLabel')}: <a href="tel:+81364539307">{t('access.phone')}</a><br />
+				{t('common.faxLabel')}: {t('access.fax')}
+			</p>
+			<p>{t('hours.amLabel')}<br />{t('hours.pmLabel')}</p>
 			<p>{t('hours.closedNote')}</p>
 		</div>
 		<div>

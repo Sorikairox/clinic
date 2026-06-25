@@ -1,8 +1,9 @@
 {
 	"site": {
-		"name": "Clínica Coloproctológica Shiba",
+		"name": "Clínica Shiba de Gastroenterología y Proctología",
 		"shortName": "Clínica Shiba",
-		"tagline": "Clínica de gastroenterología y proctología en Minato-ku, Tokio"
+		"englishName": "Shiba Gastroenterology & Proctology Clinic",
+		"tagline": "Clínica de proctología y gastroenterología en Shiba, Minato-ku, Tokio"
 	},
 	"nav": {
 		"home": "Inicio",
@@ -20,6 +21,7 @@
 		"languageLabel": "Idioma",
 		"menu": "Menú",
 		"phoneLabel": "Teléfono",
+		"faxLabel": "Fax",
 		"addressLabel": "Dirección",
 		"hoursLabel": "Horario",
 		"closed": "Cerrado",
@@ -27,131 +29,316 @@
 		"backHome": "Volver al inicio"
 	},
 	"home": {
-		"metaTitle": "Clínica Coloproctológica Shiba | Proctología y gastroenterología en Tokio",
-		"metaDescription": "Clínica de gastroenterología y proctología con atención en inglés en Shiba, Minato-ku, Tokio. Tratamiento de hemorroides, fisuras anales y fístulas, además de gastroenterología y endoscopia. Residentes extranjeros bienvenidos.",
-		"heroTitle": "Una clínica especializada en proctología y salud digestiva donde puede consultar con total confianza",
-		"heroSubtitle": "Desde el tratamiento de las hemorroides hasta la gastroenterología: atención cuidadosa y profesional en un entorno privado y cómodo.",
-		"heroCta": "Pedir una cita",
+		"metaTitle": "Clínica Shiba de Gastroenterología y Proctología | Proctología y gastroenterología en Tokio",
+		"metaDescription": "Clínica de proctología y gastroenterología con atención en inglés en Shiba, Minato-ku, Tokio. Cirugía ambulatoria de hemorroides, fisuras y fístulas anales, colonoscopia sin dolor, gastroscopia, prueba de H. pylori y vacunaciones. A 3 minutos a pie de la estación de Mita. Damos la bienvenida a los residentes extranjeros.",
+		"heroTitle": "Una clínica de proctología y salud digestiva con la que puede hablar con confianza",
+		"heroSubtitle": "Desde la cirugía ambulatoria de hemorroides hasta la colonoscopia sin dolor: una atención cuidadosa e individual en un entorno privado y cómodo.",
+		"heroCta": "Reservar una cita",
+		"heroImageAlt": "Logotipo de la Clínica Shiba de Gastroenterología y Proctología",
 		"introHeading": "Sobre la clínica",
-		"introBody": "La Clínica Coloproctológica Shiba es una clínica especializada en proctología, cirugía anal y gastroenterología situada en Shiba, Minato-ku, Tokio. Tratamos una amplia variedad de afecciones, desde hemorroides, fisuras anales y fístulas hasta trastornos digestivos y endoscopia.",
+		"introBody": "La Clínica Shiba de Gastroenterología y Proctología es una clínica especializada en proctología, gastroenterología y medicina digestiva en Shiba, Minato-ku, Tokio. Desde su apertura en 2013, hemos atendido una amplia variedad de afecciones, desde hemorroides, fisuras y fístulas anales hasta trastornos digestivos y endoscopia gástrica y colonoscópica. Cuidamos las explicaciones claras y un entorno cómodo para que incluso las preocupaciones más delicadas puedan plantearse con confianza.",
 		"foreignHeading": "Para pacientes internacionales",
-		"foreignBody": "Alrededor del 40 % de nuestros pacientes son residentes extranjeros en Japón. Ofrecemos atención en inglés, para que pueda ser atendido sin preocuparse por la barrera del idioma.",
+		"foreignBody": "Ofrecemos atención en inglés, y muchos de nuestros pacientes son residentes extranjeros en Japón. Puede ser atendido sin preocuparse por la barrera del idioma.",
 		"servicesHeading": "Nuestros servicios",
-		"hoursHeading": "Horario de atención"
+		"hoursHeading": "Horario de atención",
+		"accessHeading": "Cómo llegar"
 	},
 	"director": {
-		"metaTitle": "Director | Clínica Coloproctológica Shiba",
-		"metaDescription": "Conozca al director de la Clínica Coloproctológica Shiba: proctólogo y cirujano certificado con la titulación del examen de licencia médica de Estados Unidos.",
-		"heading": "Sobre el Director",
-		"name": "Director",
-		"body": "Nuestro director es un especialista con muchos años de experiencia en proctología y enfermedades digestivas. La atención se centra en cada paciente de forma individual, con explicaciones claras y un tratamiento adecuado y meditado. Con experiencia clínica en Estados Unidos, el director también atiende a pacientes en inglés.",
-		"qualificationsHeading": "Titulaciones",
+		"metaTitle": "Director | Clínica Shiba de Gastroenterología y Proctología",
+		"metaDescription": "Conozca al Dr. Yukihiro Satoh, director de la Clínica Shiba de Gastroenterología y Proctología: proctólogo y cirujano certificado, con titulación médica estadounidense (USMLE) y experiencia clínica en Estados Unidos.",
+		"heading": "Sobre el director",
+		"name": "Dr. Yukihiro Satoh",
+		"nameReading": "Satoh Yukihiro",
+		"title": "Director",
+		"photoAlt": "Dr. Yukihiro Satoh, director",
+		"greetingHeading": "Un mensaje del director",
+		"greeting": "Fundé esta clínica en 2013, junto con mi esposa y nuestro equipo, con el deseo de crear una clínica que reflejara verdaderamente cómo queremos cuidar de los pacientes. Las preocupaciones relacionadas con el ano y el aparato digestivo pueden ser difíciles de plantear, por eso me esfuerzo en escuchar con atención y ofrecer explicaciones claras y un tratamiento con el que pueda sentirse cómodo. Aprovechando mi experiencia clínica en Estados Unidos, también atiendo a pacientes en inglés. Acuda a nosotros con total tranquilidad.",
+		"qualificationsHeading": "Titulaciones y afiliaciones",
 		"qualifications": [
-			"Proctólogo certificado por la Sociedad Japonesa de Coloproctología",
-			"Cirujano certificado por la Sociedad Japonesa de Cirugía",
+			"Proctólogo certificado, Sociedad Japonesa de Coloproctología",
+			"Médico certificado, Sociedad Japonesa de Enfermedades Anorrectales Clínicas",
+			"Cirujano certificado, Sociedad Japonesa de Cirugía",
 			"Médico certificado en infección por Helicobacter pylori",
-			"Titulación del examen de licencia médica de Estados Unidos (USMLE)"
+			"Médico designado para enfermedades intratables (raras)",
+			"Titulación del Examen de Licencia Médica de Estados Unidos (USMLE)",
+			"Médico del trabajo certificado, Asociación Médica de Japón"
+		],
+		"careerHeading": "Trayectoria",
+		"career": [
+			"1991 Graduado en la Facultad de Medicina de la Universidad Teikyo",
+			"1991 Centro de Urgencias y Cuidados Críticos, Hospital Universitario Teikyo",
+			"1993 Departamento de Cirugía, Hospital Iwate Houyou",
+			"1996–1999 Práctica médica en California, EE. UU.",
+			"2001–2010 Departamentos de urgencias y coloproctología en hospitales de Japón",
+			"2013 Fundación de la Clínica Shiba de Gastroenterología y Proctología (actualidad)"
+		],
+		"rolesHeading": "Otras funciones",
+		"roles": [
+			"Cirujano coloproctólogo visitante, Clínica Médica Yotsumata",
+			"Médico del trabajo en varias empresas (desde 2015)",
+			"Miembro del comité, Asociación Médica del Distrito de Minato"
 		]
 	},
 	"access": {
-		"metaTitle": "Cómo llegar | Clínica Coloproctológica Shiba",
-		"metaDescription": "Cómo llegar a la Clínica Coloproctológica Shiba: KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokio. A pocos minutos a pie de las estaciones de Mita y Tamachi.",
+		"metaTitle": "Cómo llegar | Clínica Shiba de Gastroenterología y Proctología",
+		"metaDescription": "Cómo llegar a la Clínica Shiba de Gastroenterología y Proctología: KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokio 108-0014. A 3 min de la estación de Mita, a 6 min de la estación de Tamachi.",
 		"heading": "Cómo llegar",
 		"addressLabel": "Dirección",
-		"address": "KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokio 105-0014",
+		"address": "KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokio 108-0014",
+		"phoneLabel": "Teléfono",
+		"phone": "03-6453-9307",
+		"faxLabel": "Fax",
+		"fax": "03-6453-9367",
 		"stationsLabel": "Estaciones más cercanas",
 		"stations": [
-			"5 min a pie desde la estación de Mita (líneas Toei Mita / Asakusa)",
-			"7 min a pie desde la estación de Tamachi (líneas JR Yamanote / Keihin-Tohoku)"
+			"A unos 3 min a pie de la estación de Mita (línea Toei Mita), salida A9",
+			"A unos 4–5 min a pie de la estación de Mita (línea Toei Asakusa), salida A6",
+			"A unos 6 min a pie de la estación de Tamachi (líneas JR Yamanote / Keihin-Tohoku), salida Mita/Oeste"
 		],
+		"directionsHeading": "Indicaciones",
+		"directions": "Desde la salida A9 de la estación de Mita, camine por Mita-dori en dirección a Tamachi. Use el FamilyMart como punto de referencia; la clínica está en la 3.ª planta del KT Building. Si tiene dificultades para encontrarnos, llámenos por teléfono.",
+		"parkingNote": "No disponemos de aparcamiento propio. Utilice un aparcamiento de pago cercano.",
 		"hoursHeading": "Horario de atención"
 	},
+	"hours": {
+		"amLabel": "Mañana 10:00–12:30",
+		"pmLabel": "Tarde 15:00–18:00",
+		"colTime": "Horario",
+		"morningShort": "Mañana",
+		"afternoonShort": "Tarde",
+		"days": {
+			"mon": "Lun",
+			"tue": "Mar",
+			"wed": "Mié",
+			"thu": "Jue",
+			"fri": "Vie",
+			"sat": "Sáb",
+			"sun": "Dom"
+		},
+		"legendOpen": "○ Abierto",
+		"legendAppointment": "△ Con cita previa (solo pruebas)",
+		"legendClosed": "− Cerrado",
+		"closedNote": "Cerrado: domingos, festivos y el 2.º y 4.º sábado",
+		"appointmentNote": "Los miércoles se reservan para exámenes solo con cita previa.",
+		"weekdays": "Lun, jue, vie",
+		"thursday": "Jueves",
+		"saturday": "Mar y sáb",
+		"sunday": "Dom y festivos",
+		"morning": "Mañana 10:00–12:30",
+		"afternoon": "Tarde 15:00–18:00"
+	},
 	"services": {
-		"metaTitle": "Servicios | Clínica Coloproctológica Shiba",
-		"metaDescription": "Proctología (hemorroides, fisuras anales, fístulas), gastroenterología, endoscopia y vacunación en la Clínica Coloproctológica Shiba de Tokio.",
+		"metaTitle": "Servicios | Clínica Shiba de Gastroenterología y Proctología",
+		"metaDescription": "Proctología (cirugía ambulatoria de hemorroides, fisuras y fístulas anales), gastroenterología (colonoscopia sin dolor, gastroscopia, H. pylori) y vacunaciones en la Clínica Shiba de Gastroenterología y Proctología en Tokio.",
 		"heading": "Servicios",
-		"intro": "Ofrecemos una amplia variedad de atención, desde afecciones anales y gastroenterología hasta vacunación.",
+		"intro": "Nos centramos en la proctología y la gastroenterología, y también ofrecemos endoscopia y vacunaciones.",
+		"gastroenterology": {
+			"title": "Gastroenterología",
+			"summary": "Síntomas abdominales y digestivos, H. pylori, y colonoscopia y gastroscopia sin dolor.",
+			"imageAlt": "Gastroenterología",
+			"body": "Tratamos una amplia variedad de síntomas digestivos: dolor abdominal, pesadez o hinchazón, ardor de estómago y cambios en el hábito intestinal. Realizamos la prueba y la erradicación de Helicobacter pylori, e investigamos los casos en los que un chequeo muestra una prueba de sangre oculta en heces positiva. Diagnosticamos y tratamos el cáncer de estómago y la úlcera gástrica, la dispepsia funcional (FD) y el síndrome del intestino irritable (IBS).",
+			"conditionsHeading": "Afecciones que tratamos",
+			"conditions": [
+				"Dolor abdominal, pesadez y ardor de estómago",
+				"Prueba y erradicación de Helicobacter pylori",
+				"Cáncer de estómago y úlcera gástrica",
+				"Sangre oculta en heces positiva en el cribado",
+				"Dispepsia funcional (FD)",
+				"Síndrome del intestino irritable (IBS)"
+			],
+			"endoscopyHeading": "Endoscopia",
+			"endoscopy": "Ofrecemos colonoscopia sin dolor con sedación y gastroscopia, que puede realizarse con un endoscopio fino introducido por la nariz. La insuflación de CO2 reduce la hinchazón después del examen, y la visualización con realce de imagen como NBI nos ayuda a evaluar con detalle los pólipos y la inflamación. Cuando procede, los pólipos pueden extirparse durante el examen."
+		},
 		"proctology": {
 			"title": "Proctología",
-			"summary": "Diagnóstico y tratamiento de hemorroides, fisuras anales y fístulas.",
-			"body": "Un especialista evalúa síntomas como dolor anal, sangrado, hinchazón y picor. Disponemos de cirugía ambulatoria y proponemos un tratamiento adaptado a sus síntomas y preferencias. Las molestias delicadas se atienden en un entorno privado y considerado.",
+			"summary": "Diagnóstico y tratamiento de hemorroides, fisuras y fístulas anales, incluida la cirugía ambulatoria.",
+			"imageAlt": "Proctología",
+			"body": "Un especialista examina síntomas como dolor anal, sangrado, hinchazón y picor. Ofrecemos un tratamiento adaptado a sus síntomas y deseos: desde la terapia de inyección ALTA (Jion) y la ligadura-escisión de hemorroides, hasta la cirugía de fístula anal y el tratamiento conservador o quirúrgico de las fisuras anales. La cirugía ambulatoria está disponible, y las preocupaciones delicadas se atienden en un entorno privado y considerado.",
 			"conditionsHeading": "Afecciones que tratamos",
 			"conditions": [
 				"Hemorroides (internas y externas)",
 				"Fisuras anales",
 				"Fístula anal",
-				"Picor y molestias anales",
-				"Hinchazón o absceso alrededor del ano"
+				"Hemorroides externas trombosadas",
+				"Absceso perianal",
+				"Picor anal (prurito anal)"
 			]
 		},
 		"vaccines": {
-			"title": "Vacunación e inyecciones",
-			"summary": "Vacunación contra la gripe estacional y otras vacunas e inyecciones.",
-			"body": "Ofrecemos la vacuna contra la gripe estacional y otras vacunas, así como diversas inyecciones. Póngase en contacto con nosotros para más información."
+			"title": "Vacunaciones e inyecciones",
+			"summary": "Prueba de anticuerpos de la rubéola, vacuna del VPH (cáncer de cuello uterino), varicela, tétanos y más.",
+			"imageAlt": "Vacunaciones",
+			"body": "Ofrecemos la prueba de anticuerpos de la rubéola (gratuita con un bono para quienes cumplan los requisitos), la vacuna del VPH / cáncer de cuello uterino (Silgard 9 y Gardasil), la vacuna de la varicela, el tétanos, la vacuna del RSV y otras vacunaciones e inyecciones. Algunas están cubiertas por subvenciones del distrito de Minato; póngase en contacto con nosotros para obtener más información.",
+			"conditionsHeading": "",
+			"conditions": []
+		},
+		"tv": {
+			"title": "Apariciones en medios y televisión",
+			"summary": "Compartimos información fiable sobre afecciones proctológicas y digestivas en los medios.",
+			"imageAlt": "Apariciones en medios",
+			"body": "Para ayudar a difundir conocimientos precisos sobre las afecciones proctológicas y digestivas, el director participa y colabora en programas de televisión y otros medios."
 		}
 	},
 	"facility": {
-		"metaTitle": "Instalaciones | Clínica Coloproctológica Shiba",
-		"metaDescription": "Un entorno clínico limpio y diseñado pensando en la privacidad, para que pueda ser atendido con comodidad y confianza.",
-		"heading": "Nuestras Instalaciones",
-		"body": "Mantenemos un entorno limpio y diseñado pensando en la privacidad para que los pacientes puedan ser atendidos con comodidad. Cuidamos especialmente que se sienta tranquilo durante las exploraciones más delicadas."
+		"metaTitle": "Instalaciones | Clínica Shiba de Gastroenterología y Proctología",
+		"metaDescription": "Sistemas de endoscopia 4K, un anoscopio digital, rayos X y ecografía, desinfección de endoscopios, un DEA y un purificador de aire con LED de ultravioleta profundo: las instalaciones de nuestra clínica están diseñadas pensando en la precisión, la privacidad y la higiene.",
+		"heading": "Nuestras instalaciones",
+		"intro": "Hemos equipado la clínica para un diagnóstico preciso y un tratamiento que le inspire confianza, prestando atención a la privacidad y al control de infecciones.",
+		"items": {
+			"anoscope": {
+				"title": "Anoscopio digital",
+				"body": "Los pacientes pueden ver el examen en un monitor y seguir la explicación, de modo que comprenden su tratamiento y se sienten cómodos con él."
+			},
+			"endoscope": {
+				"title": "Sistemas de endoscopia digestiva 4K",
+				"body": "Disponemos de un endoscopio transnasal fino (GIF-XP290N) y colonoscopios (CF-EZ1500DI, EVIS X1 CV-1500). La insuflación de CO2 y la visualización con realce de imagen como NBI permiten un examen detallado reduciendo la molestia para el cuerpo."
+			},
+			"xray": {
+				"title": "Equipo de rayos X",
+				"body": "Se utiliza para el cribado de cáncer de pulmón del distrito de Minato y para detectar afecciones como la obstrucción intestinal y las fracturas."
+			},
+			"ultrasound": {
+				"title": "Ecografía (ultrasonido)",
+				"body": "Un examen ecográfico de baja carga de los órganos abdominales como el hígado, la vesícula biliar, el páncreas y los riñones, y para el diagnóstico de fístula y absceso anal."
+			},
+			"recovery": {
+				"title": "Sala de recuperación",
+				"body": "Una sala donde puede descansar después de un examen o procedimiento, con asientos para acompañantes y refrigerios disponibles."
+			},
+			"sterilizer": {
+				"title": "Sistema de desinfección de endoscopios",
+				"body": "Los endoscopios se limpian y desinfectan según las directrices para que los exámenes se realicen de forma higiénica."
+			},
+			"aed": {
+				"title": "DEA (desfibrilador externo automático)",
+				"body": "Se mantiene un DEA en las instalaciones para casos de emergencia médica."
+			},
+			"airPurifier": {
+				"title": "Purificador de aire con LED de ultravioleta profundo",
+				"body": "Para el control de infecciones utilizamos un purificador de aire con LED de ultravioleta profundo, junto con desinfectante de alcohol y mamparas de acrílico."
+			}
+		}
 	},
 	"price": {
-		"metaTitle": "Precios | Clínica Coloproctológica Shiba",
-		"metaDescription": "Información sobre el coste de las consultas, exploraciones y procedimientos. Se acepta el seguro médico japonés.",
+		"metaTitle": "Precios | Clínica Shiba de Gastroenterología y Proctología",
+		"metaDescription": "Precios en la Clínica Shiba de Gastroenterología y Proctología. Las consultas, los exámenes y la cirugía están cubiertos por el seguro médico japonés; se indican precios orientativos para los servicios de pago particular y las vacunaciones.",
 		"heading": "Precios",
-		"intro": "Aceptamos el seguro médico japonés. Los costes varían según la consulta y las exploraciones necesarias.",
-		"note": "Los costes detallados se explican durante su consulta. Póngase en contacto con nosotros si desea ser atendido de forma privada (pago particular)."
+		"intro": "Las consultas, los exámenes y la cirugía están cubiertos por el seguro médico japonés (los pacientes suelen pagar el 30%). Los importes siguientes son precios orientativos para los servicios de pago particular y las vacunaciones.",
+		"insuranceHeading": "Sobre la atención cubierta por el seguro",
+		"insuranceNote": "Las consultas y la cirugía anales, la endoscopia y la atención similar son tratamientos cubiertos por el seguro según los puntos establecidos por el Ministerio de Salud, Trabajo y Bienestar. El coste real depende de la medicación y los procedimientos implicados, y se explicará durante su consulta.",
+		"selfPayHeading": "Servicios de pago particular (impuestos incluidos, orientativo)",
+		"selfPay": [
+			{
+				"label": "Certificado médico",
+				"price": "¥4,500"
+			},
+			{
+				"label": "Certificado médico (para seguro privado)",
+				"price": "from ¥5,000"
+			},
+			{
+				"label": "Carta de derivación (casos de pago particular)",
+				"price": "¥5,000–10,000"
+			},
+			{
+				"label": "Datos de imagen (CD)",
+				"price": "¥4,500"
+			},
+			{
+				"label": "Inyección de ajo (vitamina)",
+				"price": "¥10,000"
+			},
+			{
+				"label": "Prueba de H. pylori (pago particular)",
+				"price": "¥15,000"
+			},
+			{
+				"label": "Reconocimiento médico previo al empleo",
+				"price": "¥12,500"
+			},
+			{
+				"label": "Gastroscopia con sedación (pago particular)",
+				"price": "from ¥55,000"
+			}
+		],
+		"selfPayNote": "El precio de la gastroscopia no incluye la extirpación de pólipos ni la biopsia.",
+		"vaccineHeading": "Vacunaciones (impuestos incluidos, orientativo)",
+		"vaccines": [
+			{
+				"label": "Vacuna del RSV",
+				"price": "¥26,500"
+			},
+			{
+				"label": "Vacuna del VPH / cáncer de cuello uterino (Silgard 9 / Gardasil)",
+				"price": "¥54,000"
+			},
+			{
+				"label": "Vacuna de la varicela",
+				"price": "¥10,000"
+			},
+			{
+				"label": "Tétanos",
+				"price": "¥4,000"
+			}
+		],
+		"vaccineNote": "Pueden estar disponibles subvenciones del distrito de Minato y de otras entidades para quienes cumplan los requisitos. Póngase en contacto con nosotros para obtener más información.",
+		"note": "Los importes mostrados son orientativos. Los costes detallados se explican durante su consulta."
 	},
 	"contact": {
-		"metaTitle": "Contacto | Clínica Coloproctológica Shiba",
-		"metaDescription": "Póngase en contacto con la Clínica Coloproctológica Shiba por teléfono o a través del formulario de reserva en línea.",
+		"metaTitle": "Contacto | Clínica Shiba de Gastroenterología y Proctología",
+		"metaDescription": "Póngase en contacto con la Clínica Shiba de Gastroenterología y Proctología por teléfono o a través del formulario de reserva en línea. Tel. 03-6453-9307.",
 		"heading": "Contacto",
-		"intro": "Para pedir una cita, utilice el formulario de reserva en línea o llámenos.",
+		"intro": "Para reservar una cita, utilice el formulario de reserva en línea o llámenos.",
 		"phoneLabel": "Teléfono",
+		"phone": "03-6453-9307",
+		"faxLabel": "Fax",
+		"fax": "03-6453-9367",
 		"addressLabel": "Dirección",
+		"hoursLabel": "Horario de atención",
 		"bookCta": "Reservar en línea"
 	},
-	"hours": {
-		"weekdays": "Lun, Mar, Mié, Vie",
-		"thursday": "Jueves",
-		"saturday": "Sábado",
-		"sunday": "Domingos y festivos",
-		"morning": "Mañana 10:00 – 12:15",
-		"afternoon": "Tarde 15:00 – 17:45",
-		"closedNote": "Cerrado los jueves, domingos y festivos."
-	},
 	"booking": {
-		"metaTitle": "Pedir una cita | Clínica Coloproctológica Shiba",
+		"metaTitle": "Reservar una cita | Clínica Shiba de Gastroenterología y Proctología",
 		"metaDescription": "Reserve su cita en línea. Elija una fecha y una hora y rellene sus datos.",
-		"heading": "Pedir una cita",
+		"heading": "Reservar una cita",
 		"intro": "Elija una fecha y una hora y rellene sus datos. Su reserva se recibe como una solicitud; la clínica la confirmará por correo electrónico.",
-		"selectDate": "Seleccionar una fecha",
-		"selectSlot": "Seleccionar una hora",
-		"noSlots": "No hay disponibilidad este día. Por favor, elija otra fecha.",
+		"selectDate": "Seleccione una fecha",
+		"selectSlot": "Seleccione una hora",
+		"noSlots": "No hay disponibilidad este día. Elija otra fecha.",
 		"selectedSlot": "Hora seleccionada",
 		"changeSlot": "Cambiar la hora",
 		"form": {
 			"heading": "Sus datos",
+			"customerNumber": "Número de paciente (si tiene)",
+			"firstVisit": "¿Es su primera visita?",
+			"firstVisitNew": "Primera vez",
+			"firstVisitReturning": "Paciente recurrente",
 			"name": "Nombre completo",
+			"nameKana": "Nombre (katakana, si corresponde)",
+			"gender": "Sexo",
+			"genderFemale": "Femenino",
+			"genderMale": "Masculino",
+			"dateOfBirth": "Fecha de nacimiento",
 			"email": "Correo electrónico",
 			"phone": "Número de teléfono",
-			"reason": "Motivo de la consulta (opcional)",
-			"notes": "Observaciones / solicitudes (opcional)",
+			"postalCode": "Código postal",
+			"prefecture": "Prefectura",
+			"address": "Dirección",
 			"language": "Idioma preferido para el contacto",
+			"choose": "Seleccione",
 			"submit": "Solicitar cita",
 			"required": "obligatorio",
 			"consent": "Su información se utiliza para confirmar su reserva y ponernos en contacto con usted sobre ella."
 		},
 		"received": {
 			"heading": "Hemos recibido su solicitud",
-			"body": "Hemos recibido su reserva como una solicitud. La clínica la revisará y le enviará una confirmación por correo electrónico. Por favor, espere el correo de confirmación.",
+			"body": "Hemos recibido su reserva como una solicitud. La clínica la revisará y le enviará una confirmación por correo electrónico. Espere el correo de confirmación.",
 			"backHome": "Volver al inicio"
 		},
 		"errors": {
-			"slotTaken": "Lo sentimos: este horario acaba de ser reservado. Por favor, elija otra hora.",
-			"invalid": "Algunos datos no son válidos. Por favor, revíselos e inténtelo de nuevo.",
-			"generic": "Se ha producido un error al procesar su reserva. Por favor, inténtelo de nuevo en unos momentos."
+			"slotTaken": "Lo sentimos: este horario acaba de ser reservado. Elija otra hora.",
+			"invalid": "Algunos datos no son válidos. Revíselos e inténtelo de nuevo.",
+			"generic": "Se ha producido un error al procesar su reserva. Inténtelo de nuevo en unos momentos."
 		}
 	},
 	"admin": {
@@ -180,29 +367,29 @@
 	},
 	"email": {
 		"received": {
-			"subject": "Hemos recibido su solicitud de cita — Clínica Coloproctológica Shiba",
+			"subject": "Hemos recibido su solicitud de cita — Clínica Shiba de Gastroenterología y Proctología",
 			"body": "Gracias por su solicitud. Hemos recibido su solicitud de cita para la fecha y hora indicadas a continuación y la revisaremos. Le enviaremos un correo electrónico aparte en cuanto quede confirmada.",
 			"closing": "Este es un acuse de recibo automático; su cita aún no está confirmada. Nos pondremos en contacto con usted en breve."
 		},
 		"confirmed": {
-			"subject": "Su cita está confirmada — Clínica Coloproctológica Shiba",
+			"subject": "Su cita está confirmada — Clínica Shiba de Gastroenterología y Proctología",
 			"greeting": "Estimado/a {name}:",
 			"body": "Gracias por su reserva. Nos complace confirmar su cita para la fecha y hora indicadas a continuación.",
 			"slotLabel": "Cita",
 			"closing": "Esperamos su visita. Si tiene cualquier pregunta, no dude en ponerse en contacto con nosotros.",
-			"signature": "Clínica Coloproctológica Shiba"
+			"signature": "Clínica Shiba de Gastroenterología y Proctología"
 		},
 		"declined": {
-			"subject": "Acerca de su solicitud de cita — Clínica Coloproctológica Shiba",
+			"subject": "Acerca de su solicitud de cita — Clínica Shiba de Gastroenterología y Proctología",
 			"greeting": "Estimado/a {name}:",
 			"body": "Gracias por su solicitud de cita. Lamentamos mucho informarle de que no podemos aceptar su reserva para la fecha y hora solicitadas.",
 			"closing": "Le rogamos que vuelva a reservar para otra fecha y hora, o que se ponga en contacto con nosotros por teléfono. Disculpe las molestias.",
-			"signature": "Clínica Coloproctológica Shiba"
+			"signature": "Clínica Shiba de Gastroenterología y Proctología"
 		}
 	},
 	"footer": {
-		"clinicName": "Clínica Coloproctológica Shiba",
-		"rights": "Todos los derechos reservados.",
+		"clinicName": "Clínica Shiba de Gastroenterología y Proctología",
+		"rights": "All rights reserved.",
 		"navHeading": "Menú"
 	}
 }

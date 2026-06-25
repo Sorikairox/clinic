@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "7653633f-dfc8-4e97-99ba-8641a7d892c8",
+  "id": "ade6d545-4427-47e1-9a19-b5ff1dc2fd04",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "booking": {
@@ -36,8 +36,43 @@
           "autoincrement": false,
           "default": "'pending'"
         },
+        "customer_number": {
+          "name": "customer_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "first_visit": {
+          "name": "first_visit",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "patient_name": {
           "name": "patient_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "patient_name_kana": {
+          "name": "patient_name_kana",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "date_of_birth": {
+          "name": "date_of_birth",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -57,6 +92,27 @@
           "notNull": true,
           "autoincrement": false
         },
+        "postal_code": {
+          "name": "postal_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "prefecture": {
+          "name": "prefecture",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "locale": {
           "name": "locale",
           "type": "text",
@@ -64,20 +120,6 @@
           "notNull": true,
           "autoincrement": false,
           "default": "'ja'"
-        },
-        "reason": {
-          "name": "reason",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "notes": {
-          "name": "notes",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",

@@ -77,9 +77,16 @@ main {
 	font-weight: 700;
 	font-size: 1.05rem;
 	color: var(--teal-dark);
+	display: inline-flex;
+	align-items: center;
 }
 .brand:hover {
 	text-decoration: none;
+}
+.brand-logo {
+	height: 40px;
+	width: auto;
+	display: block;
 }
 .main-nav {
 	display: flex;
@@ -218,6 +225,40 @@ section {
 .card h3 {
 	margin-top: 0;
 }
+.media-card {
+	padding: 0;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	color: inherit;
+}
+.media-card:hover {
+	text-decoration: none;
+	border-color: var(--teal);
+}
+.media-card img {
+	width: 100%;
+	height: 160px;
+	object-fit: cover;
+	display: block;
+	border-bottom: 1px solid var(--line);
+}
+.media-card-body {
+	padding: 18px 22px 22px;
+}
+.media-card-body h3 {
+	margin: 0 0 8px;
+}
+.media-card-body p {
+	margin: 0 0 12px;
+	color: var(--muted);
+	font-size: 0.95rem;
+}
+.card-link {
+	color: var(--teal);
+	font-weight: 600;
+	font-size: 0.95rem;
+}
 .lead {
 	font-size: 1.1rem;
 	color: var(--muted);
@@ -270,6 +311,32 @@ section {
 	border-radius: 8px;
 	font: inherit;
 }
+fieldset.form-field {
+	border: 0;
+	padding: 0;
+	margin-inline: 0;
+	min-width: 0;
+}
+.form-field legend {
+	display: block;
+	font-weight: 600;
+	font-size: 0.95rem;
+	margin-bottom: 6px;
+	padding: 0;
+}
+.form-field .radio {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: 400;
+	margin-bottom: 4px;
+	cursor: pointer;
+}
+.form-field .radio input {
+	width: auto;
+	padding: 0;
+	margin: 0;
+}
 .req {
 	color: #b91c1c;
 	font-weight: 400;
@@ -290,6 +357,113 @@ section {
 	padding: 14px 18px;
 	border-radius: 8px;
 	margin-bottom: 20px;
+}
+
+/* Booking calendar */
+.calendar {
+	margin-bottom: 32px;
+}
+.cal-month {
+	margin-bottom: 28px;
+}
+.cal-title {
+	font-size: 1.1rem;
+	margin: 0 0 12px;
+	color: var(--teal-dark);
+}
+.cal-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 6px;
+}
+.cal-head {
+	margin-bottom: 6px;
+}
+.cal-weekday {
+	text-align: center;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: var(--muted);
+	padding: 4px 0;
+}
+.cal-cell {
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	font-size: 0.95rem;
+}
+.cal-empty {
+	background: transparent;
+}
+.cal-disabled {
+	color: var(--line);
+}
+.cal-day {
+	border: 1px solid var(--teal);
+	color: var(--teal-dark);
+	background: var(--white);
+	font-weight: 600;
+	cursor: pointer;
+}
+.cal-day:hover {
+	background: var(--teal-50);
+	text-decoration: none;
+}
+.cal-selected,
+.cal-selected:hover {
+	background: var(--teal);
+	color: var(--white);
+}
+.cal-hint {
+	font-size: 0.85rem;
+	color: var(--muted);
+	margin: 8px 0 0;
+}
+/* Progressive enhancement: show the grid by default; swap to the flatpickr
+   widget only when JS is available (the `.js` class is set in <head> before
+   first paint, so there is no flash on navigation). */
+.cal-enhanced {
+	display: none;
+	max-width: 320px;
+	margin-bottom: 8px;
+}
+html.js .cal-enhanced {
+	display: block;
+}
+html.js .cal-fallback {
+	display: none;
+}
+.cal-input {
+	width: 100%;
+	padding: 12px 14px;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	font: inherit;
+	background: var(--white);
+	cursor: pointer;
+}
+.cal-input:focus {
+	outline: 2px solid var(--teal);
+	outline-offset: 1px;
+}
+/* Slot area: one group per available date, only the active one shown. The whole
+   area is hidden until a date is chosen. Toggled by the server (?date=) and,
+   when JS is on, client-side on date pick — so changing date never reloads. */
+.slot-area {
+	display: none;
+	border-top: 1px solid var(--line);
+	padding-top: 24px;
+}
+.slot-area.has-active {
+	display: block;
+}
+.slot-group {
+	display: none;
+}
+.slot-group.is-active {
+	display: block;
 }
 
 /* Slot picker */

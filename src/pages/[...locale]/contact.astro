@@ -18,7 +18,10 @@ const t = useTranslations(locale);
 		<p class="lead">{t('contact.intro')}</p>
 		<table class="info-table">
 			<tbody>
+				<tr><th>{t('contact.phoneLabel')}</th><td><a href="tel:+81364539307">{t('contact.phone')}</a></td></tr>
+				<tr><th>{t('contact.faxLabel')}</th><td>{t('contact.fax')}</td></tr>
 				<tr><th>{t('contact.addressLabel')}</th><td>{t('access.address')}</td></tr>
+				<tr><th>{t('contact.hoursLabel')}</th><td>{t('hours.amLabel')}<br />{t('hours.pmLabel')}<br />{t('hours.closedNote')}</td></tr>
 			</tbody>
 		</table>
 		<p style="margin-top:24px">

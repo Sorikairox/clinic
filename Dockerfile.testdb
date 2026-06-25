@@ -1,0 +1,27 @@
+# Local test database for the clinic app.
+#
+# The app talks to libSQL (Turso) in production and falls back to a local SQLite
+# file in dev. This image runs a standalone libSQL server (sqld) so you can test
+# the real HTTP client path locally — pointing DATABASE_URL at http://127.0.0.1:8080
+# instead of a file. No auth token is required for local use.
+#
+# Quick start:
+#   docker build -f Dockerfile.testdb -t shiba-testdb .
+#   docker run --rm -p 8080:8080 -v shiba_testdb:/var/lib/sqld shiba-testdb
+# then, in another shell:
+#   DATABASE_URL=http://127.0.0.1:8080 npm run db:migrate
+#   DATABASE_URL=http://127.0.0.1:8080 npm run db:seed
+#   DATABASE_URL=http://127.0.0.1:8080 npm run dev
+#
+# (Or just use `docker compose up testdb` — see docker-compose.yml.)
+
+FROM ghcr.io/tursodatabase/libsql-server:latest
+
+# Run as a standalone primary node and persist data under /var/lib/sqld.
+ENV SQLD_NODE=primary \
+    SQLD_HTTP_LISTEN_ADDR=0.0.0.0:8080 \
+    SQLD_DB_PATH=/var/lib/sqld/clinic.db
+
+EXPOSE 8080
+
+VOLUME ["/var/lib/sqld"]

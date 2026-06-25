@@ -59,7 +59,7 @@ function paragraph(text: string): string {
 export function buildReceivedEmail(b: Booking): { subject: string; html: string } {
 	const locale = b.locale as Locale;
 	const t = useTranslations(locale);
-	const slot = formatSlotLong(b.slotStart, b.slotEnd, locale);
+	const slot = formatSlotLong(b.slotStart, locale);
 	const html = layout(
 		// greeting / slotLabel / signature are shared with the confirmed email.
 		paragraph(t('email.confirmed.greeting', { name: b.patientName })) +
@@ -75,7 +75,7 @@ export function buildReceivedEmail(b: Booking): { subject: string; html: string 
 export function buildConfirmedEmail(b: Booking): { subject: string; html: string } {
 	const locale = b.locale as Locale;
 	const t = useTranslations(locale);
-	const slot = formatSlotLong(b.slotStart, b.slotEnd, locale);
+	const slot = formatSlotLong(b.slotStart, locale);
 	const html = layout(
 		paragraph(t('email.confirmed.greeting', { name: b.patientName })) +
 			paragraph(t('email.confirmed.body')) +

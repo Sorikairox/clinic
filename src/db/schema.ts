@@ -23,12 +23,18 @@ export const booking = sqliteTable(
 		slotStart: text('slot_start').notNull(),
 		slotEnd: text('slot_end').notNull(),
 		status: text('status', { enum: BOOKING_STATUSES }).notNull().default('pending'),
+		customerNumber: text('customer_number'),
+		firstVisit: text('first_visit').notNull(), // 'new' | 'returning'
 		patientName: text('patient_name').notNull(),
+		patientNameKana: text('patient_name_kana'),
+		gender: text('gender').notNull(), // 'female' | 'male'
+		dateOfBirth: text('date_of_birth').notNull(), // "YYYY-MM-DD"
 		patientEmail: text('patient_email').notNull(),
 		patientPhone: text('patient_phone').notNull(),
+		postalCode: text('postal_code').notNull(),
+		prefecture: text('prefecture').notNull(),
+		address: text('address').notNull(),
 		locale: text('locale').notNull().default('ja'),
-		reason: text('reason'),
-		notes: text('notes'),
 		createdAt: text('created_at').notNull(),
 		decidedAt: text('decided_at'),
 		decidedBy: text('decided_by'),

@@ -23,6 +23,9 @@ const { locale, canonical, title, description, jsonLd, hideNav, noindex } = Astr
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{/* Mark JS as available before first paint so progressive-enhancement CSS
+		    (e.g. the booking calendar) can pick its variant with no flash. */}
+		<script is:inline>document.documentElement.classList.add('js');</script>
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<SeoHead {locale} {canonical} {title} {description} {jsonLd} {noindex} />
 	</head>

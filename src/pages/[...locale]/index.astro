@@ -1,5 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
+import HoursTable from '@/components/HoursTable.astro';
 import { localizedPath, resolveLocale, useTranslations } from '@/i18n/utils';
 import { clinicJsonLd } from '@/lib/seo';
 
@@ -7,6 +8,13 @@ const locale = resolveLocale(Astro.params.locale);
 if (!locale) return new Response('Not Found', { status: 404 });
 const t = useTranslations(locale);
 const jsonLd = clinicJsonLd(locale, (Astro.site ?? new URL('https://clinic.example.com')).href);
+
+const services = [
+	{ key: 'gastroenterology', img: '/images/service-gastroenterology.jpg' },
+	{ key: 'proctology', img: '/images/service-proctology.jpg' },
+	{ key: 'vaccines', img: '/images/service-vaccine.jpg' },
+	{ key: 'tv', img: '/images/service-tv.jpg' },
+];
 ---
 
 <Base
@@ -37,27 +45,36 @@ const jsonLd = clinicJsonLd(locale, (Astro.site ?? new URL('https://clinic.examp
 	<section>
 		<h2 class="section-title">{t('home.servicesHeading')}</h2>
 		<div class="card-grid">
-			<div class="card">
-				<h3>{t('services.proctology.title')}</h3>
-				<p>{t('services.proctology.summary')}</p>
-				<a href={localizedPath('/services', locale)}>{t('common.readMore')} →</a>
-			</div>
-			<div class="card">
-				<h3>{t('services.vaccines.title')}</h3>
-				<p>{t('services.vaccines.summary')}</p>
-				<a href={localizedPath('/services', locale)}>{t('common.readMore')} →</a>
-			</div>
+			{
+				services.map((s) => (
+					<a class="card media-card" href={localizedPath('/services', locale)}>
+						<img src={s.img} alt={t(`services.${s.key}.imageAlt`)} loading="lazy" />
+						<div class="media-card-body">
+							<h3>{t(`services.${s.key}.title`)}</h3>
+							<p>{t(`services.${s.key}.summary`)}</p>
+							<span class="card-link">{t('common.readMore')} →</span>
+						</div>
+					</a>
+				))
+			}
 		</div>
 	</section>
 
 	<section>
 		<h2 class="section-title">{t('home.hoursHeading')}</h2>
+		<HoursTable {locale} />
+	</section>
+
+	<section>
+		<h2 class="section-title">{t('home.accessHeading')}</h2>
 		<table class="info-table">
 			<tbody>
-				<tr><th>{t('hours.weekdays')}</th><td>{t('hours.morning')} / {t('hours.afternoon')}</td></tr>
-				<tr><th>{t('hours.saturday')}</th><td>{t('hours.morning')}</td></tr>
-				<tr><th>{t('hours.sunday')} · {t('hours.thursday')}</th><td>{t('common.closed')}</td></tr>
+				<tr><th>{t('access.addressLabel')}</th><td>{t('access.address')}</td></tr>
+				<tr><th>{t('access.phoneLabel')}</th><td><a href="tel:+81364539307">{t('access.phone')}</a></td></tr>
 			</tbody>
 		</table>
+		<p style="margin-top:16px">
+			<a href={localizedPath('/access', locale)}>{t('common.readMore')} →</a>
+		</p>
 	</section>
 </Base>
