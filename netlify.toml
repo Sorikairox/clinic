@@ -3,8 +3,13 @@
 # `publish` MUST point at dist/ so Netlify serves those static files; otherwise
 # it publishes the repo root and every /_astro/* and /images/* request 404s
 # (the SSR function still answers HTML routes, so the site looks unstyled).
+#
+# db:migrate runs first so the linked-repo deploy provisions the Turso schema.
+# It's idempotent (already-applied migrations are skipped) and needs DATABASE_URL
+# + DATABASE_AUTH_TOKEN in the Netlify build environment. Without the tables,
+# every DB-backed page (reservation, admin) throws and renders as a 404.
 [build]
-  command = "npm run build"
+  command = "npm run db:migrate && npm run build"
   publish = "dist"
 
 [build.environment]
