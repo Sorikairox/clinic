@@ -1,5 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
+import HoursTable from '@/components/HoursTable.astro';
 import { resolveLocale, useList, useTranslations } from '@/i18n/utils';
 
 const locale = resolveLocale(Astro.params.locale);
@@ -24,6 +25,14 @@ const stations = list('access.stations');
 					<td>{t('access.address')}</td>
 				</tr>
 				<tr>
+					<th>{t('access.phoneLabel')}</th>
+					<td><a href="tel:+81364539307">{t('access.phone')}</a></td>
+				</tr>
+				<tr>
+					<th>{t('access.faxLabel')}</th>
+					<td>{t('access.fax')}</td>
+				</tr>
+				<tr>
 					<th>{t('access.stationsLabel')}</th>
 					<td>
 						<ul style="margin:0;padding-left:18px">
@@ -34,15 +43,17 @@ const stations = list('access.stations');
 			</tbody>
 		</table>
 	</section>
+
+	<section>
+		<h2 class="section-title">{t('access.directionsHeading')}</h2>
+		<div class="prose">
+			<p>{t('access.directions')}</p>
+			<p>{t('access.parkingNote')}</p>
+		</div>
+	</section>
+
 	<section>
 		<h2 class="section-title">{t('access.hoursHeading')}</h2>
-		<table class="info-table">
-			<tbody>
-				<tr><th>{t('hours.weekdays')}</th><td>{t('hours.morning')} / {t('hours.afternoon')}</td></tr>
-				<tr><th>{t('hours.saturday')}</th><td>{t('hours.morning')}</td></tr>
-				<tr><th>{t('hours.sunday')} · {t('hours.thursday')}</th><td>{t('common.closed')}</td></tr>
-			</tbody>
-		</table>
-		<p>{t('hours.closedNote')}</p>
+		<HoursTable {locale} />
 	</section>
 </Base>

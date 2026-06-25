@@ -5,19 +5,19 @@ export interface OpenRange {
 	close: string; // "HH:mm"
 }
 
-export const SLOT_MINUTES = 30;
+export const SLOT_MINUTES = 15;
 
 // How many days ahead patients may book.
 export const BOOKING_WINDOW_DAYS = 21;
 
-const MORNING: OpenRange = { open: '10:00', close: '12:15' };
-const AFTERNOON: OpenRange = { open: '15:00', close: '17:45' };
+const MORNING: OpenRange = { open: '10:00', close: '12:30' };
+const AFTERNOON: OpenRange = { open: '15:00', close: '18:00' };
 
 export const WEEKLY_TEMPLATE: Record<number, OpenRange[]> = {
 	1: [MORNING, AFTERNOON], // Mon
-	2: [MORNING, AFTERNOON], // Tue
-	3: [MORNING, AFTERNOON], // Wed
-	// Thu (4): closed
+	2: [MORNING], // Tue (morning only)
+	// Wed (3): by-appointment examinations only — not bookable online
+	4: [MORNING, AFTERNOON], // Thu
 	5: [MORNING, AFTERNOON], // Fri
 	6: [MORNING], // Sat (morning only)
 	// Sun (0): closed

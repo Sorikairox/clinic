@@ -65,14 +65,15 @@ const submittedFmt = (iso: string) =>
 		{
 			pending.map((b) => (
 				<div class="booking-card">
-					<div class="slot-line">{formatSlotLong(b.slotStart, b.slotEnd, locale)}</div>
+					<div class="slot-line">{formatSlotLong(b.slotStart, locale)}</div>
 					<table class="info-table" style="margin-top:10px">
 						<tbody>
-							<tr><th>{t('admin.dashboard.patient')}</th><td>{b.patientName}</td></tr>
+							<tr><th>{t('admin.dashboard.patient')}</th><td>{b.patientName}{b.patientNameKana ? ` (${b.patientNameKana})` : ''}</td></tr>
+							<tr><th>Visit</th><td>{b.firstVisit === 'returning' ? 'Returning patient' : 'First visit'}{b.customerNumber ? ` · #${b.customerNumber}` : ''}</td></tr>
+							<tr><th>Gender / DOB</th><td>{b.gender === 'male' ? 'Male' : 'Female'} · {b.dateOfBirth}</td></tr>
 							<tr><th>{t('admin.dashboard.contact')}</th><td>{b.patientEmail} · {b.patientPhone}</td></tr>
+							<tr><th>Address</th><td>〒{b.postalCode} {b.prefecture}{b.address}</td></tr>
 							<tr><th>{t('admin.dashboard.language')}</th><td>{LOCALE_NAMES[b.locale as Locale] ?? b.locale}</td></tr>
-							{b.reason && <tr><th>{t('admin.dashboard.reason')}</th><td>{b.reason}</td></tr>}
-							{b.notes && <tr><th>Notes</th><td>{b.notes}</td></tr>}
 							<tr><th>{t('admin.dashboard.submittedAt')}</th><td>{submittedFmt(b.createdAt)}</td></tr>
 						</tbody>
 					</table>
@@ -97,7 +98,7 @@ const submittedFmt = (iso: string) =>
 					{recent.map((b) => (
 						<div class="booking-card" style="opacity:0.85">
 							<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
-								<span class="slot-line">{formatSlotLong(b.slotStart, b.slotEnd, locale)}</span>
+								<span class="slot-line">{formatSlotLong(b.slotStart, locale)}</span>
 								<span class={`badge badge-${b.status}`}>{b.status}</span>
 							</div>
 							<div style="color:var(--muted);margin-top:6px">

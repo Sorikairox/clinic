@@ -7,6 +7,8 @@ if (!locale) return new Response('Not Found', { status: 404 });
 const t = useTranslations(locale);
 const list = useList(locale);
 const qualifications = list('director.qualifications');
+const career = list('director.career');
+const roles = list('director.roles');
 ---
 
 <Base
@@ -17,14 +19,83 @@ const qualifications = list('director.qualifications');
 >
 	<section>
 		<h1 class="section-title">{t('director.heading')}</h1>
-		<div class="prose">
-			<p class="lead">{t('director.body')}</p>
+		<div class="profile">
+			<figure class="profile-photo">
+				<img src="/images/director.jpg" alt={t('director.photoAlt')} width="240" height="240" />
+				<figcaption>
+					<strong>{t('director.name')}</strong>
+					<span>{t('director.title')}</span>
+				</figcaption>
+			</figure>
+			<div class="prose profile-body">
+				<h2>{t('director.greetingHeading')}</h2>
+				<p class="lead">{t('director.greeting')}</p>
+			</div>
 		</div>
 	</section>
+
 	<section>
 		<h2 class="section-title">{t('director.qualificationsHeading')}</h2>
 		<ul class="prose">
 			{qualifications.map((q) => <li>{q}</li>)}
 		</ul>
 	</section>
+
+	<section>
+		<h2 class="section-title">{t('director.careerHeading')}</h2>
+		<ul class="prose timeline">
+			{career.map((c) => <li>{c}</li>)}
+		</ul>
+	</section>
+
+	<section>
+		<h2 class="section-title">{t('director.rolesHeading')}</h2>
+		<ul class="prose">
+			{roles.map((r) => <li>{r}</li>)}
+		</ul>
+	</section>
 </Base>
+
+<style>
+	.profile {
+		display: flex;
+		gap: 28px;
+		flex-wrap: wrap;
+		align-items: flex-start;
+	}
+	.profile-photo {
+		margin: 0;
+		flex: 0 0 240px;
+		text-align: center;
+	}
+	.profile-photo img {
+		width: 240px;
+		height: 240px;
+		object-fit: cover;
+		border-radius: var(--radius);
+		border: 1px solid var(--line);
+	}
+	.profile-photo figcaption {
+		display: flex;
+		flex-direction: column;
+		margin-top: 10px;
+	}
+	.profile-photo figcaption strong {
+		font-size: 1.1rem;
+	}
+	.profile-photo figcaption span {
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+	.profile-body {
+		flex: 1 1 320px;
+	}
+	.profile-body h2 {
+		margin-top: 0;
+	}
+	@media (max-width: 640px) {
+		.profile-photo {
+			flex-basis: 100%;
+		}
+	}
+</style>

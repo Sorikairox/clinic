@@ -18,11 +18,17 @@ export const server = {
 		accept: 'form',
 		input: z.object({
 			slotStart: z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/),
+			customerNumber: z.string().max(50).optional(),
+			firstVisit: z.enum(['new', 'returning']),
 			name: z.string().trim().min(1).max(100),
+			nameKana: z.string().max(100).optional(),
+			gender: z.enum(['female', 'male']),
+			dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
 			email: z.string().trim().email().max(200),
 			phone: z.string().trim().min(3).max(40),
-			reason: z.string().max(1000).optional(),
-			notes: z.string().max(2000).optional(),
+			postalCode: z.string().trim().min(1).max(20),
+			prefecture: z.string().trim().min(1).max(20),
+			address: z.string().trim().min(1).max(200),
 			locale: localeEnum,
 		}),
 		handler: async (input) => {
@@ -35,12 +41,18 @@ export const server = {
 			const result = await createBooking({
 				slotStart: slot.start,
 				slotEnd: slot.end,
+				customerNumber: input.customerNumber?.trim() || null,
+				firstVisit: input.firstVisit,
 				patientName: input.name,
+				patientNameKana: input.nameKana?.trim() || null,
+				gender: input.gender,
+				dateOfBirth: input.dateOfBirth,
 				patientEmail: input.email,
 				patientPhone: input.phone,
+				postalCode: input.postalCode,
+				prefecture: input.prefecture,
+				address: input.address,
 				locale: input.locale,
-				reason: input.reason?.trim() || null,
-				notes: input.notes?.trim() || null,
 			});
 			if (!result.ok) throw new ActionError({ code: 'CONFLICT', message: 'slot_taken' });
 

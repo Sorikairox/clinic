@@ -4,8 +4,10 @@ import Base from '@/layouts/Base.astro';
 import { LOCALES, LOCALE_NAMES } from '@/i18n/config';
 import { localizedPath, resolveLocale, useTranslations } from '@/i18n/utils';
 import { bookableDates, freeSlotsForDate, isValidSlot, slotsForDate } from '@/lib/availability';
+import { buildCalendar } from '@/lib/calendar';
+import { PREFECTURES } from '@/lib/prefectures';
 import { getActiveSlotStarts } from '@/db/queries';
-import { formatDateLong, formatSlotLong } from '@/lib/datetime';
+import { formatDateLong, formatMonthYear, formatSlotLong } from '@/lib/datetime';
 
 const locale = resolveLocale(Astro.params.locale);
 if (!locale) return new Response('Not Found', { status: 404 });
@@ -26,12 +28,27 @@ const days = dates
 	.map((date) => ({ date, slots: freeSlotsForDate(date, taken) }))
 	.filter((d) => d.slots.length > 0);
 
+// Calendar model: a month grid spanning the booking window; only dates that have
+// free slots are clickable.
+const availableDates = new Set(days.map((d) => d.date));
+const months = dates.length ? buildCalendar(dates[0], dates[dates.length - 1], availableDates) : [];
+
+// Weekday header, Monday-first, reusing the localized day names from the hours
+// dictionary that every locale already provides.
+const weekdayKeys = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
+
+const reservationPath = localizedPath('/reservation', locale);
+
 // A selected slot (via ?slot=) that is still valid and free → show the form.
 const slotParam = Astro.url.searchParams.get('slot');
 const selectedSlot =
 	slotParam && isValidSlot(slotParam) && !taken.has(slotParam)
 		? (slotsForDate(slotParam.slice(0, 10)).find((s) => s.start === slotParam) ?? null)
 		: null;
+
+// A selected date (via ?date=) that has availability → reveal that day's slots.
+const dateParam = Astro.url.searchParams.get('date');
+const selectedDate = dateParam && availableDates.has(dateParam) ? dateParam : null;
 
 const errorMsg = result?.error
 	? result.error.code === 'CONFLICT'
@@ -57,9 +74,14 @@ const errorMsg = result?.error
 				<div>
 					<div class="callout" style="margin-bottom:24px">
 						<strong>{t('booking.selectedSlot')}:</strong><br />
-						{formatSlotLong(selectedSlot.start, selectedSlot.end, locale)}
+						{formatSlotLong(selectedSlot.start, locale)}
 						<br />
-						<a href={localizedPath('/reservation', locale)}>← {t('booking.changeSlot')}</a>
+						{/* href returns to the chosen day (no-JS fallback); with JS the
+						    script makes it use the browser Back button so the calendar
+						    state and scroll position are restored without a reload. */}
+						<a class="change-slot" href={`${reservationPath}?date=${selectedSlot.start.slice(0, 10)}`}>
+							← {t('booking.changeSlot')}
+						</a>
 					</div>
 
 					<h2 class="section-title">{t('booking.form.heading')}</h2>
@@ -67,8 +89,30 @@ const errorMsg = result?.error
 						<input type="hidden" name="slotStart" value={selectedSlot.start} />
 
 						<div class="form-field">
+							<label for="customerNumber">{t('booking.form.customerNumber')}</label>
+							<input id="customerNumber" name="customerNumber" type="text" maxlength="50" />
+						</div>
+						<fieldset class="form-field">
+							<legend>{t('booking.form.firstVisit')} <span class="req">({t('booking.form.required')})</span></legend>
+							<label class="radio"><input type="radio" name="firstVisit" value="new" required checked /> {t('booking.form.firstVisitNew')}</label>
+							<label class="radio"><input type="radio" name="firstVisit" value="returning" /> {t('booking.form.firstVisitReturning')}</label>
+						</fieldset>
+						<div class="form-field">
 							<label for="name">{t('booking.form.name')} <span class="req">({t('booking.form.required')})</span></label>
 							<input id="name" name="name" type="text" required maxlength="100" />
+						</div>
+						<div class="form-field">
+							<label for="nameKana">{t('booking.form.nameKana')}</label>
+							<input id="nameKana" name="nameKana" type="text" maxlength="100" />
+						</div>
+						<fieldset class="form-field">
+							<legend>{t('booking.form.gender')} <span class="req">({t('booking.form.required')})</span></legend>
+							<label class="radio"><input type="radio" name="gender" value="female" required /> {t('booking.form.genderFemale')}</label>
+							<label class="radio"><input type="radio" name="gender" value="male" /> {t('booking.form.genderMale')}</label>
+						</fieldset>
+						<div class="form-field">
+							<label for="dateOfBirth">{t('booking.form.dateOfBirth')} <span class="req">({t('booking.form.required')})</span></label>
+							<input id="dateOfBirth" name="dateOfBirth" type="date" required />
 						</div>
 						<div class="form-field">
 							<label for="email">{t('booking.form.email')} <span class="req">({t('booking.form.required')})</span></label>
@@ -79,20 +123,29 @@ const errorMsg = result?.error
 							<input id="phone" name="phone" type="tel" required maxlength="40" />
 						</div>
 						<div class="form-field">
+							<label for="postalCode">{t('booking.form.postalCode')} <span class="req">({t('booking.form.required')})</span></label>
+							<input id="postalCode" name="postalCode" type="text" required maxlength="20" />
+						</div>
+						<div class="form-field">
+							<label for="prefecture">{t('booking.form.prefecture')} <span class="req">({t('booking.form.required')})</span></label>
+							<select id="prefecture" name="prefecture" required>
+								<option value="">{t('booking.form.choose')}</option>
+								{PREFECTURES.map((p) => (
+									<option value={p}>{p}</option>
+								))}
+							</select>
+						</div>
+						<div class="form-field">
+							<label for="address">{t('booking.form.address')} <span class="req">({t('booking.form.required')})</span></label>
+							<input id="address" name="address" type="text" required maxlength="200" />
+						</div>
+						<div class="form-field">
 							<label for="locale">{t('booking.form.language')}</label>
 							<select id="locale" name="locale">
 								{LOCALES.map((l) => (
 									<option value={l} selected={l === locale}>{LOCALE_NAMES[l]}</option>
 								))}
 							</select>
-						</div>
-						<div class="form-field">
-							<label for="reason">{t('booking.form.reason')}</label>
-							<input id="reason" name="reason" type="text" maxlength="1000" />
-						</div>
-						<div class="form-field">
-							<label for="notes">{t('booking.form.notes')}</label>
-							<textarea id="notes" name="notes" rows="3" maxlength="2000"></textarea>
 						</div>
 						<p style="font-size:0.85rem;color:var(--muted)">{t('booking.form.consent')}</p>
 						<button class="btn btn-primary" type="submit">{t('booking.form.submit')}</button>
@@ -101,23 +154,135 @@ const errorMsg = result?.error
 			) : (
 				<div>
 					{days.length === 0 && <p>{t('booking.noSlots')}</p>}
-					{days.map((day) => (
-						<div class="day-block">
-							<h3>{formatDateLong(`${day.date}T00:00`, locale)}</h3>
-							<div class="slot-grid">
-								{day.slots.map((slot) => (
-									<a
-										class="slot"
-										href={`${localizedPath('/reservation', locale)}?slot=${slot.start}`}
-									>
-										{slot.time}
-									</a>
-								))}
+
+					{days.length > 0 && (
+						<div class="calendar">
+							<h2 class="section-title">{t('booking.selectDate')}</h2>
+
+							{/* Enhanced flatpickr widget — shown via the `.js` class (set in
+							    <head> before paint) so there's no flash; the script only
+							    attaches the picker. */}
+							<div class="cal-enhanced">
+								<input
+									id="calendar-widget"
+									type="text"
+									readonly
+									class="cal-input"
+									placeholder={t('booking.selectDate')}
+									value={selectedDate ?? ''}
+									data-enable={JSON.stringify([...availableDates])}
+									data-base={reservationPath}
+									data-selected={selectedDate ?? ''}
+								/>
 							</div>
+
+							{/* No-JS fallback: server-rendered month grid. */}
+							<div class="cal-fallback">
+							{months.map((month) => (
+								<div class="cal-month">
+									<h3 class="cal-title">{formatMonthYear(month.anchorDate, locale)}</h3>
+									<div class="cal-grid cal-head">
+										{weekdayKeys.map((k) => (
+											<span class="cal-weekday">{t(`hours.days.${k}`)}</span>
+										))}
+									</div>
+									{month.weeks.map((week) => (
+										<div class="cal-grid">
+											{week.map((cell) =>
+												!cell ? (
+													<span class="cal-cell cal-empty" />
+												) : cell.available ? (
+													<a
+														class:list={['cal-cell', 'cal-day', { 'cal-selected': cell.date === selectedDate }]}
+														href={`${reservationPath}?date=${cell.date}`}
+														aria-current={cell.date === selectedDate ? 'date' : undefined}
+													>
+														{cell.day}
+													</a>
+												) : (
+													<span class="cal-cell cal-disabled">{cell.day}</span>
+												),
+											)}
+										</div>
+									))}
+								</div>
+							))}
+							</div>
+							<p class="cal-hint">{t('hours.amLabel')} · {t('hours.pmLabel')}</p>
 						</div>
-					))}
+					)}
+
+					{/* Every day's slots are rendered up front; the active one is shown
+					    via `.is-active`. The server sets it from ?date= (no-JS / direct
+					    link); with JS the script toggles it on date pick, so changing
+					    date never reloads the page (no header flicker, no SSR). */}
+					{days.length > 0 && (
+						<div class:list={['slot-area', { 'has-active': selectedDate }]}>
+							<h2 class="section-title">{t('booking.selectSlot')}</h2>
+							{days.map((day) => (
+								<div
+									class:list={['day-block', 'slot-group', { 'is-active': day.date === selectedDate }]}
+									data-date={day.date}
+								>
+									<h3>{formatDateLong(`${day.date}T00:00`, locale)}</h3>
+									<div class="slot-grid">
+										{day.slots.map((slot) => (
+											<a class="slot" href={`${reservationPath}?slot=${slot.start}`}>
+												{slot.time}
+											</a>
+										))}
+									</div>
+								</div>
+							))}
+						</div>
+					)}
 				</div>
 			)
 		}
 	</section>
+
+	<script>
+		import flatpickr from 'flatpickr';
+		import 'flatpickr/dist/flatpickr.css';
+
+		const input = document.getElementById('calendar-widget');
+		if (input instanceof HTMLInputElement) {
+			const enable: string[] = JSON.parse(input.dataset.enable || '[]');
+			const base = input.dataset.base || '';
+			const selected = input.dataset.selected || undefined;
+
+			const slotArea = document.querySelector('.slot-area');
+			const groups = Array.from(document.querySelectorAll<HTMLElement>('.slot-group'));
+
+			// Reveal a day's slots without navigating — no SSR reload, no flicker.
+			// The URL is kept in sync via replaceState so refresh/share still works.
+			const showDate = (dateStr: string) => {
+				for (const g of groups) g.classList.toggle('is-active', g.dataset.date === dateStr);
+				slotArea?.classList.toggle('has-active', Boolean(dateStr));
+				history.replaceState(null, '', dateStr ? `${base}?date=${dateStr}` : base);
+			};
+
+			flatpickr(input, {
+				enable,
+				defaultDate: selected,
+				minDate: enable[0],
+				maxDate: enable[enable.length - 1],
+				disableMobile: true,
+				onChange: (_dates, dateStr) => {
+					if (dateStr) showDate(dateStr);
+				},
+			});
+		}
+
+		// On the "change time" link, prefer the browser Back button so we return
+		// to the calendar with its state/scroll intact (no reload). Falls back to
+		// the href (?date=…) when there's no history to go back to.
+		const changeSlot = document.querySelector('.change-slot');
+		changeSlot?.addEventListener('click', (event) => {
+			if (history.length > 1) {
+				event.preventDefault();
+				history.back();
+			}
+		});
+	</script>
 </Base>

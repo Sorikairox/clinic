@@ -70,6 +70,25 @@ export function useList(locale: Locale) {
 }
 
 /**
+ * Reads a dotted key expected to be an array of plain objects (e.g. price-table
+ * rows of `{ label, price }`), falling back to the default locale, then `[]`.
+ */
+export function useItems<T = Record<string, string>>(locale: Locale) {
+	return function items(key: string): T[] {
+		const read = (dict: Dict): T[] | undefined => {
+			const value = key.split('.').reduce<unknown>((acc, part) => {
+				if (acc && typeof acc === 'object' && part in (acc as Dict)) {
+					return (acc as Dict)[part];
+				}
+				return undefined;
+			}, dict);
+			return Array.isArray(value) ? (value as T[]) : undefined;
+		};
+		return read(DICTS[locale]) ?? read(DICTS[DEFAULT_LOCALE]) ?? [];
+	};
+}
+
+/**
  * Resolves the locale from the `[...locale]` route param. Returns null for an
  * unknown locale so the caller can return a 404.
  */

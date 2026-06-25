@@ -23,8 +23,18 @@ export function formatTime(slot: string, locale: Locale): string {
 	}).format(anchor(slot));
 }
 
-/** e.g. "Wednesday, 1 July 2026, 10:00–10:30 (JST)" localized to the locale. */
-export function formatSlotLong(slotStart: string, slotEnd: string, locale: Locale): string {
+/** e.g. "July 2026" localized to the locale. Takes a "YYYY-MM-DD" date. */
+export function formatMonthYear(dateISO: string, locale: Locale): string {
+	return new Intl.DateTimeFormat(LOCALE_TAGS[locale], {
+		year: 'numeric',
+		month: 'long',
+		timeZone: CLINIC_TZ,
+	}).format(anchor(`${dateISO}T00:00`));
+}
+
+/** e.g. "Wednesday, 1 July 2026, 10:00 (JST)" localized to the locale. Patients
+    book a start time only, so no end time is shown. */
+export function formatSlotLong(slotStart: string, locale: Locale): string {
 	const date = formatDateLong(slotStart, locale);
-	return `${date}, ${formatTime(slotStart, locale)}–${formatTime(slotEnd, locale)} (JST)`;
+	return `${date}, ${formatTime(slotStart, locale)} (JST)`;
 }
