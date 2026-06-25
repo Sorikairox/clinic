@@ -342,7 +342,7 @@
 			"slotTaken": "Sorry — this time slot was just booked. Please choose another time.",
 			"invalid": "Some details are invalid. Please check and try again.",
 			"generic": "Something went wrong while processing your booking. Please try again shortly.",
-			"recaptcha": "Please complete the reCAPTCHA verification, then submit again."
+			"recaptcha": "We couldn't verify that your request is genuine. Please try submitting again."
 		},
 		"review": {
 			"heading": "Confirm your booking",

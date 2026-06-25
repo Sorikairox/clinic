@@ -157,19 +157,16 @@ const errorMsg = result?.error
 					</table>
 
 					<div class="review-actions">
-						{/* Confirm → submit to the action, which creates the booking. The
-						    reCAPTCHA widget (when configured) lives inside this form so its
-						    `g-recaptcha-response` field is submitted and verified
-						    server-side in the createBooking action. */}
-						<form method="POST" action={actions.createBooking}>
+						{/* Confirm → submit to the action, which creates the booking. When
+						    reCAPTCHA is configured, an invisible Enterprise token is minted
+						    on submit (see the script below) into the hidden
+						    `g-recaptcha-response` field, then verified server-side in the
+						    createBooking action. */}
+						<form method="POST" action={actions.createBooking} id="booking-confirm-form" data-sitekey={siteKey ?? ''}>
 							{FIELD_KEYS.map((k) => (
 								<input type="hidden" name={k} value={fv[k] ?? ''} />
 							))}
-							{siteKey && (
-								<div class="recaptcha-box">
-									<div class="g-recaptcha" data-sitekey={siteKey} />
-								</div>
-							)}
+							{siteKey && <input type="hidden" name="g-recaptcha-response" id="recaptcha-token" />}
 							<button class="btn btn-primary" type="submit">{t('booking.review.confirm')}</button>
 						</form>
 						{/* Edit → re-render the prefilled details form (no action). */}
@@ -361,10 +358,35 @@ const errorMsg = result?.error
 		}
 	</section>
 
-	{/* reCAPTCHA library — loaded only on the review screen when configured. It
-	    auto-renders any `.g-recaptcha` element on the page. */}
+	{/* reCAPTCHA Enterprise (invisible, score-based) — loaded only on the review
+	    screen when configured. On confirm we generate a fresh token, drop it into
+	    the hidden `g-recaptcha-response` field, then let the form post. With the
+	    library blocked/unavailable the form still submits (the server-side
+	    assessment then fails it). */}
 	{siteKey && showReview && (
-		<script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
+		<Fragment>
+			<script is:inline src={`https://www.google.com/recaptcha/enterprise.js?render=${siteKey}`} async defer></script>
+			<script is:inline>
+				(function () {
+					var form = document.getElementById('booking-confirm-form');
+					var field = document.getElementById('recaptcha-token');
+					var siteKey = form && form.dataset.sitekey;
+					if (!form || !field || !siteKey) return;
+					form.addEventListener('submit', function (e) {
+						if (form.dataset.tokenReady) return; // second pass: token set, let it post
+						e.preventDefault();
+						var send = function () { form.dataset.tokenReady = '1'; form.submit(); };
+						var g = window.grecaptcha && window.grecaptcha.enterprise;
+						if (!g) return send();
+						g.ready(function () {
+							g.execute(siteKey, { action: 'booking' })
+								.then(function (token) { field.value = token; send(); })
+								.catch(send);
+						});
+					});
+				})();
+			</script>
+		</Fragment>
 	)}
 
 	<script>
@@ -415,9 +437,6 @@ const errorMsg = result?.error
 	</script>
 
 	<style>
-		.recaptcha-box {
-			margin-bottom: 16px;
-		}
 		.review-actions {
 			display: flex;
 			flex-wrap: wrap;

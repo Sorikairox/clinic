@@ -31,12 +31,13 @@ export const server = {
 			prefecture: z.string().trim().min(1).max(20),
 			address: z.string().trim().min(1).max(200),
 			locale: localeEnum,
-			// reCAPTCHA v2 token (field name is fixed by the widget). Optional in the
-			// schema because the gate is only enforced when reCAPTCHA is configured.
+			// reCAPTCHA Enterprise token, minted invisibly on the client (field name
+			// kept for convention). Optional in the schema because the gate is only
+			// enforced when reCAPTCHA is configured (see recaptcha.ts).
 			'g-recaptcha-response': z.string().optional(),
 		}),
 		handler: async (input) => {
-			// Bot gate: no-op unless RECAPTCHA_SECRET_KEY is configured (see recaptcha.ts).
+			// Bot gate: no-op unless reCAPTCHA Enterprise is configured (see recaptcha.ts).
 			if (!(await verifyRecaptcha(input['g-recaptcha-response']))) {
 				throw new ActionError({ code: 'BAD_REQUEST', message: 'recaptcha_failed' });
 			}
