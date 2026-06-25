@@ -1,7 +1,14 @@
+import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 4321;
 const BASE_URL = `http://127.0.0.1:${PORT}`;
+
+// Use the preinstalled Chromium when present (this sandbox), otherwise fall back
+// to the browser Playwright installs itself (CI: `playwright install chromium`).
+const SANDBOX_CHROMIUM = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const chromiumPath =
+	process.env.PW_CHROMIUM_PATH || (existsSync(SANDBOX_CHROMIUM) ? SANDBOX_CHROMIUM : undefined);
 
 export default defineConfig({
 	testDir: './tests/e2e',
@@ -15,12 +22,7 @@ export default defineConfig({
 			name: 'chromium',
 			use: {
 				...devices['Desktop Chrome'],
-				// The preinstalled Chromium (the bundled build may differ from the
-				// @playwright/test default). Override via PW_CHROMIUM_PATH if needed.
-				launchOptions: {
-					executablePath:
-						process.env.PW_CHROMIUM_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
-				},
+				launchOptions: chromiumPath ? { executablePath: chromiumPath } : {},
 			},
 		},
 	],
