@@ -112,6 +112,19 @@ ASTRO_ADAPTER=node npm run build && npm start   # node ./dist/server/entry.mjs
 ```
 This is also what the Playwright e2e suite uses.
 
+## CI / CD
+
+Two GitHub Actions workflows:
+
+- **`.github/workflows/ci.yml`** — runs unit + e2e tests on every pull request
+  (and on pushes to `main`).
+- **`.github/workflows/deploy.yml`** — on push to `main`, applies DB migrations
+  (if configured) and deploys to Netlify.
+
+The deploy workflow needs these repo **secrets**: `NETLIFY_AUTH_TOKEN`,
+`NETLIFY_SITE_ID`, and (optionally, to auto-migrate) `DATABASE_URL` +
+`DATABASE_AUTH_TOKEN`; plus an optional `SITE_URL` repo **variable**.
+
 ## Testing
 
 - `npm test` — pure-logic unit tests for slot/availability computation.
