@@ -330,7 +330,8 @@
 			"choose": "Seleccione",
 			"submit": "Solicitar cita",
 			"required": "obligatorio",
-			"consent": "Su información se utiliza para confirmar su reserva y ponernos en contacto con usted sobre ella."
+			"consent": "Su información se utiliza para confirmar su reserva y ponernos en contacto con usted sobre ella.",
+			"review": "Continuar a la confirmación"
 		},
 		"received": {
 			"heading": "Hemos recibido su solicitud",
@@ -341,6 +342,12 @@
 			"slotTaken": "Lo sentimos: este horario acaba de ser reservado. Elija otra hora.",
 			"invalid": "Algunos datos no son válidos. Revíselos e inténtelo de nuevo.",
 			"generic": "Se ha producido un error al procesar su reserva. Inténtelo de nuevo en unos momentos."
+		},
+		"review": {
+			"heading": "Confirme su cita",
+			"intro": "Revise sus datos a continuación. Vuelva para editarlos o confirme para enviar su solicitud.",
+			"confirm": "Confirmar y enviar",
+			"edit": "Volver y editar"
 		}
 	},
 	"admin": {

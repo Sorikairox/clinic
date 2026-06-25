@@ -10,6 +10,15 @@ async function fillPatientExtras(page: Page) {
 	await page.fill('#address', 'Shiba 4-11-5');
 }
 
+// The details form leads to a review/confirmation screen; from there the
+// "Confirm" button submits to the createBooking action. This advances through
+// both steps from a filled-in details form.
+async function submitThroughReview(page: Page) {
+	await page.click('button[type=submit]'); // details form → review screen
+	await expect(page.getByRole('table')).toBeVisible();
+	await page.click('form[action*="createBooking"] button[type=submit]'); // confirm
+}
+
 test.describe('Booking + dashboard flow', () => {
 	test('a patient can pick a slot, submit, and see the confirmation page', async ({ page }) => {
 		await page.goto('/en/reservation');
@@ -25,9 +34,33 @@ test.describe('Booking + dashboard flow', () => {
 		await page.fill('#email', 'e2e-patient@example.com');
 		await page.fill('#phone', '09000000000');
 		await fillPatientExtras(page);
-		await page.click('button[type=submit]');
+		await submitThroughReview(page);
 
 		await expect(page.locator('.success-banner')).toBeVisible();
+	});
+
+	test('the review step shows entered details and "Edit" returns to the prefilled form', async ({ page }) => {
+		await page.goto('/en/reservation');
+		const dates = JSON.parse((await page.locator('#calendar-widget').getAttribute('data-enable')) ?? '[]');
+		await page.goto(`/en/reservation?date=${dates[0]}`);
+		await page.locator('a.slot').first().click();
+
+		await page.fill('#name', 'Review Patient');
+		await page.fill('#email', 'review-patient@example.com');
+		await page.fill('#phone', '09011112222');
+		await fillPatientExtras(page);
+
+		// Submit the details form → review screen (no booking created yet).
+		await page.click('button[type=submit]');
+		const review = page.getByRole('table');
+		await expect(review).toBeVisible();
+		await expect(review).toContainText('Review Patient');
+		await expect(review).toContainText('review-patient@example.com');
+
+		// "Edit" returns to the form with the values preserved.
+		await page.click('form:not([action]) button[type=submit]');
+		await expect(page.locator('#name')).toHaveValue('Review Patient');
+		await expect(page.locator('#email')).toHaveValue('review-patient@example.com');
 	});
 
 	test('concurrent booking of the same slot: one succeeds, one is rejected', async ({ request }) => {
@@ -68,7 +101,7 @@ test.describe('Booking + dashboard flow', () => {
 		await page.fill('#email', 'dash-patient@example.com');
 		await page.fill('#phone', '09000000000');
 		await fillPatientExtras(page);
-		await page.click('button[type=submit]');
+		await submitThroughReview(page);
 		await expect(page.locator('.success-banner')).toBeVisible();
 
 		// Log in.

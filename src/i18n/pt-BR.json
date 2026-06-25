@@ -330,7 +330,8 @@
 			"choose": "Selecione",
 			"submit": "Solicitar consulta",
 			"required": "obrigatório",
-			"consent": "Suas informações são usadas para confirmar e entrar em contato sobre o seu agendamento."
+			"consent": "Suas informações são usadas para confirmar e entrar em contato sobre o seu agendamento.",
+			"review": "Continuar para a confirmação"
 		},
 		"received": {
 			"heading": "Sua solicitação foi recebida",
@@ -341,6 +342,12 @@
 			"slotTaken": "Desculpe — este horário acabou de ser reservado. Por favor, escolha outro horário.",
 			"invalid": "Alguns dados estão inválidos. Por favor, verifique e tente novamente.",
 			"generic": "Ocorreu um erro ao processar seu agendamento. Por favor, tente novamente em instantes."
+		},
+		"review": {
+			"heading": "Confirme sua reserva",
+			"intro": "Confira seus dados abaixo. Volte para editar ou confirme para enviar sua solicitação.",
+			"confirm": "Confirmar e enviar",
+			"edit": "Voltar e editar"
 		}
 	},
 	"admin": {

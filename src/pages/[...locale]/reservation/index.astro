@@ -39,12 +39,69 @@ const weekdayKeys = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
 
 const reservationPath = localizedPath('/reservation', locale);
 
-// A selected slot (via ?slot=) that is still valid and free → show the form.
+// The details form posts back to this page (not directly to the action) so we can
+// render a review/confirmation step first. We read the submitted values here:
+// `_step === 'edit'` means "go back and edit" (re-render the prefilled form),
+// anything else is a request to show the review screen. Only a plain page POST is
+// parsed — the final "Confirm" submit targets the action, whose body Astro has
+// already consumed (and is reflected in `result`).
+let posted: Record<string, string> | null = null;
+if (Astro.request.method === 'POST' && !result) {
+	const fd = await Astro.request.formData();
+	posted = Object.fromEntries(
+		[...fd.entries()].map(([k, v]) => [k, typeof v === 'string' ? v : '']),
+	);
+}
+const wantsEdit = posted?._step === 'edit';
+const wantsReview = posted !== null && !wantsEdit;
+
+// The slot in play comes from the posted form (review/edit) or from ?slot=. It
+// must still be valid and free for the form/review to render.
 const slotParam = Astro.url.searchParams.get('slot');
-const selectedSlot =
-	slotParam && isValidSlot(slotParam) && !taken.has(slotParam)
-		? (slotsForDate(slotParam.slice(0, 10)).find((s) => s.start === slotParam) ?? null)
+const activeSlotStart = posted?.slotStart ?? slotParam ?? null;
+const activeSlot =
+	activeSlotStart && isValidSlot(activeSlotStart) && !taken.has(activeSlotStart)
+		? (slotsForDate(activeSlotStart.slice(0, 10)).find((s) => s.start === activeSlotStart) ?? null)
 		: null;
+
+const showReview = Boolean(activeSlot && wantsReview);
+const showForm = Boolean(activeSlot && !wantsReview);
+
+// Field values to prefill the form / carry through the review round-trip. The
+// keys below are exactly the inputs the createBooking action expects.
+const fv = posted ?? {};
+const FIELD_KEYS = [
+	'slotStart', 'customerNumber', 'firstVisit', 'name', 'nameKana', 'gender',
+	'dateOfBirth', 'email', 'phone', 'postalCode', 'prefecture', 'address', 'locale',
+] as const;
+
+// Human-readable rows for the review screen (reusing the form's field labels).
+const dash = '—';
+const reviewRows = activeSlot
+	? [
+			{ label: t('booking.form.customerNumber'), value: fv.customerNumber || dash },
+			{
+				label: t('booking.form.firstVisit'),
+				value: fv.firstVisit === 'returning' ? t('booking.form.firstVisitReturning') : t('booking.form.firstVisitNew'),
+			},
+			{ label: t('booking.form.name'), value: fv.name || dash },
+			{ label: t('booking.form.nameKana'), value: fv.nameKana || dash },
+			{
+				label: t('booking.form.gender'),
+				value: fv.gender === 'male' ? t('booking.form.genderMale') : t('booking.form.genderFemale'),
+			},
+			{ label: t('booking.form.dateOfBirth'), value: fv.dateOfBirth || dash },
+			{ label: t('booking.form.email'), value: fv.email || dash },
+			{ label: t('booking.form.phone'), value: fv.phone || dash },
+			{ label: t('booking.form.postalCode'), value: fv.postalCode || dash },
+			{ label: t('booking.form.prefecture'), value: fv.prefecture || dash },
+			{ label: t('booking.form.address'), value: fv.address || dash },
+			{
+				label: t('booking.form.language'),
+				value: LOCALE_NAMES[fv.locale as keyof typeof LOCALE_NAMES] ?? fv.locale ?? dash,
+			},
+		]
+	: [];
 
 // A selected date (via ?date=) that has availability → reveal that day's slots.
 const dateParam = Astro.url.searchParams.get('date');
@@ -54,7 +111,9 @@ const errorMsg = result?.error
 	? result.error.code === 'CONFLICT'
 		? t('booking.errors.slotTaken')
 		: t('booking.errors.invalid')
-	: '';
+	: posted && !activeSlot
+		? t('booking.errors.slotTaken')
+		: '';
 ---
 
 <Base
@@ -70,85 +129,132 @@ const errorMsg = result?.error
 		{errorMsg && <div class="error-banner">{errorMsg}</div>}
 
 		{
-			selectedSlot ? (
+			showReview ? (
 				<div>
 					<div class="callout" style="margin-bottom:24px">
 						<strong>{t('booking.selectedSlot')}:</strong><br />
-						{formatSlotLong(selectedSlot.start, locale)}
+						{formatSlotLong(activeSlot!.start, locale)}
+					</div>
+
+					<h2 class="section-title">{t('booking.review.heading')}</h2>
+					<p class="lead">{t('booking.review.intro')}</p>
+
+					<table class="info-table" style="margin-bottom:24px">
+						<tbody>
+							{reviewRows.map((row) => (
+								<tr>
+									<th>{row.label}</th>
+									<td>{row.value}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+
+					<div class="review-actions">
+						{/* Confirm → submit to the action, which creates the booking. */}
+						<form method="POST" action={actions.createBooking}>
+							{FIELD_KEYS.map((k) => (
+								<input type="hidden" name={k} value={fv[k] ?? ''} />
+							))}
+							<button class="btn btn-primary" type="submit">{t('booking.review.confirm')}</button>
+						</form>
+						{/* Edit → re-render the prefilled details form (no action). */}
+						<form method="POST">
+							{FIELD_KEYS.map((k) => (
+								<input type="hidden" name={k} value={fv[k] ?? ''} />
+							))}
+							<input type="hidden" name="_step" value="edit" />
+							<button class="btn btn-outline" type="submit">← {t('booking.review.edit')}</button>
+						</form>
+					</div>
+				</div>
+			) : showForm ? (
+				<div>
+					<div class="callout" style="margin-bottom:24px">
+						<strong>{t('booking.selectedSlot')}:</strong><br />
+						{formatSlotLong(activeSlot!.start, locale)}
 						<br />
 						{/* href returns to the chosen day (no-JS fallback); with JS the
 						    script makes it use the browser Back button so the calendar
-						    state and scroll position are restored without a reload. */}
-						<a class="change-slot" href={`${reservationPath}?date=${selectedSlot.start.slice(0, 10)}`}>
+						    state and scroll position are restored without a reload. The
+						    Back shortcut is skipped when we arrived here via an "edit"
+						    POST (data-back="false") to avoid a form-resubmission prompt. */}
+						<a
+							class="change-slot"
+							data-back={(!posted).toString()}
+							href={`${reservationPath}?date=${activeSlot!.start.slice(0, 10)}`}
+						>
 							← {t('booking.changeSlot')}
 						</a>
 					</div>
 
 					<h2 class="section-title">{t('booking.form.heading')}</h2>
-					<form method="POST" action={actions.createBooking}>
-						<input type="hidden" name="slotStart" value={selectedSlot.start} />
+					{/* Posts back to this page to render the review step (progressive
+					    enhancement-free): no JS needed for the confirmation screen. */}
+					<form method="POST">
+						<input type="hidden" name="slotStart" value={activeSlot!.start} />
 
 						<div class="form-field">
 							<label for="customerNumber">{t('booking.form.customerNumber')}</label>
-							<input id="customerNumber" name="customerNumber" type="text" maxlength="50" />
+							<input id="customerNumber" name="customerNumber" type="text" maxlength="50" value={fv.customerNumber ?? ''} />
 						</div>
 						<fieldset class="form-field">
 							<legend>{t('booking.form.firstVisit')} <span class="req">({t('booking.form.required')})</span></legend>
-							<label class="radio"><input type="radio" name="firstVisit" value="new" required checked /> {t('booking.form.firstVisitNew')}</label>
-							<label class="radio"><input type="radio" name="firstVisit" value="returning" /> {t('booking.form.firstVisitReturning')}</label>
+							<label class="radio"><input type="radio" name="firstVisit" value="new" required checked={(fv.firstVisit ?? 'new') === 'new'} /> {t('booking.form.firstVisitNew')}</label>
+							<label class="radio"><input type="radio" name="firstVisit" value="returning" checked={fv.firstVisit === 'returning'} /> {t('booking.form.firstVisitReturning')}</label>
 						</fieldset>
 						<div class="form-field">
 							<label for="name">{t('booking.form.name')} <span class="req">({t('booking.form.required')})</span></label>
-							<input id="name" name="name" type="text" required maxlength="100" />
+							<input id="name" name="name" type="text" required maxlength="100" value={fv.name ?? ''} />
 						</div>
 						<div class="form-field">
 							<label for="nameKana">{t('booking.form.nameKana')}</label>
-							<input id="nameKana" name="nameKana" type="text" maxlength="100" />
+							<input id="nameKana" name="nameKana" type="text" maxlength="100" value={fv.nameKana ?? ''} />
 						</div>
 						<fieldset class="form-field">
 							<legend>{t('booking.form.gender')} <span class="req">({t('booking.form.required')})</span></legend>
-							<label class="radio"><input type="radio" name="gender" value="female" required /> {t('booking.form.genderFemale')}</label>
-							<label class="radio"><input type="radio" name="gender" value="male" /> {t('booking.form.genderMale')}</label>
+							<label class="radio"><input type="radio" name="gender" value="female" required checked={fv.gender === 'female'} /> {t('booking.form.genderFemale')}</label>
+							<label class="radio"><input type="radio" name="gender" value="male" checked={fv.gender === 'male'} /> {t('booking.form.genderMale')}</label>
 						</fieldset>
 						<div class="form-field">
 							<label for="dateOfBirth">{t('booking.form.dateOfBirth')} <span class="req">({t('booking.form.required')})</span></label>
-							<input id="dateOfBirth" name="dateOfBirth" type="date" required />
+							<input id="dateOfBirth" name="dateOfBirth" type="date" required value={fv.dateOfBirth ?? ''} />
 						</div>
 						<div class="form-field">
 							<label for="email">{t('booking.form.email')} <span class="req">({t('booking.form.required')})</span></label>
-							<input id="email" name="email" type="email" required maxlength="200" />
+							<input id="email" name="email" type="email" required maxlength="200" value={fv.email ?? ''} />
 						</div>
 						<div class="form-field">
 							<label for="phone">{t('booking.form.phone')} <span class="req">({t('booking.form.required')})</span></label>
-							<input id="phone" name="phone" type="tel" required maxlength="40" />
+							<input id="phone" name="phone" type="tel" required maxlength="40" value={fv.phone ?? ''} />
 						</div>
 						<div class="form-field">
 							<label for="postalCode">{t('booking.form.postalCode')} <span class="req">({t('booking.form.required')})</span></label>
-							<input id="postalCode" name="postalCode" type="text" required maxlength="20" />
+							<input id="postalCode" name="postalCode" type="text" required maxlength="20" value={fv.postalCode ?? ''} />
 						</div>
 						<div class="form-field">
 							<label for="prefecture">{t('booking.form.prefecture')} <span class="req">({t('booking.form.required')})</span></label>
 							<select id="prefecture" name="prefecture" required>
-								<option value="">{t('booking.form.choose')}</option>
+								<option value="" selected={!fv.prefecture}>{t('booking.form.choose')}</option>
 								{PREFECTURES.map((p) => (
-									<option value={p}>{p}</option>
+									<option value={p} selected={p === fv.prefecture}>{p}</option>
 								))}
 							</select>
 						</div>
 						<div class="form-field">
 							<label for="address">{t('booking.form.address')} <span class="req">({t('booking.form.required')})</span></label>
-							<input id="address" name="address" type="text" required maxlength="200" />
+							<input id="address" name="address" type="text" required maxlength="200" value={fv.address ?? ''} />
 						</div>
 						<div class="form-field">
 							<label for="locale">{t('booking.form.language')}</label>
 							<select id="locale" name="locale">
 								{LOCALES.map((l) => (
-									<option value={l} selected={l === locale}>{LOCALE_NAMES[l]}</option>
+									<option value={l} selected={l === (fv.locale ?? locale)}>{LOCALE_NAMES[l]}</option>
 								))}
 							</select>
 						</div>
 						<p style="font-size:0.85rem;color:var(--muted)">{t('booking.form.consent')}</p>
-						<button class="btn btn-primary" type="submit">{t('booking.form.submit')}</button>
+						<button class="btn btn-primary" type="submit">{t('booking.form.review')}</button>
 					</form>
 				</div>
 			) : (
@@ -276,13 +382,27 @@ const errorMsg = result?.error
 
 		// On the "change time" link, prefer the browser Back button so we return
 		// to the calendar with its state/scroll intact (no reload). Falls back to
-		// the href (?date=…) when there's no history to go back to.
-		const changeSlot = document.querySelector('.change-slot');
+		// the href (?date=…) when there's no history to go back to, or when the
+		// form was reached via an "edit" POST (data-back="false") — there, going
+		// back would land on the review POST and trigger a resubmission prompt.
+		const changeSlot = document.querySelector<HTMLAnchorElement>('.change-slot');
 		changeSlot?.addEventListener('click', (event) => {
-			if (history.length > 1) {
+			if (changeSlot.dataset.back !== 'false' && history.length > 1) {
 				event.preventDefault();
 				history.back();
 			}
 		});
 	</script>
+
+	<style>
+		.review-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			align-items: center;
+		}
+		.review-actions form {
+			margin: 0;
+		}
+	</style>
 </Base>

@@ -330,7 +330,8 @@
 			"choose": "Please select",
 			"submit": "Request appointment",
 			"required": "required",
-			"consent": "Your information is used to confirm and contact you about your booking."
+			"consent": "Your information is used to confirm and contact you about your booking.",
+			"review": "Continue to confirmation"
 		},
 		"received": {
 			"heading": "Your request has been received",
@@ -341,6 +342,12 @@
 			"slotTaken": "Sorry — this time slot was just booked. Please choose another time.",
 			"invalid": "Some details are invalid. Please check and try again.",
 			"generic": "Something went wrong while processing your booking. Please try again shortly."
+		},
+		"review": {
+			"heading": "Confirm your booking",
+			"intro": "Please check your details below. Go back to edit anything, or confirm to send your request.",
+			"confirm": "Confirm and submit",
+			"edit": "Go back and edit"
 		}
 	},
 	"admin": {
