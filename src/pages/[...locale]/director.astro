@@ -1,0 +1,30 @@
+---
+import Base from '@/layouts/Base.astro';
+import { resolveLocale, useList, useTranslations } from '@/i18n/utils';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+const list = useList(locale);
+const qualifications = list('director.qualifications');
+---
+
+<Base
+	{locale}
+	canonical="/director"
+	title={t('director.metaTitle')}
+	description={t('director.metaDescription')}
+>
+	<section>
+		<h1 class="section-title">{t('director.heading')}</h1>
+		<div class="prose">
+			<p class="lead">{t('director.body')}</p>
+		</div>
+	</section>
+	<section>
+		<h2 class="section-title">{t('director.qualificationsHeading')}</h2>
+		<ul class="prose">
+			{qualifications.map((q) => <li>{q}</li>)}
+		</ul>
+	</section>
+</Base>

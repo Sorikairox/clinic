@@ -1,0 +1,40 @@
+---
+import Base from '@/layouts/Base.astro';
+import { resolveLocale, useList, useTranslations } from '@/i18n/utils';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+const list = useList(locale);
+const conditions = list('services.proctology.conditions');
+---
+
+<Base
+	{locale}
+	canonical="/services"
+	title={t('services.metaTitle')}
+	description={t('services.metaDescription')}
+>
+	<section>
+		<h1 class="section-title">{t('services.heading')}</h1>
+		<p class="lead">{t('services.intro')}</p>
+	</section>
+
+	<section>
+		<h2 class="section-title">{t('services.proctology.title')}</h2>
+		<div class="prose">
+			<p>{t('services.proctology.body')}</p>
+			<h3>{t('services.proctology.conditionsHeading')}</h3>
+			<ul>
+				{conditions.map((c) => <li>{c}</li>)}
+			</ul>
+		</div>
+	</section>
+
+	<section>
+		<h2 class="section-title">{t('services.vaccines.title')}</h2>
+		<div class="prose">
+			<p>{t('services.vaccines.body')}</p>
+		</div>
+	</section>
+</Base>

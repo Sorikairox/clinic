@@ -1,0 +1,13 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const locale = 'en' as const;
+---
+
+<Base {locale} canonical="/" title="Page not found" description="Page not found" noindex={true}>
+	<section style="text-align:center;padding:60px 0">
+		<h1 style="font-size:3rem;margin:0">404</h1>
+		<p class="lead">Sorry, this page could not be found.</p>
+		<a class="btn btn-primary" href="/">Home</a>
+	</section>
+</Base>

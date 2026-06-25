@@ -1,0 +1,28 @@
+---
+import Base from '@/layouts/Base.astro';
+import { localizedPath, resolveLocale, useTranslations } from '@/i18n/utils';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+---
+
+<Base
+	{locale}
+	canonical="/contact"
+	title={t('contact.metaTitle')}
+	description={t('contact.metaDescription')}
+>
+	<section>
+		<h1 class="section-title">{t('contact.heading')}</h1>
+		<p class="lead">{t('contact.intro')}</p>
+		<table class="info-table">
+			<tbody>
+				<tr><th>{t('contact.addressLabel')}</th><td>{t('access.address')}</td></tr>
+			</tbody>
+		</table>
+		<p style="margin-top:24px">
+			<a class="btn btn-primary" href={localizedPath('/reservation', locale)}>{t('contact.bookCta')}</a>
+		</p>
+	</section>
+</Base>

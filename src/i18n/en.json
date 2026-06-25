@@ -1,0 +1,203 @@
+{
+	"site": {
+		"name": "Shiba Coloproctological Clinic",
+		"shortName": "Shiba Clinic",
+		"tagline": "Gastroenterology & proctology clinic in Minato-ku, Tokyo"
+	},
+	"nav": {
+		"home": "Home",
+		"director": "Director",
+		"access": "Access",
+		"services": "Services",
+		"facility": "Facility",
+		"price": "Pricing",
+		"contact": "Contact",
+		"book": "Book"
+	},
+	"common": {
+		"bookNow": "Book online",
+		"readMore": "Read more",
+		"languageLabel": "Language",
+		"menu": "Menu",
+		"phoneLabel": "Phone",
+		"addressLabel": "Address",
+		"hoursLabel": "Hours",
+		"closed": "Closed",
+		"loading": "Loading…",
+		"backHome": "Back to home"
+	},
+	"home": {
+		"metaTitle": "Shiba Coloproctological Clinic | Proctology & Gastroenterology in Tokyo",
+		"metaDescription": "English-speaking gastroenterology and proctology clinic in Shiba, Minato-ku, Tokyo. Treatment for hemorrhoids, anal fissures and fistula, plus gastroenterology and endoscopy. Foreign residents welcome.",
+		"heroTitle": "A specialist clinic for proctology and digestive health you can talk to with confidence",
+		"heroSubtitle": "From hemorrhoid treatment to gastroenterology — careful, professional care in a private, comfortable setting.",
+		"heroCta": "Book an appointment",
+		"introHeading": "About the clinic",
+		"introBody": "Shiba Coloproctological Clinic is a specialist clinic for proctology, anal surgery and gastroenterology located in Shiba, Minato-ku, Tokyo. We treat a wide range of conditions — from hemorrhoids, anal fissures and fistula to digestive complaints and endoscopy.",
+		"foreignHeading": "For international patients",
+		"foreignBody": "About 40% of our patients are foreign residents in Japan. We provide care in English, so you can be seen without worrying about the language barrier.",
+		"servicesHeading": "Our services",
+		"hoursHeading": "Opening hours"
+	},
+	"director": {
+		"metaTitle": "Director | Shiba Coloproctological Clinic",
+		"metaDescription": "Meet the director of Shiba Coloproctological Clinic — a board-certified proctologist and surgeon with US medical licensing examination qualification.",
+		"heading": "About the Director",
+		"name": "Director",
+		"body": "Our director is a specialist with many years of experience in proctology and digestive disease. The focus is on each individual patient — clear explanations and appropriate, considered treatment. With clinical experience in the United States, the director also sees patients in English.",
+		"qualificationsHeading": "Qualifications",
+		"qualifications": [
+			"Board-certified proctologist, Japan Society of Coloproctology",
+			"Board-certified surgeon, Japan Surgical Society",
+			"Certified physician in Helicobacter pylori infection",
+			"United States Medical Licensing Examination (USMLE) qualification"
+		]
+	},
+	"access": {
+		"metaTitle": "Access | Shiba Coloproctological Clinic",
+		"metaDescription": "How to reach Shiba Coloproctological Clinic: KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokyo. A short walk from Mita and Tamachi stations.",
+		"heading": "Access",
+		"addressLabel": "Address",
+		"address": "KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokyo 105-0014",
+		"stationsLabel": "Nearest stations",
+		"stations": [
+			"5 min walk from Mita Station (Toei Mita / Asakusa Line)",
+			"7 min walk from Tamachi Station (JR Yamanote / Keihin-Tohoku Line)"
+		],
+		"hoursHeading": "Opening hours"
+	},
+	"services": {
+		"metaTitle": "Services | Shiba Coloproctological Clinic",
+		"metaDescription": "Proctology (hemorrhoids, anal fissures, fistula), gastroenterology, endoscopy and vaccinations at Shiba Coloproctological Clinic in Tokyo.",
+		"heading": "Services",
+		"intro": "We cover a wide range of care, from anal conditions and gastroenterology to vaccinations.",
+		"proctology": {
+			"title": "Proctology",
+			"summary": "Diagnosis and treatment of hemorrhoids, anal fissures and fistula.",
+			"body": "A specialist examines symptoms such as anal pain, bleeding, swelling and itching. Day surgery is available, and we propose treatment tailored to your symptoms and preferences. Sensitive concerns are handled in a private, considerate setting.",
+			"conditionsHeading": "Conditions we treat",
+			"conditions": [
+				"Hemorrhoids (internal and external)",
+				"Anal fissures",
+				"Anal fistula",
+				"Anal itching and discomfort",
+				"Swelling or abscess around the anus"
+			]
+		},
+		"vaccines": {
+			"title": "Vaccinations & injections",
+			"summary": "Seasonal influenza and other vaccinations and injections.",
+			"body": "We offer seasonal influenza and other vaccinations, as well as various injections. Please contact us for details."
+		}
+	},
+	"facility": {
+		"metaTitle": "Facility | Shiba Coloproctological Clinic",
+		"metaDescription": "A clean clinic environment designed with privacy in mind, so you can be seen comfortably and with confidence.",
+		"heading": "Our Facility",
+		"body": "We maintain a clean environment designed with privacy in mind so that patients can be seen comfortably. Particular care is taken to put you at ease for sensitive examinations."
+	},
+	"price": {
+		"metaTitle": "Pricing | Shiba Coloproctological Clinic",
+		"metaDescription": "Guidance on the cost of consultations, examinations and procedures. Japanese health insurance is accepted.",
+		"heading": "Pricing",
+		"intro": "We accept Japanese health insurance. Costs vary depending on the consultation and examinations required.",
+		"note": "Detailed costs are explained during your consultation. Please contact us if you wish to be seen privately (self-pay)."
+	},
+	"contact": {
+		"metaTitle": "Contact | Shiba Coloproctological Clinic",
+		"metaDescription": "Contact Shiba Coloproctological Clinic by phone or through the online booking form.",
+		"heading": "Contact",
+		"intro": "To book an appointment, please use the online booking form or call us.",
+		"phoneLabel": "Phone",
+		"addressLabel": "Address",
+		"bookCta": "Book online"
+	},
+	"hours": {
+		"weekdays": "Mon, Tue, Wed, Fri",
+		"thursday": "Thursday",
+		"saturday": "Saturday",
+		"sunday": "Sun & public holidays",
+		"morning": "Morning 10:00 – 12:15",
+		"afternoon": "Afternoon 15:00 – 17:45",
+		"closedNote": "Closed on Thursdays, Sundays and public holidays."
+	},
+	"booking": {
+		"metaTitle": "Book an appointment | Shiba Coloproctological Clinic",
+		"metaDescription": "Book your appointment online. Choose a date and time and fill in your details.",
+		"heading": "Book an appointment",
+		"intro": "Choose a date and time and fill in your details. Your booking is received as a request — the clinic will confirm it by email.",
+		"selectDate": "Select a date",
+		"selectSlot": "Select a time",
+		"noSlots": "No openings on this day. Please choose another date.",
+		"selectedSlot": "Selected time",
+		"changeSlot": "Change time",
+		"form": {
+			"heading": "Your details",
+			"name": "Full name",
+			"email": "Email address",
+			"phone": "Phone number",
+			"reason": "Reason for visit (optional)",
+			"notes": "Notes / requests (optional)",
+			"language": "Preferred language for contact",
+			"submit": "Request appointment",
+			"required": "required",
+			"consent": "Your information is used to confirm and contact you about your booking."
+		},
+		"received": {
+			"heading": "Your request has been received",
+			"body": "We have received your booking as a request. The clinic will review it and send you a confirmation by email. Please wait for the confirmation email.",
+			"backHome": "Back to home"
+		},
+		"errors": {
+			"slotTaken": "Sorry — this time slot was just booked. Please choose another time.",
+			"invalid": "Some details are invalid. Please check and try again.",
+			"generic": "Something went wrong while processing your booking. Please try again shortly."
+		}
+	},
+	"admin": {
+		"login": {
+			"heading": "Staff login",
+			"email": "Email address",
+			"password": "Password",
+			"submit": "Log in",
+			"error": "Incorrect email or password."
+		},
+		"dashboard": {
+			"heading": "Bookings",
+			"pendingHeading": "Pending requests",
+			"noPending": "No pending requests.",
+			"patient": "Patient",
+			"slot": "Appointment",
+			"language": "Language",
+			"reason": "Reason",
+			"contact": "Contact",
+			"submittedAt": "Submitted",
+			"confirm": "Confirm",
+			"decline": "Decline",
+			"logout": "Log out",
+			"recentHeading": "Recently handled"
+		}
+	},
+	"email": {
+		"confirmed": {
+			"subject": "Your appointment is confirmed — Shiba Coloproctological Clinic",
+			"greeting": "Dear {name},",
+			"body": "Thank you for your booking. We are pleased to confirm your appointment for the date and time below.",
+			"slotLabel": "Appointment",
+			"closing": "We look forward to seeing you. If you have any questions, please feel free to contact us.",
+			"signature": "Shiba Coloproctological Clinic"
+		},
+		"declined": {
+			"subject": "About your appointment request — Shiba Coloproctological Clinic",
+			"greeting": "Dear {name},",
+			"body": "Thank you for your appointment request. We are very sorry, but we are unable to accept your booking for the requested date and time.",
+			"closing": "Please book again for a different date and time, or contact us by phone. We apologise for the inconvenience.",
+			"signature": "Shiba Coloproctological Clinic"
+		}
+	},
+	"footer": {
+		"clinicName": "Shiba Coloproctological Clinic",
+		"rights": "All rights reserved.",
+		"navHeading": "Menu"
+	}
+}

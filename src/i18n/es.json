@@ -1,0 +1,203 @@
+{
+	"site": {
+		"name": "Clínica Coloproctológica Shiba",
+		"shortName": "Clínica Shiba",
+		"tagline": "Clínica de gastroenterología y proctología en Minato-ku, Tokio"
+	},
+	"nav": {
+		"home": "Inicio",
+		"director": "Director",
+		"access": "Cómo llegar",
+		"services": "Servicios",
+		"facility": "Instalaciones",
+		"price": "Precios",
+		"contact": "Contacto",
+		"book": "Reservar"
+	},
+	"common": {
+		"bookNow": "Reservar en línea",
+		"readMore": "Leer más",
+		"languageLabel": "Idioma",
+		"menu": "Menú",
+		"phoneLabel": "Teléfono",
+		"addressLabel": "Dirección",
+		"hoursLabel": "Horario",
+		"closed": "Cerrado",
+		"loading": "Cargando…",
+		"backHome": "Volver al inicio"
+	},
+	"home": {
+		"metaTitle": "Clínica Coloproctológica Shiba | Proctología y gastroenterología en Tokio",
+		"metaDescription": "Clínica de gastroenterología y proctología con atención en inglés en Shiba, Minato-ku, Tokio. Tratamiento de hemorroides, fisuras anales y fístulas, además de gastroenterología y endoscopia. Residentes extranjeros bienvenidos.",
+		"heroTitle": "Una clínica especializada en proctología y salud digestiva donde puede consultar con total confianza",
+		"heroSubtitle": "Desde el tratamiento de las hemorroides hasta la gastroenterología: atención cuidadosa y profesional en un entorno privado y cómodo.",
+		"heroCta": "Pedir una cita",
+		"introHeading": "Sobre la clínica",
+		"introBody": "La Clínica Coloproctológica Shiba es una clínica especializada en proctología, cirugía anal y gastroenterología situada en Shiba, Minato-ku, Tokio. Tratamos una amplia variedad de afecciones, desde hemorroides, fisuras anales y fístulas hasta trastornos digestivos y endoscopia.",
+		"foreignHeading": "Para pacientes internacionales",
+		"foreignBody": "Alrededor del 40 % de nuestros pacientes son residentes extranjeros en Japón. Ofrecemos atención en inglés, para que pueda ser atendido sin preocuparse por la barrera del idioma.",
+		"servicesHeading": "Nuestros servicios",
+		"hoursHeading": "Horario de atención"
+	},
+	"director": {
+		"metaTitle": "Director | Clínica Coloproctológica Shiba",
+		"metaDescription": "Conozca al director de la Clínica Coloproctológica Shiba: proctólogo y cirujano certificado con la titulación del examen de licencia médica de Estados Unidos.",
+		"heading": "Sobre el Director",
+		"name": "Director",
+		"body": "Nuestro director es un especialista con muchos años de experiencia en proctología y enfermedades digestivas. La atención se centra en cada paciente de forma individual, con explicaciones claras y un tratamiento adecuado y meditado. Con experiencia clínica en Estados Unidos, el director también atiende a pacientes en inglés.",
+		"qualificationsHeading": "Titulaciones",
+		"qualifications": [
+			"Proctólogo certificado por la Sociedad Japonesa de Coloproctología",
+			"Cirujano certificado por la Sociedad Japonesa de Cirugía",
+			"Médico certificado en infección por Helicobacter pylori",
+			"Titulación del examen de licencia médica de Estados Unidos (USMLE)"
+		]
+	},
+	"access": {
+		"metaTitle": "Cómo llegar | Clínica Coloproctológica Shiba",
+		"metaDescription": "Cómo llegar a la Clínica Coloproctológica Shiba: KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokio. A pocos minutos a pie de las estaciones de Mita y Tamachi.",
+		"heading": "Cómo llegar",
+		"addressLabel": "Dirección",
+		"address": "KT Bldg. 3F, 4-11-5 Shiba, Minato-ku, Tokio 105-0014",
+		"stationsLabel": "Estaciones más cercanas",
+		"stations": [
+			"5 min a pie desde la estación de Mita (líneas Toei Mita / Asakusa)",
+			"7 min a pie desde la estación de Tamachi (líneas JR Yamanote / Keihin-Tohoku)"
+		],
+		"hoursHeading": "Horario de atención"
+	},
+	"services": {
+		"metaTitle": "Servicios | Clínica Coloproctológica Shiba",
+		"metaDescription": "Proctología (hemorroides, fisuras anales, fístulas), gastroenterología, endoscopia y vacunación en la Clínica Coloproctológica Shiba de Tokio.",
+		"heading": "Servicios",
+		"intro": "Ofrecemos una amplia variedad de atención, desde afecciones anales y gastroenterología hasta vacunación.",
+		"proctology": {
+			"title": "Proctología",
+			"summary": "Diagnóstico y tratamiento de hemorroides, fisuras anales y fístulas.",
+			"body": "Un especialista evalúa síntomas como dolor anal, sangrado, hinchazón y picor. Disponemos de cirugía ambulatoria y proponemos un tratamiento adaptado a sus síntomas y preferencias. Las molestias delicadas se atienden en un entorno privado y considerado.",
+			"conditionsHeading": "Afecciones que tratamos",
+			"conditions": [
+				"Hemorroides (internas y externas)",
+				"Fisuras anales",
+				"Fístula anal",
+				"Picor y molestias anales",
+				"Hinchazón o absceso alrededor del ano"
+			]
+		},
+		"vaccines": {
+			"title": "Vacunación e inyecciones",
+			"summary": "Vacunación contra la gripe estacional y otras vacunas e inyecciones.",
+			"body": "Ofrecemos la vacuna contra la gripe estacional y otras vacunas, así como diversas inyecciones. Póngase en contacto con nosotros para más información."
+		}
+	},
+	"facility": {
+		"metaTitle": "Instalaciones | Clínica Coloproctológica Shiba",
+		"metaDescription": "Un entorno clínico limpio y diseñado pensando en la privacidad, para que pueda ser atendido con comodidad y confianza.",
+		"heading": "Nuestras Instalaciones",
+		"body": "Mantenemos un entorno limpio y diseñado pensando en la privacidad para que los pacientes puedan ser atendidos con comodidad. Cuidamos especialmente que se sienta tranquilo durante las exploraciones más delicadas."
+	},
+	"price": {
+		"metaTitle": "Precios | Clínica Coloproctológica Shiba",
+		"metaDescription": "Información sobre el coste de las consultas, exploraciones y procedimientos. Se acepta el seguro médico japonés.",
+		"heading": "Precios",
+		"intro": "Aceptamos el seguro médico japonés. Los costes varían según la consulta y las exploraciones necesarias.",
+		"note": "Los costes detallados se explican durante su consulta. Póngase en contacto con nosotros si desea ser atendido de forma privada (pago particular)."
+	},
+	"contact": {
+		"metaTitle": "Contacto | Clínica Coloproctológica Shiba",
+		"metaDescription": "Póngase en contacto con la Clínica Coloproctológica Shiba por teléfono o a través del formulario de reserva en línea.",
+		"heading": "Contacto",
+		"intro": "Para pedir una cita, utilice el formulario de reserva en línea o llámenos.",
+		"phoneLabel": "Teléfono",
+		"addressLabel": "Dirección",
+		"bookCta": "Reservar en línea"
+	},
+	"hours": {
+		"weekdays": "Lun, Mar, Mié, Vie",
+		"thursday": "Jueves",
+		"saturday": "Sábado",
+		"sunday": "Domingos y festivos",
+		"morning": "Mañana 10:00 – 12:15",
+		"afternoon": "Tarde 15:00 – 17:45",
+		"closedNote": "Cerrado los jueves, domingos y festivos."
+	},
+	"booking": {
+		"metaTitle": "Pedir una cita | Clínica Coloproctológica Shiba",
+		"metaDescription": "Reserve su cita en línea. Elija una fecha y una hora y rellene sus datos.",
+		"heading": "Pedir una cita",
+		"intro": "Elija una fecha y una hora y rellene sus datos. Su reserva se recibe como una solicitud; la clínica la confirmará por correo electrónico.",
+		"selectDate": "Seleccionar una fecha",
+		"selectSlot": "Seleccionar una hora",
+		"noSlots": "No hay disponibilidad este día. Por favor, elija otra fecha.",
+		"selectedSlot": "Hora seleccionada",
+		"changeSlot": "Cambiar la hora",
+		"form": {
+			"heading": "Sus datos",
+			"name": "Nombre completo",
+			"email": "Correo electrónico",
+			"phone": "Número de teléfono",
+			"reason": "Motivo de la consulta (opcional)",
+			"notes": "Observaciones / solicitudes (opcional)",
+			"language": "Idioma preferido para el contacto",
+			"submit": "Solicitar cita",
+			"required": "obligatorio",
+			"consent": "Su información se utiliza para confirmar su reserva y ponernos en contacto con usted sobre ella."
+		},
+		"received": {
+			"heading": "Hemos recibido su solicitud",
+			"body": "Hemos recibido su reserva como una solicitud. La clínica la revisará y le enviará una confirmación por correo electrónico. Por favor, espere el correo de confirmación.",
+			"backHome": "Volver al inicio"
+		},
+		"errors": {
+			"slotTaken": "Lo sentimos: este horario acaba de ser reservado. Por favor, elija otra hora.",
+			"invalid": "Algunos datos no son válidos. Por favor, revíselos e inténtelo de nuevo.",
+			"generic": "Se ha producido un error al procesar su reserva. Por favor, inténtelo de nuevo en unos momentos."
+		}
+	},
+	"admin": {
+		"login": {
+			"heading": "Acceso del personal",
+			"email": "Correo electrónico",
+			"password": "Contraseña",
+			"submit": "Iniciar sesión",
+			"error": "Correo electrónico o contraseña incorrectos."
+		},
+		"dashboard": {
+			"heading": "Reservas",
+			"pendingHeading": "Solicitudes pendientes",
+			"noPending": "No hay solicitudes pendientes.",
+			"patient": "Paciente",
+			"slot": "Cita",
+			"language": "Idioma",
+			"reason": "Motivo",
+			"contact": "Contacto",
+			"submittedAt": "Enviada",
+			"confirm": "Confirmar",
+			"decline": "Rechazar",
+			"logout": "Cerrar sesión",
+			"recentHeading": "Gestionadas recientemente"
+		}
+	},
+	"email": {
+		"confirmed": {
+			"subject": "Su cita está confirmada — Clínica Coloproctológica Shiba",
+			"greeting": "Estimado/a {name}:",
+			"body": "Gracias por su reserva. Nos complace confirmar su cita para la fecha y hora indicadas a continuación.",
+			"slotLabel": "Cita",
+			"closing": "Esperamos su visita. Si tiene cualquier pregunta, no dude en ponerse en contacto con nosotros.",
+			"signature": "Clínica Coloproctológica Shiba"
+		},
+		"declined": {
+			"subject": "Acerca de su solicitud de cita — Clínica Coloproctológica Shiba",
+			"greeting": "Estimado/a {name}:",
+			"body": "Gracias por su solicitud de cita. Lamentamos mucho informarle de que no podemos aceptar su reserva para la fecha y hora solicitadas.",
+			"closing": "Le rogamos que vuelva a reservar para otra fecha y hora, o que se ponga en contacto con nosotros por teléfono. Disculpe las molestias.",
+			"signature": "Clínica Coloproctológica Shiba"
+		}
+	},
+	"footer": {
+		"clinicName": "Clínica Coloproctológica Shiba",
+		"rights": "Todos los derechos reservados.",
+		"navHeading": "Menú"
+	}
+}

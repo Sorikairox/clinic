@@ -1,0 +1,25 @@
+---
+import Base from '@/layouts/Base.astro';
+import { localizedPath, resolveLocale, useTranslations } from '@/i18n/utils';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+---
+
+<Base
+	{locale}
+	canonical="/reservation"
+	title={t('booking.received.heading')}
+	description={t('booking.metaDescription')}
+>
+	<section>
+		<div class="success-banner">
+			<h1 style="margin:0 0 8px">{t('booking.received.heading')}</h1>
+			<p style="margin:0">{t('booking.received.body')}</p>
+		</div>
+		<p style="margin-top:24px">
+			<a class="btn btn-outline" href={localizedPath('/', locale)}>← {t('booking.received.backHome')}</a>
+		</p>
+	</section>
+</Base>
