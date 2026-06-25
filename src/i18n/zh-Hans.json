@@ -341,7 +341,8 @@
 		"errors": {
 			"slotTaken": "抱歉——该时段刚刚被预约。请选择其他时间。",
 			"invalid": "部分信息有误。请检查后重试。",
-			"generic": "处理您的预约时出现问题。请稍后重试。"
+			"generic": "处理您的预约时出现问题。请稍后重试。",
+			"recaptcha": "请完成 reCAPTCHA 验证后再次提交。"
 		},
 		"review": {
 			"heading": "确认您的预约",

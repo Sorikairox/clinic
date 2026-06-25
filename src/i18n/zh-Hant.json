@@ -341,7 +341,8 @@
 		"errors": {
 			"slotTaken": "很抱歉，此時段剛剛被預約。請選擇其他時間。",
 			"invalid": "部分資料無效，請檢查後再試一次。",
-			"generic": "處理您的預約時發生錯誤，請稍後再試。"
+			"generic": "處理您的預約時發生錯誤，請稍後再試。",
+			"recaptcha": "請完成 reCAPTCHA 驗證後再次提交。"
 		},
 		"review": {
 			"heading": "確認您的預約",

@@ -8,6 +8,7 @@ import { buildCalendar } from '@/lib/calendar';
 import { PREFECTURES } from '@/lib/prefectures';
 import { getActiveSlotStarts } from '@/db/queries';
 import { formatDateLong, formatMonthYear, formatSlotLong } from '@/lib/datetime';
+import { recaptchaSiteKey } from '@/lib/recaptcha';
 
 const locale = resolveLocale(Astro.params.locale);
 if (!locale) return new Response('Not Found', { status: 404 });
@@ -107,10 +108,15 @@ const reviewRows = activeSlot
 const dateParam = Astro.url.searchParams.get('date');
 const selectedDate = dateParam && availableDates.has(dateParam) ? dateParam : null;
 
+// reCAPTCHA: only render the widget when a site key is configured (recaptcha.ts).
+const siteKey = recaptchaSiteKey();
+
 const errorMsg = result?.error
 	? result.error.code === 'CONFLICT'
 		? t('booking.errors.slotTaken')
-		: t('booking.errors.invalid')
+		: result.error.message === 'recaptcha_failed'
+			? t('booking.errors.recaptcha')
+			: t('booking.errors.invalid')
 	: posted && !activeSlot
 		? t('booking.errors.slotTaken')
 		: '';
@@ -151,11 +157,19 @@ const errorMsg = result?.error
 					</table>
 
 					<div class="review-actions">
-						{/* Confirm → submit to the action, which creates the booking. */}
+						{/* Confirm → submit to the action, which creates the booking. The
+						    reCAPTCHA widget (when configured) lives inside this form so its
+						    `g-recaptcha-response` field is submitted and verified
+						    server-side in the createBooking action. */}
 						<form method="POST" action={actions.createBooking}>
 							{FIELD_KEYS.map((k) => (
 								<input type="hidden" name={k} value={fv[k] ?? ''} />
 							))}
+							{siteKey && (
+								<div class="recaptcha-box">
+									<div class="g-recaptcha" data-sitekey={siteKey} />
+								</div>
+							)}
 							<button class="btn btn-primary" type="submit">{t('booking.review.confirm')}</button>
 						</form>
 						{/* Edit → re-render the prefilled details form (no action). */}
@@ -347,6 +361,12 @@ const errorMsg = result?.error
 		}
 	</section>
 
+	{/* reCAPTCHA library — loaded only on the review screen when configured. It
+	    auto-renders any `.g-recaptcha` element on the page. */}
+	{siteKey && showReview && (
+		<script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
+	)}
+
 	<script>
 		import flatpickr from 'flatpickr';
 		import 'flatpickr/dist/flatpickr.css';
@@ -395,11 +415,14 @@ const errorMsg = result?.error
 	</script>
 
 	<style>
+		.recaptcha-box {
+			margin-bottom: 16px;
+		}
 		.review-actions {
 			display: flex;
 			flex-wrap: wrap;
 			gap: 12px;
-			align-items: center;
+			align-items: flex-end;
 		}
 		.review-actions form {
 			margin: 0;

@@ -6,6 +6,7 @@ import { staff } from '../db/schema';
 import { createBooking, decideBooking } from '../db/queries';
 import { isValidSlot, slotsForDate } from '../lib/availability';
 import { buildConfirmedEmail, buildDeclinedEmail, buildReceivedEmail, sendEmail } from '../lib/email';
+import { verifyRecaptcha } from '../lib/recaptcha';
 import { verifyPassword } from '../lib/password';
 import { clearSession, getSessionStaff, setSession } from '../lib/session';
 import { LOCALES } from '../i18n/config';
@@ -30,8 +31,16 @@ export const server = {
 			prefecture: z.string().trim().min(1).max(20),
 			address: z.string().trim().min(1).max(200),
 			locale: localeEnum,
+			// reCAPTCHA v2 token (field name is fixed by the widget). Optional in the
+			// schema because the gate is only enforced when reCAPTCHA is configured.
+			'g-recaptcha-response': z.string().optional(),
 		}),
 		handler: async (input) => {
+			// Bot gate: no-op unless RECAPTCHA_SECRET_KEY is configured (see recaptcha.ts).
+			if (!(await verifyRecaptcha(input['g-recaptcha-response']))) {
+				throw new ActionError({ code: 'BAD_REQUEST', message: 'recaptcha_failed' });
+			}
+
 			if (!isValidSlot(input.slotStart)) {
 				throw new ActionError({ code: 'BAD_REQUEST', message: 'invalid_slot' });
 			}

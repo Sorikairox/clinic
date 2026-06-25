@@ -341,7 +341,8 @@
 		"errors": {
 			"slotTaken": "Lo sentimos: este horario acaba de ser reservado. Elija otra hora.",
 			"invalid": "Algunos datos no son válidos. Revíselos e inténtelo de nuevo.",
-			"generic": "Se ha producido un error al procesar su reserva. Inténtelo de nuevo en unos momentos."
+			"generic": "Se ha producido un error al procesar su reserva. Inténtelo de nuevo en unos momentos.",
+			"recaptcha": "Complete la verificación reCAPTCHA y envíe de nuevo."
 		},
 		"review": {
 			"heading": "Confirme su cita",

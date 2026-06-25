@@ -341,7 +341,8 @@
 		"errors": {
 			"slotTaken": "Desculpe — este horário acabou de ser reservado. Por favor, escolha outro horário.",
 			"invalid": "Alguns dados estão inválidos. Por favor, verifique e tente novamente.",
-			"generic": "Ocorreu um erro ao processar seu agendamento. Por favor, tente novamente em instantes."
+			"generic": "Ocorreu um erro ao processar seu agendamento. Por favor, tente novamente em instantes.",
+			"recaptcha": "Conclua a verificação do reCAPTCHA e envie novamente."
 		},
 		"review": {
 			"heading": "Confirme sua reserva",
