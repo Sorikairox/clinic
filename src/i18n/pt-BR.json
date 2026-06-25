@@ -26,7 +26,9 @@
 		"hoursLabel": "Horário de atendimento",
 		"closed": "Fechado",
 		"loading": "Carregando…",
-		"backHome": "Voltar ao início"
+		"backHome": "Voltar ao início",
+		"disclaimerTitle": "⚠ Demonstração não oficial — NÃO é o site oficial da clínica",
+		"disclaimerText": "Esta é uma recriação de demonstração pessoal. NÃO tem vínculo com a clínica e você NÃO pode marcar consultas reais aqui."
 	},
 	"home": {
 		"metaTitle": "Clínica Shiba de Gastroenterologia e Proctologia | Proctologia e Gastroenterologia em Tóquio",

@@ -26,7 +26,9 @@
 		"hoursLabel": "診療時間",
 		"closed": "休診",
 		"loading": "載入中…",
-		"backHome": "返回首頁"
+		"backHome": "返回首頁",
+		"disclaimerTitle": "⚠ 非官方示範網站（並非診所官方網站）",
+		"disclaimerText": "這是個人製作的示範網站，與診所並無任何關聯，無法在此進行實際預約。"
 	},
 	"home": {
 		"metaTitle": "芝胃腸肛門診所 | 東京肛門科與胃腸科",

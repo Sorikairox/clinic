@@ -26,7 +26,9 @@
 		"hoursLabel": "门诊时间",
 		"closed": "停诊",
 		"loading": "加载中…",
-		"backHome": "返回首页"
+		"backHome": "返回首页",
+		"disclaimerTitle": "⚠ 非官方演示网站（并非诊所官方网站）",
+		"disclaimerText": "这是个人制作的演示网站，与诊所没有任何关联，无法在此进行真实预约。"
 	},
 	"home": {
 		"metaTitle": "芝胃肠肛肠诊所 | 东京肛肠科与胃肠科",
