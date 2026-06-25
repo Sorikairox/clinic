@@ -1,0 +1,203 @@
+{
+	"site": {
+		"name": "芝肛肠胃肠诊所",
+		"shortName": "芝诊所",
+		"tagline": "位于东京港区的胃肠与肛肠专科诊所"
+	},
+	"nav": {
+		"home": "首页",
+		"director": "院长介绍",
+		"access": "交通指引",
+		"services": "诊疗项目",
+		"facility": "院内设施",
+		"price": "费用说明",
+		"contact": "联系我们",
+		"book": "在线预约"
+	},
+	"common": {
+		"bookNow": "在线预约",
+		"readMore": "了解更多",
+		"languageLabel": "语言",
+		"menu": "菜单",
+		"phoneLabel": "电话",
+		"addressLabel": "地址",
+		"hoursLabel": "诊疗时间",
+		"closed": "休诊",
+		"loading": "加载中…",
+		"backHome": "返回首页"
+	},
+	"home": {
+		"metaTitle": "芝肛肠胃肠诊所 | 东京港区的肛肠与胃肠专科",
+		"metaDescription": "位于东京港区芝的胃肠与肛肠专科诊所。诊治痔疮、肛裂、肛瘘，以及胃肠内科和内窥镜检查。提供英语诊疗，欢迎在日外籍人士就诊。",
+		"heroTitle": "让您安心倾诉的肛肠与消化系统专科诊所",
+		"heroSubtitle": "从痔疮治疗到胃肠内科——在注重隐私、舒适的环境中，为您提供细致而专业的诊疗。",
+		"heroCta": "预约就诊",
+		"introHeading": "关于本诊所",
+		"introBody": "芝肛肠胃肠诊所是一家位于东京港区芝的肛肠、肛门外科及胃肠内科专科诊所。我们诊治范围广泛——从痔疮、肛裂、肛瘘等肛门疾病，到消化系统不适及内窥镜检查。",
+		"foreignHeading": "致国际患者",
+		"foreignBody": "本诊所约有40%的患者为在日外籍人士。我们提供英语诊疗，让您无需担心语言障碍即可安心就诊。",
+		"servicesHeading": "诊疗项目",
+		"hoursHeading": "诊疗时间"
+	},
+	"director": {
+		"metaTitle": "院长介绍 | 芝肛肠胃肠诊所",
+		"metaDescription": "了解芝肛肠胃肠诊所的院长——日本大肠肛门病学会认定的肛肠专科医师及外科专科医师，并取得美国执业医师资格考试（USMLE）资格。",
+		"heading": "院长介绍",
+		"name": "院长",
+		"body": "本诊所院长是一位在肛肠疾病与消化系统疾病诊疗领域拥有多年经验的专科医师。诊疗以每一位患者为本——提供清晰易懂的说明与恰当、周到的治疗。院长拥有在美国的临床经验，亦可提供英语诊疗。",
+		"qualificationsHeading": "资质与专长",
+		"qualifications": [
+			"日本大肠肛门病学会 肛肠病专科医师",
+			"日本外科学会 外科专科医师",
+			"幽门螺杆菌感染症 认定医师",
+			"美国执业医师资格考试（USMLE）资格"
+		]
+	},
+	"access": {
+		"metaTitle": "交通指引 | 芝肛肠胃肠诊所",
+		"metaDescription": "前往芝肛肠胃肠诊所的方式：东京都港区芝4-11-5 KT大厦3楼。从三田站、田町站步行可达。",
+		"heading": "交通指引",
+		"addressLabel": "地址",
+		"address": "〒105-0014 东京都港区芝4-11-5 KT大厦3楼",
+		"stationsLabel": "最近车站",
+		"stations": [
+			"从三田站（都营三田线／浅草线）步行5分钟",
+			"从田町站（JR山手线／京浜东北线）步行7分钟"
+		],
+		"hoursHeading": "诊疗时间"
+	},
+	"services": {
+		"metaTitle": "诊疗项目 | 芝肛肠胃肠诊所",
+		"metaDescription": "芝肛肠胃肠诊所（东京）提供肛肠科（痔疮、肛裂、肛瘘）、胃肠内科、内窥镜检查及疫苗接种服务。",
+		"heading": "诊疗项目",
+		"intro": "本诊所诊疗范围广泛，涵盖肛门疾病、胃肠内科以及疫苗接种。",
+		"proctology": {
+			"title": "肛肠科",
+			"summary": "痔疮、肛裂、肛瘘等肛门疾病的诊断与治疗。",
+			"body": "由专科医师诊查肛门疼痛、出血、肿胀、瘙痒等症状。本诊所可开展日间手术，并根据您的症状与意愿提供量身定制的治疗方案。对于难以启齿的困扰，我们也将在注重隐私、体贴周到的环境中为您诊治。",
+			"conditionsHeading": "诊治的症状与疾病",
+			"conditions": [
+				"痔疮（内痔与外痔）",
+				"肛裂",
+				"肛瘘",
+				"肛门瘙痒与不适",
+				"肛门周围肿胀或脓肿"
+			]
+		},
+		"vaccines": {
+			"title": "疫苗接种与各类注射",
+			"summary": "季节性流感等疫苗接种及各类注射。",
+			"body": "本诊所提供季节性流感等疫苗接种以及各类注射服务。详情请垂询。"
+		}
+	},
+	"facility": {
+		"metaTitle": "院内设施 | 芝肛肠胃肠诊所",
+		"metaDescription": "整洁的院内环境，处处注重隐私，让您舒适、安心地就诊。",
+		"heading": "院内设施",
+		"body": "为让患者能够舒适就诊，我们营造了整洁且注重隐私的院内环境。对于较为敏感的诊疗内容，我们也格外用心，力求让您安心。"
+	},
+	"price": {
+		"metaTitle": "费用说明 | 芝肛肠胃肠诊所",
+		"metaDescription": "关于诊疗、检查及处置费用的说明。本诊所适用日本各类健康保险。",
+		"heading": "费用说明",
+		"intro": "本诊所适用日本各类健康保险。费用因诊疗内容及所需检查而有所不同。",
+		"note": "详细费用将在就诊时为您说明。如希望接受自费诊疗，请与我们联系。"
+	},
+	"contact": {
+		"metaTitle": "联系我们 | 芝肛肠胃肠诊所",
+		"metaDescription": "通过电话或在线预约表单联系芝肛肠胃肠诊所。",
+		"heading": "联系我们",
+		"intro": "预约就诊请使用在线预约表单或致电我们。",
+		"phoneLabel": "电话",
+		"addressLabel": "地址",
+		"bookCta": "在线预约"
+	},
+	"hours": {
+		"weekdays": "周一、周二、周三、周五",
+		"thursday": "周四",
+		"saturday": "周六",
+		"sunday": "周日及公众假期",
+		"morning": "上午 10:00 – 12:15",
+		"afternoon": "下午 15:00 – 17:45",
+		"closedNote": "周四、周日及公众假期休诊。"
+	},
+	"booking": {
+		"metaTitle": "在线预约 | 芝肛肠胃肠诊所",
+		"metaDescription": "在线预约就诊。请选择日期与时间并填写您的信息。",
+		"heading": "预约就诊",
+		"intro": "请选择日期与时间并填写您的信息。您的预约将作为预约申请受理，诊所将通过电子邮件向您确认。",
+		"selectDate": "选择日期",
+		"selectSlot": "选择时间",
+		"noSlots": "当日已无可预约时段。请另选日期。",
+		"selectedSlot": "已选时间",
+		"changeSlot": "更改时间",
+		"form": {
+			"heading": "填写您的信息",
+			"name": "姓名",
+			"email": "电子邮箱",
+			"phone": "电话号码",
+			"reason": "就诊原因（选填）",
+			"notes": "备注／需求（选填）",
+			"language": "希望联系所用语言",
+			"submit": "提交预约申请",
+			"required": "必填",
+			"consent": "您填写的信息将用于确认预约并就预约事宜与您联系。"
+		},
+		"received": {
+			"heading": "您的预约申请已收到",
+			"body": "我们已将您的预约作为申请受理。诊所将审核后通过电子邮件向您发送确认。请耐心等待确认邮件。",
+			"backHome": "返回首页"
+		},
+		"errors": {
+			"slotTaken": "抱歉——该时段刚刚被预约。请另选时间。",
+			"invalid": "部分信息有误。请检查后重试。",
+			"generic": "处理您的预约时发生错误。请稍后重试。"
+		}
+	},
+	"admin": {
+		"login": {
+			"heading": "员工登录",
+			"email": "电子邮箱",
+			"password": "密码",
+			"submit": "登录",
+			"error": "邮箱或密码不正确。"
+		},
+		"dashboard": {
+			"heading": "预约管理",
+			"pendingHeading": "待确认申请",
+			"noPending": "暂无待确认申请。",
+			"patient": "患者",
+			"slot": "预约时间",
+			"language": "语言",
+			"reason": "就诊原因",
+			"contact": "联系方式",
+			"submittedAt": "提交时间",
+			"confirm": "确认",
+			"decline": "拒绝",
+			"logout": "退出登录",
+			"recentHeading": "近期处理记录"
+		}
+	},
+	"email": {
+		"confirmed": {
+			"subject": "您的预约已确认 — 芝肛肠胃肠诊所",
+			"greeting": "{name} 您好，",
+			"body": "感谢您的预约。我们很高兴为您确认以下日期与时间的预约。",
+			"slotLabel": "预约时间",
+			"closing": "期待您的到来。如有任何疑问，欢迎随时与我们联系。",
+			"signature": "芝肛肠胃肠诊所"
+		},
+		"declined": {
+			"subject": "关于您的预约申请 — 芝肛肠胃肠诊所",
+			"greeting": "{name} 您好，",
+			"body": "感谢您提交预约申请。非常抱歉，我们无法受理您所申请日期与时间的预约。",
+			"closing": "敬请另择日期与时间重新预约，或致电与我们联系。给您带来不便，敬请谅解。",
+			"signature": "芝肛肠胃肠诊所"
+		}
+	},
+	"footer": {
+		"clinicName": "芝肛肠胃肠诊所",
+		"rights": "All rights reserved.",
+		"navHeading": "菜单"
+	}
+}

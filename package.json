@@ -1,0 +1,32 @@
+{
+  "name": "shiba-clinic",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Multilingual SSR website + booking system for Shiba Coloproctological Clinic",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs",
+    "astro": "astro",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@astrojs/node": "^11.0.0",
+    "@astrojs/sitemap": "^3.7.3",
+    "@libsql/client": "^0.17.4",
+    "astro": "^7.0.2",
+    "drizzle-orm": "^0.45.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.22.4",
+    "vitest": "^4.1.9"
+  }
+}

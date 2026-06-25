@@ -1,0 +1,48 @@
+---
+import Base from '@/layouts/Base.astro';
+import { resolveLocale, useList, useTranslations } from '@/i18n/utils';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+const list = useList(locale);
+const stations = list('access.stations');
+---
+
+<Base
+	{locale}
+	canonical="/access"
+	title={t('access.metaTitle')}
+	description={t('access.metaDescription')}
+>
+	<section>
+		<h1 class="section-title">{t('access.heading')}</h1>
+		<table class="info-table">
+			<tbody>
+				<tr>
+					<th>{t('access.addressLabel')}</th>
+					<td>{t('access.address')}</td>
+				</tr>
+				<tr>
+					<th>{t('access.stationsLabel')}</th>
+					<td>
+						<ul style="margin:0;padding-left:18px">
+							{stations.map((s) => <li>{s}</li>)}
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	<section>
+		<h2 class="section-title">{t('access.hoursHeading')}</h2>
+		<table class="info-table">
+			<tbody>
+				<tr><th>{t('hours.weekdays')}</th><td>{t('hours.morning')} / {t('hours.afternoon')}</td></tr>
+				<tr><th>{t('hours.saturday')}</th><td>{t('hours.morning')}</td></tr>
+				<tr><th>{t('hours.sunday')} · {t('hours.thursday')}</th><td>{t('common.closed')}</td></tr>
+			</tbody>
+		</table>
+		<p>{t('hours.closedNote')}</p>
+	</section>
+</Base>

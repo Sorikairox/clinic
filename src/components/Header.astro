@@ -1,0 +1,36 @@
+---
+import { type Locale } from '@/i18n/config';
+import { localizedPath, useTranslations } from '@/i18n/utils';
+import { NAV_ITEMS } from '@/lib/routes';
+import LangSwitcher from './LangSwitcher.astro';
+
+interface Props {
+	locale: Locale;
+	canonical: string;
+}
+
+const { locale, canonical } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<header class="site-header">
+	<div class="container header-inner">
+		<a class="brand" href={localizedPath('/', locale)}>{t('site.name')}</a>
+		<nav class="main-nav" aria-label="Main navigation">
+			{
+				NAV_ITEMS.map((item) => (
+					<a
+						href={localizedPath(item.path, locale)}
+						aria-current={canonical === item.path ? 'page' : undefined}
+					>
+						{t(item.labelKey)}
+					</a>
+				))
+			}
+		</nav>
+		<div class="header-actions">
+			<LangSwitcher {locale} {canonical} />
+			<a class="btn btn-primary" href={localizedPath('/reservation', locale)}>{t('nav.book')}</a>
+		</div>
+	</div>
+</header>

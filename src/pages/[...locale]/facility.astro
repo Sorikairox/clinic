@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/Base.astro';
+import { resolveLocale, useTranslations } from '@/i18n/utils';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+---
+
+<Base
+	{locale}
+	canonical="/facility"
+	title={t('facility.metaTitle')}
+	description={t('facility.metaDescription')}
+>
+	<section>
+		<h1 class="section-title">{t('facility.heading')}</h1>
+		<div class="prose">
+			<p class="lead">{t('facility.body')}</p>
+		</div>
+	</section>
+</Base>

@@ -1,0 +1,112 @@
+---
+import { actions } from 'astro:actions';
+import Base from '@/layouts/Base.astro';
+import { LOCALE_NAMES, type Locale } from '@/i18n/config';
+import { useTranslations } from '@/i18n/utils';
+import { getSessionStaff } from '@/lib/session';
+import { listPending, listRecentDecided } from '@/db/queries';
+import { formatSlotLong } from '@/lib/datetime';
+
+const staff = await getSessionStaff(Astro.cookies);
+if (!staff) return Astro.redirect('/admin/login');
+
+const locale = 'en' as const;
+const t = useTranslations(locale);
+
+// Flash message after a confirm/decline action.
+const confirmRes = Astro.getActionResult(actions.confirmBooking);
+const declineRes = Astro.getActionResult(actions.declineBooking);
+let flash = '';
+let flashWarn = '';
+for (const [res, label] of [
+	[confirmRes, 'confirmed'],
+	[declineRes, 'declined'],
+] as const) {
+	if (res && !res.error) {
+		flash = `Booking ${label} and patient notified by email.`;
+		if (res.data && 'emailSent' in res.data && !res.data.emailSent) {
+			flash = `Booking ${label}.`;
+			flashWarn = 'The notification email could not be sent (check RESEND_API_KEY).';
+		}
+	}
+}
+
+const pending = await listPending();
+const recent = await listRecentDecided(8);
+
+const submittedFmt = (iso: string) =>
+	new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso));
+---
+
+<Base
+	{locale}
+	canonical="/admin"
+	title={t('admin.dashboard.heading')}
+	description="Clinic booking dashboard"
+	hideNav={true}
+	noindex={true}
+>
+	<div class="admin-wrap">
+		<div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+			<h1 class="section-title" style="border:none;margin-bottom:0">{t('admin.dashboard.heading')}</h1>
+			<div style="display:flex;align-items:center;gap:12px">
+				<span style="color:var(--muted)">{staff.name}</span>
+				<form method="POST" action={actions.logout}>
+					<button class="btn btn-outline" type="submit">{t('admin.dashboard.logout')}</button>
+				</form>
+			</div>
+		</div>
+
+		{flash && <div class="success-banner" style="margin-top:20px">{flash}</div>}
+		{flashWarn && <div class="error-banner">{flashWarn}</div>}
+
+		<h2 class="section-title" style="margin-top:28px">{t('admin.dashboard.pendingHeading')}</h2>
+		{pending.length === 0 && <p>{t('admin.dashboard.noPending')}</p>}
+		{
+			pending.map((b) => (
+				<div class="booking-card">
+					<div class="slot-line">{formatSlotLong(b.slotStart, b.slotEnd, locale)}</div>
+					<table class="info-table" style="margin-top:10px">
+						<tbody>
+							<tr><th>{t('admin.dashboard.patient')}</th><td>{b.patientName}</td></tr>
+							<tr><th>{t('admin.dashboard.contact')}</th><td>{b.patientEmail} · {b.patientPhone}</td></tr>
+							<tr><th>{t('admin.dashboard.language')}</th><td>{LOCALE_NAMES[b.locale as Locale] ?? b.locale}</td></tr>
+							{b.reason && <tr><th>{t('admin.dashboard.reason')}</th><td>{b.reason}</td></tr>}
+							{b.notes && <tr><th>Notes</th><td>{b.notes}</td></tr>}
+							<tr><th>{t('admin.dashboard.submittedAt')}</th><td>{submittedFmt(b.createdAt)}</td></tr>
+						</tbody>
+					</table>
+					<div class="booking-actions">
+						<form method="POST" action={actions.confirmBooking}>
+							<input type="hidden" name="id" value={b.id} />
+							<button class="btn btn-primary" type="submit">{t('admin.dashboard.confirm')}</button>
+						</form>
+						<form method="POST" action={actions.declineBooking}>
+							<input type="hidden" name="id" value={b.id} />
+							<button class="btn btn-danger" type="submit">{t('admin.dashboard.decline')}</button>
+						</form>
+					</div>
+				</div>
+			))
+		}
+
+		{
+			recent.length > 0 && (
+				<>
+					<h2 class="section-title" style="margin-top:32px">{t('admin.dashboard.recentHeading')}</h2>
+					{recent.map((b) => (
+						<div class="booking-card" style="opacity:0.85">
+							<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+								<span class="slot-line">{formatSlotLong(b.slotStart, b.slotEnd, locale)}</span>
+								<span class={`badge badge-${b.status}`}>{b.status}</span>
+							</div>
+							<div style="color:var(--muted);margin-top:6px">
+								{b.patientName} · {b.patientEmail}
+							</div>
+						</div>
+					))}
+				</>
+			)
+		}
+	</div>
+</Base>

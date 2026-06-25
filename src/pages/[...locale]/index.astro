@@ -1,0 +1,63 @@
+---
+import Base from '@/layouts/Base.astro';
+import { localizedPath, resolveLocale, useTranslations } from '@/i18n/utils';
+import { clinicJsonLd } from '@/lib/seo';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+const jsonLd = clinicJsonLd(locale, (Astro.site ?? new URL('https://clinic.example.com')).href);
+---
+
+<Base
+	{locale}
+	canonical="/"
+	title={t('home.metaTitle')}
+	description={t('home.metaDescription')}
+	{jsonLd}
+>
+	<section class="hero">
+		<h1>{t('home.heroTitle')}</h1>
+		<p>{t('home.heroSubtitle')}</p>
+		<a class="btn btn-primary" href={localizedPath('/reservation', locale)}>{t('home.heroCta')}</a>
+	</section>
+
+	<section>
+		<h2 class="section-title">{t('home.introHeading')}</h2>
+		<p class="lead">{t('home.introBody')}</p>
+	</section>
+
+	<section>
+		<div class="callout">
+			<h2 style="margin-top:0">{t('home.foreignHeading')}</h2>
+			<p style="margin-bottom:0">{t('home.foreignBody')}</p>
+		</div>
+	</section>
+
+	<section>
+		<h2 class="section-title">{t('home.servicesHeading')}</h2>
+		<div class="card-grid">
+			<div class="card">
+				<h3>{t('services.proctology.title')}</h3>
+				<p>{t('services.proctology.summary')}</p>
+				<a href={localizedPath('/services', locale)}>{t('common.readMore')} →</a>
+			</div>
+			<div class="card">
+				<h3>{t('services.vaccines.title')}</h3>
+				<p>{t('services.vaccines.summary')}</p>
+				<a href={localizedPath('/services', locale)}>{t('common.readMore')} →</a>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<h2 class="section-title">{t('home.hoursHeading')}</h2>
+		<table class="info-table">
+			<tbody>
+				<tr><th>{t('hours.weekdays')}</th><td>{t('hours.morning')} / {t('hours.afternoon')}</td></tr>
+				<tr><th>{t('hours.saturday')}</th><td>{t('hours.morning')}</td></tr>
+				<tr><th>{t('hours.sunday')} · {t('hours.thursday')}</th><td>{t('common.closed')}</td></tr>
+			</tbody>
+		</table>
+	</section>
+</Base>

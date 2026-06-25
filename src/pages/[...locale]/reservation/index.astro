@@ -1,0 +1,123 @@
+---
+import { actions } from 'astro:actions';
+import Base from '@/layouts/Base.astro';
+import { LOCALES, LOCALE_NAMES } from '@/i18n/config';
+import { localizedPath, resolveLocale, useTranslations } from '@/i18n/utils';
+import { bookableDates, freeSlotsForDate, isValidSlot, slotsForDate } from '@/lib/availability';
+import { getActiveSlotStarts } from '@/db/queries';
+import { formatDateLong, formatSlotLong } from '@/lib/datetime';
+
+const locale = resolveLocale(Astro.params.locale);
+if (!locale) return new Response('Not Found', { status: 404 });
+const t = useTranslations(locale);
+
+// If a booking was just submitted successfully, go to the confirmation page.
+const result = Astro.getActionResult(actions.createBooking);
+if (result && !result.error) {
+	return Astro.redirect(localizedPath('/reservation/received', locale));
+}
+
+// Availability for the bookable window.
+const dates = bookableDates();
+const taken = dates.length
+	? await getActiveSlotStarts(dates[0], dates[dates.length - 1])
+	: new Set<string>();
+const days = dates
+	.map((date) => ({ date, slots: freeSlotsForDate(date, taken) }))
+	.filter((d) => d.slots.length > 0);
+
+// A selected slot (via ?slot=) that is still valid and free → show the form.
+const slotParam = Astro.url.searchParams.get('slot');
+const selectedSlot =
+	slotParam && isValidSlot(slotParam) && !taken.has(slotParam)
+		? (slotsForDate(slotParam.slice(0, 10)).find((s) => s.start === slotParam) ?? null)
+		: null;
+
+const errorMsg = result?.error
+	? result.error.code === 'CONFLICT'
+		? t('booking.errors.slotTaken')
+		: t('booking.errors.invalid')
+	: '';
+---
+
+<Base
+	{locale}
+	canonical="/reservation"
+	title={t('booking.metaTitle')}
+	description={t('booking.metaDescription')}
+>
+	<section>
+		<h1 class="section-title">{t('booking.heading')}</h1>
+		<p class="lead">{t('booking.intro')}</p>
+
+		{errorMsg && <div class="error-banner">{errorMsg}</div>}
+
+		{
+			selectedSlot ? (
+				<div>
+					<div class="callout" style="margin-bottom:24px">
+						<strong>{t('booking.selectedSlot')}:</strong><br />
+						{formatSlotLong(selectedSlot.start, selectedSlot.end, locale)}
+						<br />
+						<a href={localizedPath('/reservation', locale)}>← {t('booking.changeSlot')}</a>
+					</div>
+
+					<h2 class="section-title">{t('booking.form.heading')}</h2>
+					<form method="POST" action={actions.createBooking}>
+						<input type="hidden" name="slotStart" value={selectedSlot.start} />
+
+						<div class="form-field">
+							<label for="name">{t('booking.form.name')} <span class="req">({t('booking.form.required')})</span></label>
+							<input id="name" name="name" type="text" required maxlength="100" />
+						</div>
+						<div class="form-field">
+							<label for="email">{t('booking.form.email')} <span class="req">({t('booking.form.required')})</span></label>
+							<input id="email" name="email" type="email" required maxlength="200" />
+						</div>
+						<div class="form-field">
+							<label for="phone">{t('booking.form.phone')} <span class="req">({t('booking.form.required')})</span></label>
+							<input id="phone" name="phone" type="tel" required maxlength="40" />
+						</div>
+						<div class="form-field">
+							<label for="locale">{t('booking.form.language')}</label>
+							<select id="locale" name="locale">
+								{LOCALES.map((l) => (
+									<option value={l} selected={l === locale}>{LOCALE_NAMES[l]}</option>
+								))}
+							</select>
+						</div>
+						<div class="form-field">
+							<label for="reason">{t('booking.form.reason')}</label>
+							<input id="reason" name="reason" type="text" maxlength="1000" />
+						</div>
+						<div class="form-field">
+							<label for="notes">{t('booking.form.notes')}</label>
+							<textarea id="notes" name="notes" rows="3" maxlength="2000"></textarea>
+						</div>
+						<p style="font-size:0.85rem;color:var(--muted)">{t('booking.form.consent')}</p>
+						<button class="btn btn-primary" type="submit">{t('booking.form.submit')}</button>
+					</form>
+				</div>
+			) : (
+				<div>
+					{days.length === 0 && <p>{t('booking.noSlots')}</p>}
+					{days.map((day) => (
+						<div class="day-block">
+							<h3>{formatDateLong(`${day.date}T00:00`, locale)}</h3>
+							<div class="slot-grid">
+								{day.slots.map((slot) => (
+									<a
+										class="slot"
+										href={`${localizedPath('/reservation', locale)}?slot=${slot.start}`}
+									>
+										{slot.time}
+									</a>
+								))}
+							</div>
+						</div>
+					))}
+				</div>
+			)
+		}
+	</section>
+</Base>

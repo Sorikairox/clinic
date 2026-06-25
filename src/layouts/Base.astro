@@ -1,0 +1,38 @@
+---
+import '@/styles/global.css';
+import { LOCALE_TAGS, type Locale } from '@/i18n/config';
+import SeoHead from '@/components/SeoHead.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+	locale: Locale;
+	canonical: string;
+	title: string;
+	description: string;
+	jsonLd?: unknown;
+	hideNav?: boolean;
+	noindex?: boolean;
+}
+
+const { locale, canonical, title, description, jsonLd, hideNav, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang={LOCALE_TAGS[locale]}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<SeoHead {locale} {canonical} {title} {description} {jsonLd} {noindex} />
+	</head>
+	<body>
+		{!hideNav && <Header {locale} {canonical} />}
+		<main>
+			<div class="container">
+				<slot />
+			</div>
+		</main>
+		<Footer {locale} />
+	</body>
+</html>
