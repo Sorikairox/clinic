@@ -1,7 +1,11 @@
-# Netlify build configuration. The @astrojs/netlify adapter wires up the
-# serverless functions and publish directory automatically.
+# Netlify build configuration. The @astrojs/netlify adapter emits the SSR
+# function under .netlify/ and the static assets (CSS/JS/images) into dist/.
+# `publish` MUST point at dist/ so Netlify serves those static files; otherwise
+# it publishes the repo root and every /_astro/* and /images/* request 404s
+# (the SSR function still answers HTML routes, so the site looks unstyled).
 [build]
   command = "npm run build"
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
