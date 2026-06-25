@@ -179,6 +179,11 @@
 		}
 	},
 	"email": {
+		"received": {
+			"subject": "We've received your appointment request — Shiba Coloproctological Clinic",
+			"body": "Thank you for your request. We have received your appointment request for the date and time below and will review it. We will send you a separate email once it is confirmed.",
+			"closing": "This is an automatic acknowledgement — your appointment is not confirmed yet. We will be in touch shortly."
+		},
 		"confirmed": {
 			"subject": "Your appointment is confirmed — Shiba Coloproctological Clinic",
 			"greeting": "Dear {name},",

@@ -179,6 +179,11 @@
 		}
 	},
 	"email": {
+		"received": {
+			"subject": "Recebemos sua solicitação de consulta — Shiba Coloproctological Clinic",
+			"body": "Agradecemos pela sua solicitação. Recebemos seu pedido de consulta para a data e o horário abaixo e iremos analisá-lo. Assim que estiver confirmado, enviaremos um e-mail separado.",
+			"closing": "Esta é uma confirmação automática de recebimento — sua consulta ainda não está confirmada. Entraremos em contato em breve."
+		},
 		"confirmed": {
 			"subject": "Sua consulta está confirmada — Shiba Coloproctological Clinic",
 			"greeting": "Prezado(a) {name},",

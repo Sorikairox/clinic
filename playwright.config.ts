@@ -30,6 +30,7 @@ export default defineConfig({
 		timeout: 120_000,
 		reuseExistingServer: false,
 		env: {
+			ASTRO_ADAPTER: 'node', // build a runnable Node server for the e2e run
 			DATABASE_URL: 'file:./e2e.db',
 			SESSION_SECRET: 'e2e-secret',
 			HOST: '127.0.0.1',

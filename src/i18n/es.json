@@ -179,6 +179,11 @@
 		}
 	},
 	"email": {
+		"received": {
+			"subject": "Hemos recibido su solicitud de cita — Clínica Coloproctológica Shiba",
+			"body": "Gracias por su solicitud. Hemos recibido su solicitud de cita para la fecha y hora indicadas a continuación y la revisaremos. Le enviaremos un correo electrónico aparte en cuanto quede confirmada.",
+			"closing": "Este es un acuse de recibo automático; su cita aún no está confirmada. Nos pondremos en contacto con usted en breve."
+		},
 		"confirmed": {
 			"subject": "Su cita está confirmada — Clínica Coloproctológica Shiba",
 			"greeting": "Estimado/a {name}:",

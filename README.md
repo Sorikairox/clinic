@@ -76,10 +76,16 @@ To add a locale: add it to `LOCALES`/`LOCALE_NAMES`/`LOCALE_TAGS` in
 
 ## Email
 
-Confirmation/decline emails are sent through Resend from the dashboard actions
-(`src/actions/index.ts` → `src/lib/email.ts`). Without `RESEND_API_KEY` the app
-logs the email instead of sending it, so the flow works in development. Templates
-are localized by the booking's `locale`.
+Three transactional emails are sent through Resend (`src/lib/email.ts`), all
+localized by the booking's `locale`:
+
+- **Auto-reply on submission** — an acknowledgement that the request was received
+  (sent from the `createBooking` action, best-effort).
+- **Confirmation** / **decline** — sent when staff act on a booking from the
+  dashboard.
+
+Without `RESEND_API_KEY` the app logs the email instead of sending it, so the
+flow works end to end in development.
 
 ## Deployment (low cost)
 
@@ -91,14 +97,20 @@ turso db tokens create shiba-clinic        # -> DATABASE_AUTH_TOKEN
 ```
 Run `npm run db:migrate` and `npm run db:seed` against those env vars once.
 
-### Hosting
-This project uses the **Node adapter**, so the built server (`npm start`) runs on
-any Node host — a small VPS, Fly.io, Render, Railway, or **Netlify** (swap to
-`@astrojs/netlify` in `astro.config.mjs`).
-
-Required production env vars (see `.env.example`):
+### Hosting — Netlify (default)
+The build targets **Netlify** by default (`@astrojs/netlify`). Connect the repo to
+a Netlify site; `netlify.toml` sets the build command and Node version, and the
+adapter wires up the serverless functions automatically. Set the production env
+vars (see `.env.example`) in the Netlify dashboard:
 `SITE_URL`, `DATABASE_URL`, `DATABASE_AUTH_TOKEN`, `SESSION_SECRET`,
 `RESEND_API_KEY`, `EMAIL_FROM`.
+
+### Hosting — Node (VPS / Fly / Render / tests)
+Set `ASTRO_ADAPTER=node` to build a standalone Node server instead:
+```bash
+ASTRO_ADAPTER=node npm run build && npm start   # node ./dist/server/entry.mjs
+```
+This is also what the Playwright e2e suite uses.
 
 ## Testing
 

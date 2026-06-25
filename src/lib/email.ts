@@ -56,6 +56,22 @@ function paragraph(text: string): string {
 	return `<p style="margin:0 0 16px;">${text}</p>`;
 }
 
+export function buildReceivedEmail(b: Booking): { subject: string; html: string } {
+	const locale = b.locale as Locale;
+	const t = useTranslations(locale);
+	const slot = formatSlotLong(b.slotStart, b.slotEnd, locale);
+	const html = layout(
+		// greeting / slotLabel / signature are shared with the confirmed email.
+		paragraph(t('email.confirmed.greeting', { name: b.patientName })) +
+			paragraph(t('email.received.body')) +
+			`<p style="margin:0 0 16px;padding:14px 16px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">
+        <strong>${t('email.confirmed.slotLabel')}:</strong><br>${slot}</p>` +
+			paragraph(t('email.received.closing')) +
+			paragraph(`— ${t('email.confirmed.signature')}`),
+	);
+	return { subject: t('email.received.subject'), html };
+}
+
 export function buildConfirmedEmail(b: Booking): { subject: string; html: string } {
 	const locale = b.locale as Locale;
 	const t = useTranslations(locale);
