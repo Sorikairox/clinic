@@ -5,7 +5,7 @@ import { db } from '../db/client';
 import { staff } from '../db/schema';
 import { createBooking, decideBooking } from '../db/queries';
 import { isValidSlot, slotsForDate } from '../lib/availability';
-import { buildConfirmedEmail, buildDeclinedEmail, sendEmail } from '../lib/email';
+import { buildConfirmedEmail, buildDeclinedEmail, buildReceivedEmail, sendEmail } from '../lib/email';
 import { verifyPassword } from '../lib/password';
 import { clearSession, getSessionStaff, setSession } from '../lib/session';
 import { LOCALES } from '../i18n/config';
@@ -43,6 +43,13 @@ export const server = {
 				notes: input.notes?.trim() || null,
 			});
 			if (!result.ok) throw new ActionError({ code: 'CONFLICT', message: 'slot_taken' });
+
+			// Best-effort auto-reply acknowledging the request (in the patient's
+			// language). sendEmail logs and swallows failures, so it never blocks
+			// or fails the booking itself.
+			const { subject, html } = buildReceivedEmail(result.booking);
+			await sendEmail({ to: result.booking.patientEmail, subject, html });
+
 			return { bookingId: result.booking.id };
 		},
 	}),
