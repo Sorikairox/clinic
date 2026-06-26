@@ -15,5 +15,14 @@
 [build.environment]
   NODE_VERSION = "22"
 
+  # Netlify secrets scanning compares the *values* of all build-environment
+  # variables against the repo/build output and fails the build on a match. The
+  # key listed below holds a non-sensitive identifier (a Google Cloud project
+  # slug) that is also the npm package name, so it legitimately appears across
+  # the tree (package.json, package-lock.json, README, .env.example, source) and
+  # trips the scanner as a false positive. Omit only that key; the genuinely
+  # sensitive vars stay scanned.
+  SECRETS_SCAN_OMIT_KEYS = "RECAPTCHA_PROJECT_ID"
+
 # Reminder: set SITE_URL, DATABASE_URL, DATABASE_AUTH_TOKEN, SESSION_SECRET,
 # RESEND_API_KEY and EMAIL_FROM in the Netlify site environment variables.
