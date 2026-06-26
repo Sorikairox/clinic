@@ -658,6 +658,12 @@ html.js .cal-fallback {
 		padding: 8px 0;
 		font-size: 1rem;
 	}
+	/* The switcher sits on the left of the header on mobile, so anchor its
+	   dropdown to the left edge — `right: 0` would push it off-screen. */
+	.lang-switcher ul {
+		right: auto;
+		left: 0;
+	}
 	.hero {
 		padding: 40px 24px;
 	}
