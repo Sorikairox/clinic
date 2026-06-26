@@ -107,6 +107,54 @@ main {
 	align-items: center;
 	gap: 12px;
 }
+/* Hamburger toggle — hidden on desktop and when JS is unavailable. */
+.nav-toggle {
+	display: none;
+	margin-left: auto;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--white);
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+}
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+	content: "";
+	display: block;
+	width: 20px;
+	height: 2px;
+	background: var(--teal-dark);
+	border-radius: 2px;
+	transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-toggle-bars {
+	position: relative;
+}
+.nav-toggle-bars::before {
+	position: absolute;
+	top: -6px;
+}
+.nav-toggle-bars::after {
+	position: absolute;
+	top: 6px;
+}
+/* Animate bars into an "X" when the menu is open. */
+.nav-open .nav-toggle-bars {
+	background: transparent;
+}
+.nav-open .nav-toggle-bars::before {
+	top: 0;
+	transform: rotate(45deg);
+}
+.nav-open .nav-toggle-bars::after {
+	top: 0;
+	transform: rotate(-45deg);
+}
 
 /* Buttons */
 .btn {
@@ -583,6 +631,32 @@ html.js .cal-fallback {
 	.main-nav {
 		order: 3;
 		width: 100%;
+	}
+	/* JS-enhanced: collapse the nav behind the burger so it no longer
+	   eats vertical space on small screens. */
+	.site-header.nav-enhanced .nav-toggle {
+		display: inline-flex;
+		order: 2;
+	}
+	.site-header.nav-enhanced .header-actions {
+		order: 1;
+	}
+	.site-header.nav-enhanced .main-nav {
+		display: none;
+	}
+	.site-header.nav-enhanced.nav-open .main-nav {
+		display: flex;
+		flex-direction: column;
+		/* flex-basis 100% (not just width) so it wraps to its own full-width
+		   row — base `.main-nav { flex: 1 }` sets flex-basis: 0% otherwise. */
+		flex: 0 0 100%;
+		gap: 4px;
+		padding-top: 8px;
+		border-top: 1px solid var(--line);
+	}
+	.site-header.nav-enhanced.nav-open .main-nav a {
+		padding: 8px 0;
+		font-size: 1rem;
 	}
 	.hero {
 		padding: 40px 24px;
