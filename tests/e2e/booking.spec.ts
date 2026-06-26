@@ -63,8 +63,21 @@ test.describe('Booking + dashboard flow', () => {
 		await expect(page.locator('#email')).toHaveValue('review-patient@example.com');
 	});
 
-	test('concurrent booking of the same slot: one succeeds, one is rejected', async ({ request }) => {
-		const slotStart = '2026-06-26T16:00';
+	test('concurrent booking of the same slot: one succeeds, one is rejected', async ({ page, request }) => {
+		// Derive the slot from the server-rendered calendar rather than hardcoding
+		// a date (which goes stale once that day passes). `data-enable` already
+		// lists only bookable dates — closing days and fully-booked days excluded —
+		// so its first entry is the next available date. Use that day's *last*
+		// free slot so it can't collide with the first-slot bookings the other
+		// tests make on the same day.
+		await page.goto('/en/reservation');
+		const dates: string[] = JSON.parse(
+			(await page.locator('#calendar-widget').getAttribute('data-enable')) ?? '[]',
+		);
+		await page.goto(`/en/reservation?date=${dates[0]}`);
+		const href = await page.locator('a.slot').last().getAttribute('href');
+		const slotStart = new URL(href!, 'http://localhost').searchParams.get('slot')!;
+
 		const post = () =>
 			request.post('/en/reservation?_action=createBooking', {
 				form: {
