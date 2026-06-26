@@ -15,5 +15,15 @@
 [build.environment]
   NODE_VERSION = "22"
 
+  # Netlify secrets scanning compares the *values* of all build-environment
+  # variables against the repo/build output and fails the build on a match.
+  # RECAPTCHA_PROJECT_ID is the Google Cloud project slug ("shiba-clinic") — not
+  # a secret. It legitimately appears all over the tree (package.json "name",
+  # package-lock.json, the README turso commands, .env.example, recaptcha.ts/test),
+  # so it trips the scanner as a false positive. Omit just that key from scanning;
+  # the genuinely-sensitive vars (RECAPTCHA_API_KEY, DATABASE_AUTH_TOKEN,
+  # SESSION_SECRET, RESEND_API_KEY) stay scanned.
+  SECRETS_SCAN_OMIT_KEYS = "RECAPTCHA_PROJECT_ID"
+
 # Reminder: set SITE_URL, DATABASE_URL, DATABASE_AUTH_TOKEN, SESSION_SECRET,
 # RESEND_API_KEY and EMAIL_FROM in the Netlify site environment variables.
