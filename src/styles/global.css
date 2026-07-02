@@ -660,6 +660,20 @@ html.js .cal-fallback {
 	color: var(--teal-dark);
 }
 
+/* Admin language switcher */
+.admin-lang {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+.admin-lang select {
+	padding: 6px 8px;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	font-size: 0.9rem;
+	background: var(--white);
+}
+
 /* Slot manager */
 .manage-datebar {
 	display: flex;

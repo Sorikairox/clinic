@@ -1,0 +1,34 @@
+---
+import { LOCALES, LOCALE_NAMES, type Locale } from '@/i18n/config';
+
+interface Props {
+	locale: Locale;
+	/** Where the GET form submits (e.g. "/admin" or "/admin/login"). */
+	action: string;
+	/** Preserve the selected slot-manager day across a language change. */
+	manageDate?: string;
+}
+
+const { locale, action, manageDate } = Astro.props;
+---
+
+<form method="GET" action={action} class="admin-lang">
+	{manageDate && <input type="hidden" name="manageDate" value={manageDate} />}
+	<select name="lang" aria-label="Display language" data-admin-lang>
+		{LOCALES.map((l) => (
+			<option value={l} selected={l === locale}>{LOCALE_NAMES[l]}</option>
+		))}
+	</select>
+	{/* No-JS fallback: submit the choice. With JS the select auto-submits. */}
+	<button class="btn btn-outline btn-sm" type="submit">OK</button>
+</form>
+
+<script>
+	// Auto-submit the language switcher on change (and hide the fallback button).
+	const select = document.querySelector<HTMLSelectElement>('select[data-admin-lang]');
+	if (select) {
+		const btn = select.parentElement?.querySelector('button');
+		if (btn) btn.style.display = 'none';
+		select.addEventListener('change', () => select.form?.submit());
+	}
+</script>

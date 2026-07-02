@@ -372,7 +372,57 @@
 			"confirm": "Confirm",
 			"decline": "Decline",
 			"logout": "Log out",
-			"recentHeading": "Recently handled"
+			"recentHeading": "Recently handled",
+			"visit": "Visit",
+			"visitNew": "First visit",
+			"visitReturning": "Returning patient",
+			"genderDob": "Gender / DOB",
+			"male": "Male",
+			"female": "Female",
+			"address": "Address",
+			"status": {
+				"pending": "Pending",
+				"confirmed": "Confirmed",
+				"declined": "Declined",
+				"blocked": "Blocked"
+			},
+			"flash": {
+				"confirmed": "Booking confirmed.",
+				"declined": "Booking declined.",
+				"confirmedEmailed": "Booking confirmed and the patient has been notified by email.",
+				"declinedEmailed": "Booking declined and the patient has been notified by email.",
+				"emailWarn": "The notification email could not be sent (check RESEND_API_KEY)."
+			},
+			"manage": {
+				"heading": "Manage slots",
+				"intro": "Book a slot for an appointment taken by phone, or block a slot so it can't be booked online.",
+				"date": "Date",
+				"show": "Show slots",
+				"noSlots": "The clinic has no bookable slots on that date (closed or outside the window).",
+				"free": "Free",
+				"blocked": "Blocked",
+				"block": "Block",
+				"unblock": "Unblock",
+				"phoneAppt": "Phone appt",
+				"pendingOnline": "Pending (online)",
+				"bookedOnline": "Booked (online)",
+				"cancel": "Cancel",
+				"bookByPhone": "Book by phone",
+				"patientName": "Patient name",
+				"phone": "Phone",
+				"email": "Email (optional — sends a confirmation)",
+				"customerNumber": "Customer no. (optional)",
+				"note": "Note (optional)",
+				"bookAppointment": "Book appointment",
+				"booked": "Phone appointment booked.",
+				"bookedEmailed": "Phone appointment booked and the patient has been notified by email.",
+				"emailWarn": "The confirmation email could not be sent (check RESEND_API_KEY).",
+				"blockedFlash": "Slot blocked — it can no longer be booked online.",
+				"freed": "Slot freed.",
+				"errConflict": "That slot was just taken. Please pick another.",
+				"errInvalid": "That is not a valid, open slot.",
+				"errGeneric": "Could not complete that action — please check the details and try again."
+			}
 		}
 	},
 	"email": {

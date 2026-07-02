@@ -372,7 +372,57 @@
 			"confirm": "Confirmar",
 			"decline": "Rechazar",
 			"logout": "Cerrar sesión",
-			"recentHeading": "Gestionadas recientemente"
+			"recentHeading": "Gestionadas recientemente",
+			"visit": "Tipo de visita",
+			"visitNew": "Primera visita",
+			"visitReturning": "Visita de seguimiento",
+			"genderDob": "Sexo / Nac.",
+			"male": "Masculino",
+			"female": "Femenino",
+			"address": "Dirección",
+			"status": {
+				"pending": "Pendiente",
+				"confirmed": "Confirmada",
+				"declined": "Rechazada",
+				"blocked": "Bloqueado"
+			},
+			"flash": {
+				"confirmed": "Reserva confirmada.",
+				"declined": "Reserva rechazada.",
+				"confirmedEmailed": "Reserva confirmada y se ha notificado al paciente por correo electrónico.",
+				"declinedEmailed": "Reserva rechazada y se ha notificado al paciente por correo electrónico.",
+				"emailWarn": "No se pudo enviar el correo de notificación (verifique RESEND_API_KEY)."
+			},
+			"manage": {
+				"heading": "Gestionar horarios",
+				"intro": "Reserve un horario para una cita concertada por teléfono, o bloquee un horario para que no pueda reservarse en línea.",
+				"date": "Fecha",
+				"show": "Mostrar horarios",
+				"noSlots": "La clínica no tiene horarios disponibles en esa fecha (cerrada o fuera del período).",
+				"free": "Libre",
+				"blocked": "Bloqueado",
+				"block": "Bloquear",
+				"unblock": "Desbloquear",
+				"phoneAppt": "Por teléfono",
+				"pendingOnline": "Pendiente (en línea)",
+				"bookedOnline": "Reservado (en línea)",
+				"cancel": "Cancelar",
+				"bookByPhone": "Reservar por teléfono",
+				"patientName": "Nombre del paciente",
+				"phone": "Teléfono",
+				"email": "Correo electrónico (opcional: envía una confirmación)",
+				"customerNumber": "N.º de cliente (opcional)",
+				"note": "Nota (opcional)",
+				"bookAppointment": "Reservar cita",
+				"booked": "Cita por teléfono reservada.",
+				"bookedEmailed": "Cita por teléfono reservada y se ha notificado al paciente por correo electrónico.",
+				"emailWarn": "No se pudo enviar el correo de confirmación (verifique RESEND_API_KEY).",
+				"blockedFlash": "Horario bloqueado: ya no se puede reservar en línea.",
+				"freed": "Horario liberado.",
+				"errConflict": "Ese horario acaba de ocuparse. Elija otro.",
+				"errInvalid": "Ese no es un horario válido y disponible.",
+				"errGeneric": "No se pudo completar la acción: verifique los datos e inténtelo de nuevo."
+			}
 		}
 	},
 	"email": {

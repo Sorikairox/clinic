@@ -1,11 +1,12 @@
 ---
 import { actions } from 'astro:actions';
 import Base from '@/layouts/Base.astro';
+import AdminLangSwitcher from '@/components/AdminLangSwitcher.astro';
 import { useTranslations } from '@/i18n/utils';
+import { resolveAdminLocale } from '@/lib/adminLocale';
 import { getSessionStaff } from '@/lib/session';
 
-// Admin UI is English-only.
-const locale = 'en' as const;
+const locale = resolveAdminLocale(Astro.cookies, Astro.url);
 const t = useTranslations(locale);
 
 if (await getSessionStaff(Astro.cookies)) return Astro.redirect('/admin');
@@ -24,6 +25,9 @@ const error = result?.error ? t('admin.login.error') : '';
 	noindex={true}
 >
 	<div class="admin-wrap" style="max-width:420px;margin:40px auto;">
+		<div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+			<AdminLangSwitcher {locale} action="/admin/login" />
+		</div>
 		<h1 class="section-title">{t('admin.login.heading')}</h1>
 		{error && <div class="error-banner">{error}</div>}
 		<form method="POST" action={actions.login}>
