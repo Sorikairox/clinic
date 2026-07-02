@@ -19,16 +19,15 @@ const { locale, action, manageDate } = Astro.props;
 			<option value={l} selected={l === locale}>{LOCALE_NAMES[l]}</option>
 		))}
 	</select>
-	{/* No-JS fallback: submit the choice. With JS the select auto-submits. */}
-	<button class="btn btn-outline btn-sm" type="submit">OK</button>
+	{/* No-JS fallback only: submit the choice. Rendered solely when scripting is
+	    off, so it never becomes a second submit button in the JS DOM (with JS the
+	    select auto-submits, and a stray submit button would shadow the page's own
+	    login/logout button). */}
+	<noscript><button class="btn btn-outline btn-sm" type="submit">OK</button></noscript>
 </form>
 
 <script>
-	// Auto-submit the language switcher on change (and hide the fallback button).
+	// Auto-submit the language switcher on change.
 	const select = document.querySelector<HTMLSelectElement>('select[data-admin-lang]');
-	if (select) {
-		const btn = select.parentElement?.querySelector('button');
-		if (btn) btn.style.display = 'none';
-		select.addEventListener('change', () => select.form?.submit());
-	}
+	select?.addEventListener('change', () => select.form?.submit());
 </script>
