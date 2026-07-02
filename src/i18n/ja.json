@@ -372,7 +372,57 @@
 			"confirm": "確定する",
 			"decline": "お断りする",
 			"logout": "ログアウト",
-			"recentHeading": "最近の対応"
+			"recentHeading": "最近の対応",
+			"visit": "受診区分",
+			"visitNew": "初診",
+			"visitReturning": "再診",
+			"genderDob": "性別・生年月日",
+			"male": "男性",
+			"female": "女性",
+			"address": "住所",
+			"status": {
+				"pending": "確認待ち",
+				"confirmed": "確定",
+				"declined": "お断り",
+				"blocked": "ブロック"
+			},
+			"flash": {
+				"confirmed": "予約を確定しました。",
+				"declined": "予約をお断りしました。",
+				"confirmedEmailed": "予約を確定し、患者へメールで通知しました。",
+				"declinedEmailed": "予約をお断りし、患者へメールで通知しました。",
+				"emailWarn": "通知メールを送信できませんでした（RESEND_API_KEY を確認してください）。"
+			},
+			"manage": {
+				"heading": "予約枠の管理",
+				"intro": "電話で受けた予約を登録したり、オンライン予約できないよう枠をブロックしたりできます。",
+				"date": "日付",
+				"show": "枠を表示",
+				"noSlots": "その日は予約可能な枠がありません（休診日または予約受付期間外です）。",
+				"free": "空き",
+				"blocked": "ブロック中",
+				"block": "ブロック",
+				"unblock": "解除",
+				"phoneAppt": "電話予約",
+				"pendingOnline": "確認待ち（オンライン）",
+				"bookedOnline": "予約済み（オンライン）",
+				"cancel": "取消",
+				"bookByPhone": "電話予約を登録",
+				"patientName": "患者氏名",
+				"phone": "電話番号",
+				"email": "メール（任意・確認メールを送信します）",
+				"customerNumber": "診察券番号（任意）",
+				"note": "メモ（任意）",
+				"bookAppointment": "予約を登録",
+				"booked": "電話予約を登録しました。",
+				"bookedEmailed": "電話予約を登録し、患者へメールで通知しました。",
+				"emailWarn": "確認メールを送信できませんでした（RESEND_API_KEY を確認してください）。",
+				"blockedFlash": "枠をブロックしました。オンラインでは予約できなくなります。",
+				"freed": "枠を解放しました。",
+				"errConflict": "その枠はすでに埋まりました。別の枠を選んでください。",
+				"errInvalid": "有効な空き枠ではありません。",
+				"errGeneric": "処理を完了できませんでした。入力内容を確認してもう一度お試しください。"
+			}
 		}
 	},
 	"email": {

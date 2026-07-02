@@ -117,8 +117,9 @@ test.describe('Booking + dashboard flow', () => {
 		await submitThroughReview(page);
 		await expect(page.locator('.success-banner')).toBeVisible();
 
-		// Log in.
-		await page.goto('/admin/login');
+		// Log in. Pin the admin UI to English (it defaults to Japanese) so the
+		// assertions below match; ?lang= is remembered in a cookie for /admin.
+		await page.goto('/admin/login?lang=en');
 		await page.fill('#email', 'e2e@clinic.test');
 		await page.fill('#password', 'e2epass123');
 		await page.click('button[type=submit]');

@@ -372,7 +372,57 @@
 			"confirm": "確認",
 			"decline": "婉拒",
 			"logout": "登出",
-			"recentHeading": "最近處理"
+			"recentHeading": "最近處理",
+			"visit": "就診類型",
+			"visitNew": "初診",
+			"visitReturning": "複診",
+			"genderDob": "性別 / 出生日期",
+			"male": "男",
+			"female": "女",
+			"address": "地址",
+			"status": {
+				"pending": "待確認",
+				"confirmed": "已確認",
+				"declined": "已婉拒",
+				"blocked": "已封鎖"
+			},
+			"flash": {
+				"confirmed": "預約已確認。",
+				"declined": "預約已婉拒。",
+				"confirmedEmailed": "預約已確認，並已透過電子郵件通知患者。",
+				"declinedEmailed": "預約已婉拒，並已透過電子郵件通知患者。",
+				"emailWarn": "通知郵件傳送失敗（請檢查 RESEND_API_KEY）。"
+			},
+			"manage": {
+				"heading": "管理預約時段",
+				"intro": "登記電話預約，或封鎖某個時段使其無法在線上預約。",
+				"date": "日期",
+				"show": "顯示時段",
+				"noSlots": "該日期沒有可預約的時段（休診或超出預約範圍）。",
+				"free": "空閒",
+				"blocked": "已封鎖",
+				"block": "封鎖",
+				"unblock": "解除封鎖",
+				"phoneAppt": "電話預約",
+				"pendingOnline": "待確認（線上）",
+				"bookedOnline": "已預約（線上）",
+				"cancel": "取消",
+				"bookByPhone": "登記電話預約",
+				"patientName": "患者姓名",
+				"phone": "電話",
+				"email": "電子郵件（選填，將傳送確認郵件）",
+				"customerNumber": "掛號卡號（選填）",
+				"note": "備註（選填）",
+				"bookAppointment": "登記預約",
+				"booked": "電話預約已登記。",
+				"bookedEmailed": "電話預約已登記，並已透過電子郵件通知患者。",
+				"emailWarn": "確認郵件傳送失敗（請檢查 RESEND_API_KEY）。",
+				"blockedFlash": "該時段已封鎖，將無法在線上預約。",
+				"freed": "該時段已釋放。",
+				"errConflict": "該時段剛被佔用，請另選一個。",
+				"errInvalid": "這不是有效的空閒時段。",
+				"errGeneric": "無法完成此操作，請檢查資料後再試一次。"
+			}
 		}
 	},
 	"email": {

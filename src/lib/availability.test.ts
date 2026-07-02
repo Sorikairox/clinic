@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 import {
 	bookableDates,
 	freeSlotsForDate,
+	isStaffManageableSlot,
 	isValidSlot,
 	slotsForDate,
+	staffManageableDates,
 	weekdayOf,
 } from './availability';
 
@@ -81,5 +83,30 @@ describe('isValidSlot', () => {
 	});
 	it('rejects today / past (window starts tomorrow)', () => {
 		expect(isValidSlot('2026-06-25T10:00', NOW)).toBe(false);
+	});
+});
+
+describe('staffManageableDates', () => {
+	it('includes today (staff take same-day phone appointments)', () => {
+		const dates = staffManageableDates(NOW);
+		expect(dates[0]).toBe('2026-06-25'); // today (Thursday, open) — unlike bookableDates
+		expect(bookableDates(NOW)).not.toContain('2026-06-25');
+	});
+	it('still excludes closed days', () => {
+		const dates = staffManageableDates(NOW);
+		expect(dates).not.toContain(WEDNESDAY);
+		expect(dates).not.toContain(SUNDAY);
+	});
+});
+
+describe('isStaffManageableSlot', () => {
+	it('accepts a real template slot today', () => {
+		expect(isStaffManageableSlot('2026-06-25T10:00', NOW)).toBe(true);
+	});
+	it('rejects an off-grid time', () => {
+		expect(isStaffManageableSlot('2026-06-25T10:20', NOW)).toBe(false);
+	});
+	it('rejects a slot on a closed day', () => {
+		expect(isStaffManageableSlot('2026-07-01T10:00', NOW)).toBe(false); // Wednesday
 	});
 });

@@ -372,7 +372,57 @@
 			"confirm": "确认",
 			"decline": "婉拒",
 			"logout": "登出",
-			"recentHeading": "近期处理"
+			"recentHeading": "近期处理",
+			"visit": "就诊类型",
+			"visitNew": "初诊",
+			"visitReturning": "复诊",
+			"genderDob": "性别 / 出生日期",
+			"male": "男",
+			"female": "女",
+			"address": "地址",
+			"status": {
+				"pending": "待确认",
+				"confirmed": "已确认",
+				"declined": "已婉拒",
+				"blocked": "已封锁"
+			},
+			"flash": {
+				"confirmed": "预约已确认。",
+				"declined": "预约已婉拒。",
+				"confirmedEmailed": "预约已确认，并已通过邮件通知患者。",
+				"declinedEmailed": "预约已婉拒，并已通过邮件通知患者。",
+				"emailWarn": "通知邮件发送失败（请检查 RESEND_API_KEY）。"
+			},
+			"manage": {
+				"heading": "管理预约时段",
+				"intro": "登记电话预约，或封锁某个时段使其无法在线预约。",
+				"date": "日期",
+				"show": "显示时段",
+				"noSlots": "该日期没有可预约的时段（休诊或超出预约范围）。",
+				"free": "空闲",
+				"blocked": "已封锁",
+				"block": "封锁",
+				"unblock": "解除封锁",
+				"phoneAppt": "电话预约",
+				"pendingOnline": "待确认（在线）",
+				"bookedOnline": "已预约（在线）",
+				"cancel": "取消",
+				"bookByPhone": "登记电话预约",
+				"patientName": "患者姓名",
+				"phone": "电话",
+				"email": "邮箱（可选，将发送确认邮件）",
+				"customerNumber": "就诊卡号（可选）",
+				"note": "备注（可选）",
+				"bookAppointment": "登记预约",
+				"booked": "电话预约已登记。",
+				"bookedEmailed": "电话预约已登记，并已通过邮件通知患者。",
+				"emailWarn": "确认邮件发送失败（请检查 RESEND_API_KEY）。",
+				"blockedFlash": "该时段已封锁，将无法在线预约。",
+				"freed": "该时段已释放。",
+				"errConflict": "该时段刚被占用，请另选一个。",
+				"errInvalid": "这不是有效的空闲时段。",
+				"errGeneric": "无法完成该操作，请检查信息后重试。"
+			}
 		}
 	},
 	"email": {

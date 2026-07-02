@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { and, desc, eq, gte, lte, ne } from 'drizzle-orm';
+import { and, desc, eq, gte, inArray, lte, ne } from 'drizzle-orm';
 import { db } from './client';
 import { booking, type Booking, type NewBooking } from './schema';
 
@@ -58,6 +58,54 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
 	}
 }
 
+export type CreateStaffEntryInput = Omit<NewBooking, 'id' | 'createdAt'> & { origin?: 'staff' };
+
+/**
+ * Inserts a staff-created entry — a phone appointment ('confirmed') or a plain
+ * block ('blocked'). Shares the active_slot_unique guard with online bookings,
+ * so it fails atomically if the slot is already taken.
+ */
+export async function createStaffEntry(input: CreateStaffEntryInput): Promise<CreateBookingResult> {
+	const row: NewBooking = {
+		...input,
+		origin: 'staff',
+		id: randomUUID(),
+		createdAt: new Date().toISOString(),
+	};
+	try {
+		const [created] = await db.insert(booking).values(row).returning();
+		return { ok: true, booking: created };
+	} catch (err) {
+		if (isUniqueViolation(err)) return { ok: false, reason: 'slot_taken' };
+		throw err;
+	}
+}
+
+/**
+ * Deletes a staff-created entry (a block or phone booking) by id, freeing its
+ * slot. Restricted to origin 'staff' so a patient's online booking can never be
+ * silently removed here — those go through decline. Returns the removed row.
+ */
+export async function deleteStaffEntry(id: string): Promise<Booking | null> {
+	const [removed] = await db
+		.delete(booking)
+		.where(and(eq(booking.id, id), eq(booking.origin, 'staff')))
+		.returning();
+	return removed ?? null;
+}
+
+/** Active (non-declined) entries whose slot falls on the given date, ordered by time. */
+export function getEntriesForDate(dateISO: string): Promise<Booking[]> {
+	return db.query.booking.findMany({
+		where: and(
+			ne(booking.status, 'declined'),
+			gte(booking.slotStart, dateISO),
+			lte(booking.slotStart, `${dateISO}T99:99`),
+		),
+		orderBy: booking.slotStart,
+	});
+}
+
 export function getBooking(id: string): Promise<Booking | undefined> {
 	return db.query.booking.findFirst({ where: eq(booking.id, id) });
 }
@@ -71,7 +119,9 @@ export function listPending(): Promise<Booking[]> {
 
 export function listRecentDecided(limit = 10): Promise<Booking[]> {
 	return db.query.booking.findMany({
-		where: ne(booking.status, 'pending'),
+		// Only confirmed/declined bookings — 'blocked' holds are managed inline in
+		// the slot manager, not shown in the "recently handled" history.
+		where: inArray(booking.status, ['confirmed', 'declined']),
 		orderBy: desc(booking.decidedAt),
 		limit,
 	});

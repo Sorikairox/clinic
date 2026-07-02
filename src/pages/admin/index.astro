@@ -1,16 +1,19 @@
 ---
 import { actions } from 'astro:actions';
 import Base from '@/layouts/Base.astro';
+import AdminLangSwitcher from '@/components/AdminLangSwitcher.astro';
 import { LOCALE_NAMES, type Locale } from '@/i18n/config';
 import { useTranslations } from '@/i18n/utils';
+import { resolveAdminLocale } from '@/lib/adminLocale';
 import { getSessionStaff } from '@/lib/session';
-import { listPending, listRecentDecided } from '@/db/queries';
-import { formatSlotLong } from '@/lib/datetime';
+import { getEntriesForDate, listPending, listRecentDecided } from '@/db/queries';
+import { slotsForDate, staffManageableDates } from '@/lib/availability';
+import { formatDateLong, formatSlotLong } from '@/lib/datetime';
 
 const staff = await getSessionStaff(Astro.cookies);
 if (!staff) return Astro.redirect('/admin/login');
 
-const locale = 'en' as const;
+const locale = resolveAdminLocale(Astro.cookies, Astro.url);
 const t = useTranslations(locale);
 
 // Flash message after a confirm/decline action.
@@ -23,10 +26,10 @@ for (const [res, label] of [
 	[declineRes, 'declined'],
 ] as const) {
 	if (res && !res.error) {
-		flash = `Booking ${label} and patient notified by email.`;
+		flash = t(`admin.dashboard.flash.${label}Emailed`);
 		if (res.data && 'emailSent' in res.data && !res.data.emailSent) {
-			flash = `Booking ${label}.`;
-			flashWarn = 'The notification email could not be sent (check RESEND_API_KEY).';
+			flash = t(`admin.dashboard.flash.${label}`);
+			flashWarn = t('admin.dashboard.flash.emailWarn');
 		}
 	}
 }
@@ -36,6 +39,59 @@ const recent = await listRecentDecided(8);
 
 const submittedFmt = (iso: string) =>
 	new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso));
+
+// --- Slot manager: book (phone) / block slots -----------------------------
+const manageDates = staffManageableDates();
+const manageMin = manageDates[0];
+const manageMax = manageDates[manageDates.length - 1];
+
+const bookRes = Astro.getActionResult(actions.staffBookSlot);
+const blockRes = Astro.getActionResult(actions.blockSlot);
+const releaseRes = Astro.getActionResult(actions.releaseSlot);
+
+// After a slot action the page re-renders at /admin (no query string), so the
+// action returns the affected date and we use it to re-open that day.
+const requestedDate =
+	(bookRes && !bookRes.error && bookRes.data.date) ||
+	(blockRes && !blockRes.error && blockRes.data.date) ||
+	(releaseRes && !releaseRes.error && releaseRes.data.date) ||
+	Astro.url.searchParams.get('manageDate') ||
+	'';
+const manageDate = manageDates.includes(requestedDate) ? requestedDate : '';
+
+let daySlots: ReturnType<typeof slotsForDate> = [];
+const entriesByStart = new Map<string, Awaited<ReturnType<typeof getEntriesForDate>>[number]>();
+if (manageDate) {
+	daySlots = slotsForDate(manageDate);
+	for (const e of await getEntriesForDate(manageDate)) entriesByStart.set(e.slotStart, e);
+}
+
+// Flash / error for the slot manager.
+let manageFlash = '';
+let manageWarn = '';
+if (bookRes && !bookRes.error) {
+	manageFlash = t('admin.dashboard.manage.booked');
+	if (bookRes.data.hadEmail) {
+		manageFlash = bookRes.data.emailSent
+			? t('admin.dashboard.manage.bookedEmailed')
+			: t('admin.dashboard.manage.booked');
+		if (!bookRes.data.emailSent) manageWarn = t('admin.dashboard.manage.emailWarn');
+	}
+}
+if (blockRes && !blockRes.error) manageFlash = t('admin.dashboard.manage.blockedFlash');
+if (releaseRes && !releaseRes.error) manageFlash = t('admin.dashboard.manage.freed');
+
+const manageError = bookRes?.error || blockRes?.error || releaseRes?.error;
+const manageErrMsg = manageError
+	? manageError.code === 'CONFLICT'
+		? t('admin.dashboard.manage.errConflict')
+		: manageError.code === 'BAD_REQUEST'
+			? t('admin.dashboard.manage.errInvalid')
+			: t('admin.dashboard.manage.errGeneric')
+	: '';
+
+// A date was requested (via ?manageDate) but it has no manageable slots.
+const manageNoSlots = Boolean(requestedDate) && !manageDate;
 ---
 
 <Base
@@ -49,7 +105,8 @@ const submittedFmt = (iso: string) =>
 	<div class="admin-wrap">
 		<div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
 			<h1 class="section-title" style="border:none;margin-bottom:0">{t('admin.dashboard.heading')}</h1>
-			<div style="display:flex;align-items:center;gap:12px">
+			<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+				<AdminLangSwitcher {locale} action="/admin" manageDate={manageDate} />
 				<span style="color:var(--muted)">{staff.name}</span>
 				<form method="POST" action={actions.logout}>
 					<button class="btn btn-outline" type="submit">{t('admin.dashboard.logout')}</button>
@@ -60,6 +117,131 @@ const submittedFmt = (iso: string) =>
 		{flash && <div class="success-banner" style="margin-top:20px">{flash}</div>}
 		{flashWarn && <div class="error-banner">{flashWarn}</div>}
 
+		<h2 class="section-title" style="margin-top:28px">{t('admin.dashboard.manage.heading')}</h2>
+		<p style="color:var(--muted);margin-top:-8px">{t('admin.dashboard.manage.intro')}</p>
+
+		{manageFlash && <div class="success-banner">{manageFlash}</div>}
+		{manageWarn && <div class="error-banner">{manageWarn}</div>}
+		{manageErrMsg && <div class="error-banner">{manageErrMsg}</div>}
+
+		<form method="GET" action="/admin" class="manage-datebar">
+			<label for="manageDate">{t('admin.dashboard.manage.date')}</label>
+			<input
+				id="manageDate"
+				name="manageDate"
+				type="date"
+				value={manageDate}
+				min={manageMin}
+				max={manageMax}
+				required
+			/>
+			<button class="btn btn-outline" type="submit">{t('admin.dashboard.manage.show')}</button>
+		</form>
+
+		{manageNoSlots && <p>{t('admin.dashboard.manage.noSlots')}</p>}
+
+		{
+			manageDate && (
+				<div class="manage-day">
+					<h3 style="margin:12px 0">{formatDateLong(`${manageDate}T00:00`, locale)}</h3>
+					<div class="manage-list">
+						{daySlots.map((slot) => {
+							const entry = entriesByStart.get(slot.start);
+							if (!entry) {
+								return (
+									<div class="manage-slot">
+										<span class="manage-time">{slot.time}</span>
+										<span class="badge manage-badge badge-free">{t('admin.dashboard.manage.free')}</span>
+										<div class="manage-actions">
+											<details class="phone-book">
+												<summary class="btn btn-outline btn-sm">{t('admin.dashboard.manage.bookByPhone')}</summary>
+												<form method="POST" action={actions.staffBookSlot} class="phone-form">
+													<input type="hidden" name="slotStart" value={slot.start} />
+													<div class="form-field">
+														<label>{t('admin.dashboard.manage.patientName')} <span class="req">*</span></label>
+														<input name="name" type="text" required maxlength="100" />
+													</div>
+													<div class="form-field">
+														<label>{t('admin.dashboard.manage.phone')} <span class="req">*</span></label>
+														<input name="phone" type="tel" required maxlength="40" />
+													</div>
+													<div class="form-field">
+														<label>{t('admin.dashboard.manage.email')}</label>
+														<input name="email" type="email" maxlength="200" />
+													</div>
+													<div class="form-field">
+														<label>{t('admin.dashboard.manage.customerNumber')}</label>
+														<input name="customerNumber" type="text" maxlength="50" />
+													</div>
+													<fieldset class="form-field">
+														<legend>{t('admin.dashboard.visit')}</legend>
+														<label class="radio"><input type="radio" name="firstVisit" value="new" checked /> {t('admin.dashboard.visitNew')}</label>
+														<label class="radio"><input type="radio" name="firstVisit" value="returning" /> {t('admin.dashboard.visitReturning')}</label>
+													</fieldset>
+													<div class="form-field">
+														<label>{t('admin.dashboard.manage.note')}</label>
+														<input name="note" type="text" maxlength="500" />
+													</div>
+													<button class="btn btn-primary btn-sm" type="submit">{t('admin.dashboard.manage.bookAppointment')}</button>
+												</form>
+											</details>
+											<form method="POST" action={actions.blockSlot} class="inline-form">
+												<input type="hidden" name="slotStart" value={slot.start} />
+												<button class="btn btn-outline btn-sm" type="submit">{t('admin.dashboard.manage.block')}</button>
+											</form>
+										</div>
+									</div>
+								);
+							}
+							if (entry.status === 'blocked') {
+								return (
+									<div class="manage-slot">
+										<span class="manage-time">{slot.time}</span>
+										<span class="badge manage-badge badge-blocked">{t('admin.dashboard.manage.blocked')}</span>
+										<span class="manage-who">{entry.note}</span>
+										<div class="manage-actions">
+											<form method="POST" action={actions.releaseSlot} class="inline-form">
+												<input type="hidden" name="id" value={entry.id} />
+												<button class="btn btn-outline btn-sm" type="submit">{t('admin.dashboard.manage.unblock')}</button>
+											</form>
+										</div>
+									</div>
+								);
+							}
+							if (entry.origin === 'staff') {
+								return (
+									<div class="manage-slot">
+										<span class="manage-time">{slot.time}</span>
+										<span class="badge manage-badge badge-confirmed">{t('admin.dashboard.manage.phoneAppt')}</span>
+										<span class="manage-who">
+											{entry.patientName}
+											{entry.patientPhone ? ` · ${entry.patientPhone}` : ''}
+											{entry.note ? ` · ${entry.note}` : ''}
+										</span>
+										<div class="manage-actions">
+											<form method="POST" action={actions.releaseSlot} class="inline-form">
+												<input type="hidden" name="id" value={entry.id} />
+												<button class="btn btn-danger btn-sm" type="submit">{t('admin.dashboard.manage.cancel')}</button>
+											</form>
+										</div>
+									</div>
+								);
+							}
+							return (
+								<div class="manage-slot">
+									<span class="manage-time">{slot.time}</span>
+									<span class={`badge manage-badge badge-${entry.status === 'pending' ? 'pending' : 'confirmed'}`}>
+										{entry.status === 'pending' ? t('admin.dashboard.manage.pendingOnline') : t('admin.dashboard.manage.bookedOnline')}
+									</span>
+									<span class="manage-who">{entry.patientName}</span>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			)
+		}
+
 		<h2 class="section-title" style="margin-top:28px">{t('admin.dashboard.pendingHeading')}</h2>
 		{pending.length === 0 && <p>{t('admin.dashboard.noPending')}</p>}
 		{
@@ -69,10 +251,10 @@ const submittedFmt = (iso: string) =>
 					<table class="info-table" style="margin-top:10px">
 						<tbody>
 							<tr><th>{t('admin.dashboard.patient')}</th><td>{b.patientName}{b.patientNameKana ? ` (${b.patientNameKana})` : ''}</td></tr>
-							<tr><th>Visit</th><td>{b.firstVisit === 'returning' ? 'Returning patient' : 'First visit'}{b.customerNumber ? ` · #${b.customerNumber}` : ''}</td></tr>
-							<tr><th>Gender / DOB</th><td>{b.gender === 'male' ? 'Male' : 'Female'} · {b.dateOfBirth}</td></tr>
+							<tr><th>{t('admin.dashboard.visit')}</th><td>{b.firstVisit === 'returning' ? t('admin.dashboard.visitReturning') : t('admin.dashboard.visitNew')}{b.customerNumber ? ` · #${b.customerNumber}` : ''}</td></tr>
+							<tr><th>{t('admin.dashboard.genderDob')}</th><td>{b.gender === 'male' ? t('admin.dashboard.male') : t('admin.dashboard.female')} · {b.dateOfBirth}</td></tr>
 							<tr><th>{t('admin.dashboard.contact')}</th><td>{b.patientEmail} · {b.patientPhone}</td></tr>
-							<tr><th>Address</th><td>〒{b.postalCode} {b.prefecture}{b.address}</td></tr>
+							<tr><th>{t('admin.dashboard.address')}</th><td>〒{b.postalCode} {b.prefecture}{b.address}</td></tr>
 							<tr><th>{t('admin.dashboard.language')}</th><td>{LOCALE_NAMES[b.locale as Locale] ?? b.locale}</td></tr>
 							<tr><th>{t('admin.dashboard.submittedAt')}</th><td>{submittedFmt(b.createdAt)}</td></tr>
 						</tbody>
@@ -99,7 +281,7 @@ const submittedFmt = (iso: string) =>
 						<div class="booking-card" style="opacity:0.85">
 							<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
 								<span class="slot-line">{formatSlotLong(b.slotStart, locale)}</span>
-								<span class={`badge badge-${b.status}`}>{b.status}</span>
+								<span class={`badge badge-${b.status}`}>{t(`admin.dashboard.status.${b.status}`)}</span>
 							</div>
 							<div style="color:var(--muted);margin-top:6px">
 								{b.patientName} · {b.patientEmail}
