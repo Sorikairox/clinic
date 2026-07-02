@@ -647,6 +647,91 @@ html.js .cal-fallback {
 	background: #fef2f2;
 	color: #991b1b;
 }
+.badge-pending {
+	background: #fffbeb;
+	color: #92400e;
+}
+.badge-blocked {
+	background: #f3f4f6;
+	color: #374151;
+}
+.badge-free {
+	background: var(--teal-50);
+	color: var(--teal-dark);
+}
+
+/* Slot manager */
+.manage-datebar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin: 14px 0 4px;
+}
+.manage-datebar input[type='date'] {
+	padding: 8px 10px;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	font-size: 0.95rem;
+}
+.btn-sm {
+	padding: 5px 12px;
+	font-size: 0.85rem;
+}
+.manage-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.manage-slot {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+	padding: 10px 14px;
+	background: var(--white);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+}
+.manage-time {
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	min-width: 3.5em;
+	color: var(--teal-dark);
+}
+.manage-who {
+	color: var(--muted);
+	font-size: 0.92rem;
+}
+.manage-actions {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	margin-left: auto;
+	flex-wrap: wrap;
+}
+.inline-form {
+	display: inline;
+}
+.phone-book summary {
+	list-style: none;
+	cursor: pointer;
+	display: inline-block;
+}
+.phone-book summary::-webkit-details-marker {
+	display: none;
+}
+.phone-form {
+	margin-top: 12px;
+	padding: 16px;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	background: var(--teal-50);
+	width: min(420px, 90vw);
+}
+.phone-form .form-field {
+	margin-bottom: 12px;
+}
 
 @media (max-width: 640px) {
 	.header-inner {

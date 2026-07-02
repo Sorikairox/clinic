@@ -89,3 +89,28 @@ export function isValidSlot(slotStart: string, now: Date = new Date()): boolean 
 	if (!bookableDates(now).includes(date)) return false;
 	return slotsForDate(date).some((s) => s.start === slotStart);
 }
+
+/**
+ * Dates staff may manage from the dashboard: today through
+ * BOOKING_WINDOW_DAYS ahead, open days only. Unlike {@link bookableDates} this
+ * includes *today* — staff take same-day phone appointments — but it still can't
+ * offer days the template marks closed (there are no slots to manage).
+ */
+export function staffManageableDates(now: Date = new Date()): string[] {
+	const start = clinicToday(now);
+	const dates: string[] = [];
+	for (let i = 0; i <= BOOKING_WINDOW_DAYS; i++) {
+		const date = addDays(start, i);
+		if (BLOCKED_DATES.has(date)) continue;
+		if ((WEEKLY_TEMPLATE[weekdayOf(date)] ?? []).length === 0) continue;
+		dates.push(date);
+	}
+	return dates;
+}
+
+/** True if a slotStart is a real template slot on a staff-manageable date. */
+export function isStaffManageableSlot(slotStart: string, now: Date = new Date()): boolean {
+	const date = slotStart.slice(0, 10);
+	if (!staffManageableDates(now).includes(date)) return false;
+	return slotsForDate(date).some((s) => s.start === slotStart);
+}

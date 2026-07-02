@@ -4,8 +4,9 @@ import Base from '@/layouts/Base.astro';
 import { LOCALE_NAMES, type Locale } from '@/i18n/config';
 import { useTranslations } from '@/i18n/utils';
 import { getSessionStaff } from '@/lib/session';
-import { listPending, listRecentDecided } from '@/db/queries';
-import { formatSlotLong } from '@/lib/datetime';
+import { getEntriesForDate, listPending, listRecentDecided } from '@/db/queries';
+import { slotsForDate, staffManageableDates } from '@/lib/availability';
+import { formatDateLong, formatSlotLong } from '@/lib/datetime';
 
 const staff = await getSessionStaff(Astro.cookies);
 if (!staff) return Astro.redirect('/admin/login');
@@ -36,6 +37,59 @@ const recent = await listRecentDecided(8);
 
 const submittedFmt = (iso: string) =>
 	new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso));
+
+// --- Slot manager: book (phone) / block slots -----------------------------
+const manageDates = staffManageableDates();
+const manageMin = manageDates[0];
+const manageMax = manageDates[manageDates.length - 1];
+
+const bookRes = Astro.getActionResult(actions.staffBookSlot);
+const blockRes = Astro.getActionResult(actions.blockSlot);
+const releaseRes = Astro.getActionResult(actions.releaseSlot);
+
+// After a slot action the page re-renders at /admin (no query string), so the
+// action returns the affected date and we use it to re-open that day.
+const requestedDate =
+	(bookRes && !bookRes.error && bookRes.data.date) ||
+	(blockRes && !blockRes.error && blockRes.data.date) ||
+	(releaseRes && !releaseRes.error && releaseRes.data.date) ||
+	Astro.url.searchParams.get('manageDate') ||
+	'';
+const manageDate = manageDates.includes(requestedDate) ? requestedDate : '';
+
+let daySlots: ReturnType<typeof slotsForDate> = [];
+const entriesByStart = new Map<string, Awaited<ReturnType<typeof getEntriesForDate>>[number]>();
+if (manageDate) {
+	daySlots = slotsForDate(manageDate);
+	for (const e of await getEntriesForDate(manageDate)) entriesByStart.set(e.slotStart, e);
+}
+
+// Flash / error for the slot manager.
+let manageFlash = '';
+let manageWarn = '';
+if (bookRes && !bookRes.error) {
+	manageFlash = 'Phone appointment booked.';
+	if (bookRes.data.hadEmail) {
+		manageFlash = bookRes.data.emailSent
+			? 'Phone appointment booked and patient notified by email.'
+			: 'Phone appointment booked.';
+		if (!bookRes.data.emailSent) manageWarn = 'The confirmation email could not be sent (check RESEND_API_KEY).';
+	}
+}
+if (blockRes && !blockRes.error) manageFlash = 'Slot blocked — it can no longer be booked online.';
+if (releaseRes && !releaseRes.error) manageFlash = 'Slot freed.';
+
+const manageError = bookRes?.error || blockRes?.error || releaseRes?.error;
+const manageErrMsg = manageError
+	? manageError.code === 'CONFLICT'
+		? 'That slot was just taken. Please pick another.'
+		: manageError.code === 'BAD_REQUEST'
+			? 'That is not a valid, open slot.'
+			: 'Could not complete that action — please check the details and try again.'
+	: '';
+
+// A date was requested (via ?manageDate) but it has no manageable slots.
+const manageNoSlots = Boolean(requestedDate) && !manageDate;
 ---
 
 <Base
@@ -59,6 +113,133 @@ const submittedFmt = (iso: string) =>
 
 		{flash && <div class="success-banner" style="margin-top:20px">{flash}</div>}
 		{flashWarn && <div class="error-banner">{flashWarn}</div>}
+
+		<h2 class="section-title" style="margin-top:28px">Manage slots</h2>
+		<p style="color:var(--muted);margin-top:-8px">
+			Book a slot for an appointment taken by phone, or block a slot so it can't be booked online.
+		</p>
+
+		{manageFlash && <div class="success-banner">{manageFlash}</div>}
+		{manageWarn && <div class="error-banner">{manageWarn}</div>}
+		{manageErrMsg && <div class="error-banner">{manageErrMsg}</div>}
+
+		<form method="GET" action="/admin" class="manage-datebar">
+			<label for="manageDate">Date</label>
+			<input
+				id="manageDate"
+				name="manageDate"
+				type="date"
+				value={manageDate}
+				min={manageMin}
+				max={manageMax}
+				required
+			/>
+			<button class="btn btn-outline" type="submit">Show slots</button>
+		</form>
+
+		{manageNoSlots && <p>The clinic has no bookable slots on that date (closed or outside the window).</p>}
+
+		{
+			manageDate && (
+				<div class="manage-day">
+					<h3 style="margin:12px 0">{formatDateLong(`${manageDate}T00:00`, locale)}</h3>
+					<div class="manage-list">
+						{daySlots.map((slot) => {
+							const entry = entriesByStart.get(slot.start);
+							if (!entry) {
+								return (
+									<div class="manage-slot">
+										<span class="manage-time">{slot.time}</span>
+										<span class="badge manage-badge badge-free">Free</span>
+										<div class="manage-actions">
+											<details class="phone-book">
+												<summary class="btn btn-outline btn-sm">Book by phone</summary>
+												<form method="POST" action={actions.staffBookSlot} class="phone-form">
+													<input type="hidden" name="slotStart" value={slot.start} />
+													<div class="form-field">
+														<label>Patient name <span class="req">*</span></label>
+														<input name="name" type="text" required maxlength="100" />
+													</div>
+													<div class="form-field">
+														<label>Phone <span class="req">*</span></label>
+														<input name="phone" type="tel" required maxlength="40" />
+													</div>
+													<div class="form-field">
+														<label>Email (optional — sends a confirmation)</label>
+														<input name="email" type="email" maxlength="200" />
+													</div>
+													<div class="form-field">
+														<label>Customer no. (optional)</label>
+														<input name="customerNumber" type="text" maxlength="50" />
+													</div>
+													<fieldset class="form-field">
+														<legend>Visit</legend>
+														<label class="radio"><input type="radio" name="firstVisit" value="new" checked /> First visit</label>
+														<label class="radio"><input type="radio" name="firstVisit" value="returning" /> Returning</label>
+													</fieldset>
+													<div class="form-field">
+														<label>Note (optional)</label>
+														<input name="note" type="text" maxlength="500" />
+													</div>
+													<button class="btn btn-primary btn-sm" type="submit">Book appointment</button>
+												</form>
+											</details>
+											<form method="POST" action={actions.blockSlot} class="inline-form">
+												<input type="hidden" name="slotStart" value={slot.start} />
+												<button class="btn btn-outline btn-sm" type="submit">Block</button>
+											</form>
+										</div>
+									</div>
+								);
+							}
+							if (entry.status === 'blocked') {
+								return (
+									<div class="manage-slot">
+										<span class="manage-time">{slot.time}</span>
+										<span class="badge manage-badge badge-blocked">Blocked</span>
+										<span class="manage-who">{entry.note}</span>
+										<div class="manage-actions">
+											<form method="POST" action={actions.releaseSlot} class="inline-form">
+												<input type="hidden" name="id" value={entry.id} />
+												<button class="btn btn-outline btn-sm" type="submit">Unblock</button>
+											</form>
+										</div>
+									</div>
+								);
+							}
+							if (entry.origin === 'staff') {
+								return (
+									<div class="manage-slot">
+										<span class="manage-time">{slot.time}</span>
+										<span class="badge manage-badge badge-confirmed">Phone appt</span>
+										<span class="manage-who">
+											{entry.patientName}
+											{entry.patientPhone ? ` · ${entry.patientPhone}` : ''}
+											{entry.note ? ` · ${entry.note}` : ''}
+										</span>
+										<div class="manage-actions">
+											<form method="POST" action={actions.releaseSlot} class="inline-form">
+												<input type="hidden" name="id" value={entry.id} />
+												<button class="btn btn-danger btn-sm" type="submit">Cancel</button>
+											</form>
+										</div>
+									</div>
+								);
+							}
+							return (
+								<div class="manage-slot">
+									<span class="manage-time">{slot.time}</span>
+									<span class={`badge manage-badge badge-${entry.status === 'pending' ? 'pending' : 'confirmed'}`}>
+										{entry.status === 'pending' ? 'Pending (online)' : 'Booked (online)'}
+									</span>
+									<span class="manage-who">{entry.patientName}</span>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			)
+		}
 
 		<h2 class="section-title" style="margin-top:28px">{t('admin.dashboard.pendingHeading')}</h2>
 		{pending.length === 0 && <p>{t('admin.dashboard.noPending')}</p>}

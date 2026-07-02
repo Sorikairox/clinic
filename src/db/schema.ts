@@ -11,11 +11,22 @@ export const staff = sqliteTable('staff', {
 	createdAt: text('created_at').notNull(),
 });
 
-export const BOOKING_STATUSES = ['pending', 'confirmed', 'declined'] as const;
+// 'blocked' is a staff-created hold that takes a slot out of online availability
+// (e.g. a phone appointment or a slot the clinic wants to keep free). Like every
+// non-'declined' status it occupies the slot via the active_slot_unique index.
+export const BOOKING_STATUSES = ['pending', 'confirmed', 'declined', 'blocked'] as const;
 export type BookingStatus = (typeof BOOKING_STATUSES)[number];
 
-// A patient's booking request. slotStart/slotEnd are clinic-local (JST) wall
-// times, "YYYY-MM-DDTHH:mm" — no timezone math, the clinic operates in one zone.
+export const BOOKING_ORIGINS = ['online', 'staff'] as const;
+export type BookingOrigin = (typeof BOOKING_ORIGINS)[number];
+
+// A booking record. Most are patient requests submitted online, but staff can
+// also create entries from the dashboard: a phone appointment ('confirmed',
+// origin 'staff') or a plain block ('blocked'). Because staff entries may have
+// only partial patient details (or none, for a block), the patient columns are
+// nullable — the online booking action still requires them via its input schema.
+// slotStart/slotEnd are clinic-local (JST) wall times, "YYYY-MM-DDTHH:mm" — no
+// timezone math, the clinic operates in one zone.
 export const booking = sqliteTable(
 	'booking',
 	{
@@ -23,17 +34,19 @@ export const booking = sqliteTable(
 		slotStart: text('slot_start').notNull(),
 		slotEnd: text('slot_end').notNull(),
 		status: text('status', { enum: BOOKING_STATUSES }).notNull().default('pending'),
+		origin: text('origin', { enum: BOOKING_ORIGINS }).notNull().default('online'),
 		customerNumber: text('customer_number'),
-		firstVisit: text('first_visit').notNull(), // 'new' | 'returning'
-		patientName: text('patient_name').notNull(),
+		firstVisit: text('first_visit'), // 'new' | 'returning'
+		patientName: text('patient_name'),
 		patientNameKana: text('patient_name_kana'),
-		gender: text('gender').notNull(), // 'female' | 'male'
-		dateOfBirth: text('date_of_birth').notNull(), // "YYYY-MM-DD"
-		patientEmail: text('patient_email').notNull(),
-		patientPhone: text('patient_phone').notNull(),
-		postalCode: text('postal_code').notNull(),
-		prefecture: text('prefecture').notNull(),
-		address: text('address').notNull(),
+		gender: text('gender'), // 'female' | 'male'
+		dateOfBirth: text('date_of_birth'), // "YYYY-MM-DD"
+		patientEmail: text('patient_email'),
+		patientPhone: text('patient_phone'),
+		postalCode: text('postal_code'),
+		prefecture: text('prefecture'),
+		address: text('address'),
+		note: text('note'), // staff annotation: block reason / phone-booking memo
 		locale: text('locale').notNull().default('ja'),
 		createdAt: text('created_at').notNull(),
 		decidedAt: text('decided_at'),

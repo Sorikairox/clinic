@@ -62,7 +62,7 @@ export function buildReceivedEmail(b: Booking): { subject: string; html: string 
 	const slot = formatSlotLong(b.slotStart, locale);
 	const html = layout(
 		// greeting / slotLabel / signature are shared with the confirmed email.
-		paragraph(t('email.confirmed.greeting', { name: b.patientName })) +
+		paragraph(t('email.confirmed.greeting', { name: b.patientName ?? '' })) +
 			paragraph(t('email.received.body')) +
 			`<p style="margin:0 0 16px;padding:14px 16px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">
         <strong>${t('email.confirmed.slotLabel')}:</strong><br>${slot}</p>` +
@@ -77,7 +77,7 @@ export function buildConfirmedEmail(b: Booking): { subject: string; html: string
 	const t = useTranslations(locale);
 	const slot = formatSlotLong(b.slotStart, locale);
 	const html = layout(
-		paragraph(t('email.confirmed.greeting', { name: b.patientName })) +
+		paragraph(t('email.confirmed.greeting', { name: b.patientName ?? '' })) +
 			paragraph(t('email.confirmed.body')) +
 			`<p style="margin:0 0 16px;padding:14px 16px;background:#ecfdf5;border-radius:8px;border:1px solid #a7f3d0;">
         <strong>${t('email.confirmed.slotLabel')}:</strong><br>${slot}</p>` +
@@ -91,7 +91,7 @@ export function buildDeclinedEmail(b: Booking): { subject: string; html: string 
 	const locale = b.locale as Locale;
 	const t = useTranslations(locale);
 	const html = layout(
-		paragraph(t('email.declined.greeting', { name: b.patientName })) +
+		paragraph(t('email.declined.greeting', { name: b.patientName ?? '' })) +
 			paragraph(t('email.declined.body')) +
 			paragraph(t('email.declined.closing')) +
 			paragraph(`— ${t('email.declined.signature')}`),
